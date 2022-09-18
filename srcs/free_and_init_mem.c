@@ -12,40 +12,46 @@
 
 #include "msh.h"
 
-static void	free_array(void ***arr, size_t len)
+void	init_msh(t_msh *msh)
 {
-	size_t	i;
-
-	i = 0;
-	while (i <= len)
-	{
-		if (*((*arr) + i))
-		{
-			free(*((*arr) + i));
-			*((*arr) + i) = NULL;
-		}
-		i++;
-	}
-	free(*arr);
-	*arr = NULL;
+	ft_printf("\n******************"
+        "************************");
+	ft_printf("\n\t******MINISHELL******");
+	ft_printf("\n\n\t-USE AT YOUR OWN RISK-");
+	ft_printf("\n\n*******************"
+        "***********************\n");
+	msh->args = NULL;
+	// msh->env = get_env();
 }
 
-static size_t	array_len(char **arr)
+static void	free_arr(char **arr, size_t len)
+{
+	if (!arr || !len)
+		return ;
+	while (len--)
+	{
+		if (arr[len] != NULL)
+		{
+			free(arr[len]);
+			arr[len] = NULL;
+		}
+	}
+	free(arr);
+	arr = NULL;
+}
+
+static size_t	arr_len(char **arr)
 {
 	size_t	len;
 
-	if (!arr)
-		return (0);
 	len = 0;
-	while (arr[len])
+	while (*arr++)
 		len++;
 	return (len);
 }
 
-void	free_mem(char **args, char *cli)
+void	free_mem(char **args)
 {
 	if (args)
-		free_array((void ***)&args, array_len(args));
-	if (cli)
-		ft_strdel(&cli);
+		free_arr(args, arr_len(args));
 }

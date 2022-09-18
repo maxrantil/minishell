@@ -61,7 +61,7 @@ SOURCE_COUNT = $(words $(FILES))
 H_FILES 	= 	msh
 
 FILES 		= 	main \
-#				free_mem \
+				free_and_init_mem \
 
 H_PATHS 	= 	$(addsuffix .h, $(addprefix $(INCLUDES)/, $(H_FILES)))
 C_PATHS 	= 	$(addsuffix .c, $(addprefix $(SOURCES)/, $(FILES)))
