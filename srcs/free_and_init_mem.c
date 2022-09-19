@@ -21,6 +21,7 @@ void	init_msh(t_msh *msh)
 	ft_printf("\n\n*******************"
         "***********************\n");
 	msh->args = NULL;
+	msh->cli = NULL;
 	// msh->env = get_env();
 }
 
@@ -50,8 +51,10 @@ static size_t	arr_len(char **arr)
 	return (len);
 }
 
-void	free_mem(char **args)
+void	free_mem(t_msh *msh)
 {
-	if (args)
-		free_arr(args, arr_len(args));
+	if (msh->args)
+		free_arr(msh->args, arr_len(msh->args));
+	if (msh->cli)
+		ft_strdel(&msh->cli);
 }

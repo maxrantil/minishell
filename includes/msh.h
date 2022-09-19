@@ -22,6 +22,7 @@
 typedef struct s_msh
 {
 	char	**args;
+	char	*cli;
 }			t_msh;
 
 /*
@@ -31,7 +32,7 @@ int msh_cd(char **args);
 int msh_exit(char **args);
 
 
-void	free_mem(char **args);
+void	free_mem(t_msh *msh);
 void	init_msh(t_msh *msh);
 
 #endif

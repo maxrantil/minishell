@@ -49,9 +49,8 @@ int msh_exit(char **args)
 	return (1);
 }
 
-
 /* child pid = 0 */
-int	msh_launch(char **args)
+int	msh_launch(t_msh *msh)
 {
 	pid_t	pid;
 	// extern char	**environ;
@@ -61,19 +60,14 @@ int	msh_launch(char **args)
 	if (pid == 0)
 	{
 		// if (execve(args[0], args, NULL) == -1)
-		if (execvp(args[0], args) == -1)
+		if (execvp(msh->args[0], msh->args) == -1)
 			ft_putstr_fd("error: execve failed\n", STDERR_FILENO);
 		exit(EXIT_FAILURE);
-		// return (0);
 	}
 	else if (pid < 0)
 		ft_putstr_fd("error: pid failed\n", STDERR_FILENO);
 	else
-	{
 		waitpid(pid, &status, WUNTRACED);
-		// while (!WIFEXITED(status) && !WIFSIGNALED(status))	
-			// waitpid(pid, &status, WUNTRACED);
-	}
 	return (1);
 }
 
@@ -82,20 +76,20 @@ static size_t num_builtins()
 	return (sizeof(builtin_str) / sizeof(char *));
 }
 
-int	exec_args(char **args)
+int	exec_args(t_msh *msh)
 {
 	size_t	i;
 
-	if (!args[0])
+	if (!msh->args[0])
 		return (1);
 	i = 0;
 	while (i < num_builtins())
 	{
-		if (!ft_strcmp(args[0], builtin_str[i]))
-			return ((*builtin_func[i])(args));
+		if (!ft_strcmp(msh->args[0], builtin_str[i]))
+			return ((*builtin_func[i])(msh->args));
 		i++;
 	}
-	return (msh_launch(args));
+	return (msh_launch(msh));
 }
 
 /* int	check_whitespace(char *str)
@@ -109,10 +103,27 @@ int	exec_args(char **args)
 	return (0);
 } */
 
+char	**split_tokens(char *cli, char *delimit)
+{
+	char	**tokens;
+	char	*token;
+	size_t	i;
+
+	tokens = (char **)ft_memalloc(sizeof(char *) * MSH_TOK_BUFSIZE);
+	if (!tokens)
+	{
+		ft_putstr_fd("error: malloc tokens", STDERR_FILENO);
+		exit(EXIT_FAILURE);
+	}
+	i = 0;
+	while ((token = ft_strsep(&cli, delimit)) != NULL)
+		tokens[i++] = token;
+	return (tokens);
+}
+
 int	main(void)
 {
 	t_msh	msh;
-	char	*cli;
 	int		status;
 	int		line;
 
@@ -121,15 +132,15 @@ int	main(void)
 	while (status)
 	{
 		ft_putstr(PROMPT);
-		line = get_next_line(STDIN_FILENO, &cli);
-		if (line == 1 && cli[0])
+		line = get_next_line(STDIN_FILENO, &msh.cli);
+		if (line == 1 && msh.cli[0])
 		{
-			msh.args = ft_strsplit(cli, ' ');
-			status = exec_args(msh.args);
+			msh.args = split_tokens(msh.cli, " \t\r\n\a");
+			status = exec_args(&msh);
 		}
-		ft_printf("YES!\n");
-		free_mem(msh.args);
-		ft_strdel(&cli);
+		for (int i = 0; msh.args[i] != NULL; i++)
+			ft_printf("%s\n", msh.args[i]);
+		// free_mem(&msh);
 	}
 	return (0);
 }

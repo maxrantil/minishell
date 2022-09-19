@@ -1,5 +1,6 @@
+#include "libft.h"
 
-char *ft_strsep(char **stringp, const char *delim)
+char	*ft_strsep(char **stringp, const char *delim)
 {
 	char	*begin;
 	char	*end;
