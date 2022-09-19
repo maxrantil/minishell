@@ -147,7 +147,6 @@ char	**split_tokens(char *cli, char *delimit)
 		if (ft_strlen(token))
 			tokens[i++] = token;
 	}
-	ft_printf("out cli == '%p'\n", tokens);
 	return (tokens);
 }
 
@@ -168,7 +167,7 @@ int	main(void)
 			status = exec_args(&msh);
 		}
 		else
-			ft_putstr_fd("minishell: gnl, could not read input\n", STDERR_FILENO);
+			ft_putstr_fd("minishell: could not read input\n", STDERR_FILENO);
 		free_mem(&msh);
 	}
 	return (0);
