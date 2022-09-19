@@ -6,7 +6,7 @@
 #    By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/17 18:22:31 by mrantil           #+#    #+#              #
-#    Updated: 2022/09/18 12:57:02 by mrantil          ###   ########.fr        #
+#    Updated: 2022/09/19 15:50:57 by mrantil          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,9 +47,9 @@ CFLAGS		+=	-Wunreachable-code -Wtype-limits
 #CFLAGS		+=	-O3 -flto -fPIC -shared
 
 LEAK_CHECK	=	-g
-LEAK_CHECK	+=	-fsanitize=address
+#LEAK_CHECK	+=	-fsanitize=address
 
-TERMCAPS	=	-ltermcap
+#TERMCAPS	=	-ltermcap
 
 SOURCES 	= 	srcs
 OBJECTS 	= 	objs
@@ -60,8 +60,9 @@ SOURCE_COUNT = $(words $(FILES))
 
 H_FILES 	= 	msh
 
-FILES 		= 	main \
+FILES 		= 	builtins \
 				free_and_init_mem \
+				main \
 
 H_PATHS 	= 	$(addsuffix .h, $(addprefix $(INCLUDES)/, $(H_FILES)))
 C_PATHS 	= 	$(addsuffix .c, $(addprefix $(SOURCES)/, $(FILES)))
