@@ -160,7 +160,7 @@ int	main(void)
 	while (status)
 	{
 		ft_printf("{yel}${gre}>{nor} ");
-		msh.cli = NULL;
+		// msh.cli = NULL;
 		if (get_next_line(STDIN_FILENO, &msh.cli) == 1)// && msh.cli[0])
 		{
 			msh.args = split_tokens(msh.cli, " \t\n\v\f\r");

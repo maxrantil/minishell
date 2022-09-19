@@ -14,10 +14,10 @@
 //CD NEEDS MORE WORK! HIGH PRIORITY
 //change from relative path s "$> cd relative/path/of/your/choice", then run the following command "$> /bin/pwd". /bin/pwd must confirm that the current folder was updated.
 //and more, look eval
-
+//need to update the oldpwd and pwd in env after changes
 char	*get_env_var(char **env, char *var)
 {
-	char	*home;
+	char	*ret;
 	size_t	i;
 
 	i = 0;
@@ -25,9 +25,9 @@ char	*get_env_var(char **env, char *var)
 	{
 		if (!ft_strncmp(env[i], var, ft_strlen(var)))
 		{
-			home = (char *)ft_memalloc(sizeof(char) * ft_strlen(env[i] - 5));
-			ft_strcpy(home, ft_strchr(env[i], '/'));
-			return (home);
+			ret = (char *)ft_memalloc(sizeof(char) * ft_strlen(env[i] - 5));
+			ft_strcpy(ret, ft_strchr(env[i], '/'));
+			return (ret);
 		}
 		i++;
 	}
@@ -36,11 +36,32 @@ char	*get_env_var(char **env, char *var)
 
 int	msh_cd(t_msh *msh)
 {
+	char *home;
+	char *oldpwd;
+	char *tilde;
+
 	if (!msh->args[1])
-		chdir(get_env_var(msh->env, "HOME="));
+	{
+		home = get_env_var(msh->env, "HOME=");
+		if (chdir(home) != 0)
+			ft_putstr_fd("ERROR, cd: home", STDERR_FILENO);
+		free(home);
+
+	}
 	else if (!ft_strcmp(msh->args[1], "-"))
 	{
-		chdir(get_env_var(msh->env, "OLDPWD="));
+		oldpwd = get_env_var(msh->env, "OLDPWD=");
+		if (chdir(oldpwd) != 0)
+			ft_putstr_fd("ERROR, cd: oldpwd", STDERR_FILENO);
+		free(oldpwd);
+	}
+	else if (msh->args[1][0] == '~')
+	{
+		home = get_env_var(msh->env, "HOME=");
+		tilde = ft_strupdate(home, msh->args[1] + 1);
+		if (chdir(tilde) != 0)
+			ft_putstr_fd("ERROR, cd: tilde", STDERR_FILENO);
+		free(tilde);
 	}
 	else
 	{
