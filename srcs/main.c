@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 15:09:44 by mrantil           #+#    #+#             */
-/*   Updated: 2022/09/19 18:19:20 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/09/20 17:52:13 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,16 @@ char	*builtin_str[] = {
 	"echo",
 	"pwd",
 	"env",
+	/* "setenv", */
 	"exit"
 };
 
-
-//fix echo
 int	(*builtin_func[]) (t_msh *msh) = {
 	&msh_cd,
 	&msh_echo,
 	&msh_pwd,
 	&msh_env,
+	/* &msh_setenv, */
 	&msh_exit
 };
 
@@ -45,9 +45,10 @@ int	check_paths(t_msh *msh)
 	{
 		if (!ft_strncmp(msh->env[i], "PATH=", 5))
 		{
-			msh->paths = (char **)ft_memalloc(sizeof(char *) * MSH_TOK_BUFSIZE);
+			msh->paths = (char **)ft_memalloc(sizeof(char *) * MSH_TOK_BUFSIZE); //need to fix the correct bufsize?
 			j = 0;
-			while ((path = ft_strsep(&msh->env[i], ":")) != NULL)
+			char *dup_paths = ft_strdup(msh->env[i]);
+			while ((path = ft_strsep(&dup_paths, ":")) != NULL)
 				msh->paths[j++] = ft_strchr(path, '/');
 			return (1);
 		}
@@ -56,15 +57,7 @@ int	check_paths(t_msh *msh)
 	return (0);
 }
 
-// void prints_paths(t_msh *msh)
-// {
-// 	int i = 0;
-
-// 	while (msh->paths[i])
-// 		ft_printf("%s\n", msh->paths[i++]);
-// }
-
-char	*verify_arg(t_msh *msh)	//fix for if the full path is given and not only the arg
+char	*verify_arg(t_msh *msh)
 {
 	struct stat	statbuf;
 	char		*verify;
@@ -74,8 +67,7 @@ char	*verify_arg(t_msh *msh)	//fix for if the full path is given and not only th
 	while (msh->paths[i])
 	{
 		verify = (char *)ft_memalloc(sizeof(char) * MAX_PATHLEN);
-		// ft_bzero(verify, MAX_PATHLEN);
-		ft_strcat(verify, msh->paths[i]);
+		ft_strcpy(verify, msh->paths[i]);
 		ft_strcat(verify, "/");
 		ft_strcat(verify, msh->args[0]);
 		if (!lstat(verify, &statbuf))
@@ -86,19 +78,18 @@ char	*verify_arg(t_msh *msh)	//fix for if the full path is given and not only th
 	return (NULL);
 }
 
-/* child pid = 0 */
+/* child process pid = 0 */
 int	msh_launch(t_msh *msh)
 {
 	pid_t	pid;
 	int		status;
 
 	pid = fork();
-	check_paths(msh);
-	// prints_paths(msh);
 	if (pid == 0)
 	{
-		execve(msh->args[0], msh->args, NULL);
-		execve(verify_arg(msh), msh->args, NULL);
+		check_paths(msh);
+		execve(msh->args[0], msh->args, msh->env);
+		execve(verify_arg(msh), msh->args, msh->env);
 		ft_printf("minishell: %s: ", msh->args[0]);
 		ft_putstr_fd("command not found\n", STDERR_FILENO);
 		exit(EXIT_FAILURE);
@@ -162,8 +153,7 @@ int	main(void)
 	while (status)
 	{
 		ft_printf("{yel}${gre}>{nor} ");
-		// msh.cli = NULL;
-		if (get_next_line(STDIN_FILENO, &msh.cli) == 1)// && msh.cli[0])
+		if (get_next_line(STDIN_FILENO, &msh.cli) == 1)
 		{
 			msh.args = split_tokens(msh.cli, " \t\n\v\f\r");
 			status = exec_args(&msh);

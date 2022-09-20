@@ -1,20 +1,20 @@
 #include "libft.h"
 
-char	*ft_strsep(char **stringp, const char *delim)
+char	*ft_strsep(char **string_ptr, const char *delim)
 {
 	char	*begin;
 	char	*end;
 
-	begin = *stringp;
+	begin = *string_ptr;
 	if (begin == NULL)
 		return NULL;
 	end = begin + ft_strcspn(begin, delim);
 	if (*end)
 	{
 		*end++ = '\0';
-		*stringp = end;
+		*string_ptr = end;
 	}
 	else
-	    *stringp = NULL;
+	    *string_ptr = NULL;
 	return (begin);
 }
