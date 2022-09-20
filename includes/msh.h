@@ -46,6 +46,7 @@ typedef struct s_msh
 **	Function Declarations for builtin shell commands:
 */
 int		msh_cd(t_msh *msh);
+int		msh_echo(t_msh *msh);
 int		msh_pwd(t_msh *msh);
 int		msh_env(t_msh *msh);
 int		msh_exit(t_msh *msh);

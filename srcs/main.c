@@ -18,6 +18,7 @@
 
 char	*builtin_str[] = {
 	"cd",
+	"echo",
 	"pwd",
 	"env",
 	"exit"
@@ -27,6 +28,7 @@ char	*builtin_str[] = {
 //fix echo
 int	(*builtin_func[]) (t_msh *msh) = {
 	&msh_cd,
+	&msh_echo,
 	&msh_pwd,
 	&msh_env,
 	&msh_exit

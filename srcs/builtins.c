@@ -57,6 +57,29 @@ int	msh_cd(t_msh *msh)
 	return 1;
 }
 
+int	msh_echo(t_msh *msh)		//do i need to take cli to get correct spaces? //double strings with quotes doesnt work now
+{
+	size_t	arrlen;
+	size_t	i;
+
+	arrlen = ft_arrlen(msh->args) - 1;
+	i = 1;
+	while (i <= arrlen)
+	{
+		if (i != arrlen && (ft_strchr(msh->args[i], '\"') || ft_strchr(msh->args[i], '\'')))
+			ft_printf("%s", msh->args[i] + 1);
+		else if (i == arrlen && (ft_strchr(msh->args[i], '\"') || ft_strchr(msh->args[i], '\'')))
+			ft_printf("%.*s", ft_strlen(msh->args[i]) - 1, msh->args[i]);
+		else
+			ft_printf("%s", msh->args[i]);
+		if (i != arrlen)
+			ft_putchar(' ');
+		i++;
+	}
+	ft_putchar('\n');
+	return (1);
+}
+
 int	msh_pwd(t_msh *msh)
 {
 	char	cwd[MAX_PATHLEN];
