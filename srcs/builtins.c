@@ -15,24 +15,7 @@
 //change from relative path s "$> cd relative/path/of/your/choice", then run the following command "$> /bin/pwd". /bin/pwd must confirm that the current folder was updated.
 //and more, look eval
 //need to update the oldpwd and pwd in env after changes
-char	*get_env_var(char **env, char *var)
-{
-	char	*ret;
-	size_t	i;
 
-	i = 0;
-	while (env[i])
-	{
-		if (!ft_strncmp(env[i], var, ft_strlen(var)))
-		{
-			ret = (char *)ft_memalloc(sizeof(char) * ft_strlen(env[i] - 5));
-			ft_strcpy(ret, ft_strchr(env[i], '/'));
-			return (ret);
-		}
-		i++;
-	}
-	return (NULL);
-}
 
 int	msh_cd(t_msh *msh)
 {

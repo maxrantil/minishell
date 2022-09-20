@@ -62,6 +62,7 @@ H_FILES 	= 	msh
 
 FILES 		= 	builtins \
 				free_and_init_mem \
+				get_env_var	\
 				main \
 
 H_PATHS 	= 	$(addsuffix .h, $(addprefix $(INCLUDES)/, $(H_FILES)))

@@ -12,6 +12,25 @@
 
 #include "msh.h"
 
+char	*change_shlvl(char *shlvl)
+{
+	int		lvl;
+	char	*str_lvl;
+	char	*ret;
+
+	lvl = ft_atoi(ft_strchr(shlvl, '=') + 1);
+	if (lvl <= 999)
+		++lvl;
+	else
+		lvl = 1;
+	str_lvl = ft_itoa(lvl);
+	ret = ft_strnew(9);
+	ft_strcpy(ret, "SHLVL=");
+	ft_strcat(ret, str_lvl);
+	ft_strdel(&str_lvl);
+	return (ret);
+}
+
 static char	**get_env()
 {
 	extern char	**environ;
@@ -25,20 +44,45 @@ static char	**get_env()
 	i = 0;
 	while (environ[i])
 	{
-		env[i] = ft_strsep(&environ[i], "\n");			//use strsplit here to being able to manipulate the variables
+		if (!ft_strncmp(environ[i], "SHLVL=", 6))
+			env[i] = change_shlvl(environ[i]);				//this is malloced and needs to be free'ed
+		else
+			env[i] = ft_strsep(&environ[i], "\n");			//use strsplit here to being able to manipulate the variables
 		ft_printf("env[%d]: %s\n", i, env[i]);
 		i++;
 	}
 	env[i] = NULL;
 		ft_printf("env[i]: %s\n", env[i]);
 	return (env); 
-	/* env = (char **)ft_memalloc(sizeof(char *) * MSH_TOK_BUFSIZE);
-	i = 0;
-	while (i < MSH_TOK_BUFSIZE) */
 }
+
+/* static char	**get_env_from_env(char **environ)
+{
+	char		**env;
+	int			i;
+
+	i = 0;
+	while (environ[i])
+		i++;
+	env = (char **)ft_memalloc(sizeof(char *) * i + 1);
+	i = 0;
+	while (environ[i])
+	{
+		if (!ft_strncmp(environ[i], "SHLVL=", 6))
+			env[i] = change_shlvl(environ[i]);				//this is malloced and needs to be free'ed
+		else
+			env[i] = ft_strsep(&environ[i], "\n");			//use strsplit here to being able to manipulate the variables
+		ft_printf("env[%d]: %s\n", i, env[i]);
+		i++;
+	}
+	env[i] = NULL;
+		ft_printf("env[i]: %s\n", env[i]);
+	return (env); 
+} */
 
 void	init_msh(t_msh *msh)
 {
+	static int check;
 	ft_printf("\n******************"
         "************************");
 	ft_printf("\n\t******MINISHELL******");
@@ -46,7 +90,10 @@ void	init_msh(t_msh *msh)
         "***********************\n");
 	msh->args = NULL;
 	msh->cli = NULL;
-	msh->env = get_env();
+	if (!check)
+		msh->env = get_env();
+	/* else
+		msh->env = get_env_from_env(msh->env); */
 }
 
 /* static void	free_arr(char **arr, size_t len)
