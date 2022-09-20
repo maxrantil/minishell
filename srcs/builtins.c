@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 13:33:14 by mrantil           #+#    #+#             */
-/*   Updated: 2022/09/20 17:45:34 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/09/20 18:34:57 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,12 +61,29 @@ int	msh_env(t_msh *msh)
 //after CD next priotity is setenv and unsetenv
 /* int	msh_setenv(t_msh *msh)
 {
-	if (!strncmp())
+	char 	*var;
+	size_t	i;
 
 	i = 0;
-	
+	if (ft_arrlen(msh->args) == 2)
+	{
+		while (msh->env[i])
+		{
+			if (!ft_strncmp(msh->args[1], ))
+			i++;
+		}
+		
+	}
+	else
+	{
+		ft_putstr_fd("Error, you can only set one variable at a time\n", STDERR_FILENO);
+		ft_putstr_fd("usage: setenv key=value\n", STDERR_FILENO);
+		return (0);
+	}
 	return (1);
 } */
+//test to 'cd ..' from /
+//test to run executables that doesnt exist
 
 /* int	msh_unsetenv(t_msh *msh)
 {

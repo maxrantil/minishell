@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   change_env_var.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/09/20 18:28:00 by mrantil           #+#    #+#             */
+/*   Updated: 2022/09/20 18:28:06 by mrantil          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "msh.h"
 
 char	*change_shlvl(char *shlvl)
@@ -65,7 +77,7 @@ void	update_pwd(char **env)
 	i = 0;
 	while (env[i])
 	{
-		if (!ft_strncmp(env[i], "PWD=", 4))
+		if (!ft_strncmp(env[i], "PWD=", 4))	//error handling if somone unset PWD
 		{
 			change_oldpwd(env, i);
 			change_pwd(env, i);
