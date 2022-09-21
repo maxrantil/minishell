@@ -21,7 +21,7 @@ static char	**get_env()
 	i = 0;
 	while (environ[i])
 		i++;
-	env = (char **)ft_memalloc(sizeof(char *) * i + 1);
+	env = (char **)ft_memalloc(sizeof(char *) * i + 100); //100 here is a hack for adding easily, +1 would be for null
 	i = 0;
 	while (environ[i])
 	{

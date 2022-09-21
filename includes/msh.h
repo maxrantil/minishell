@@ -50,6 +50,7 @@ int		msh_echo(t_msh *msh);
 int		msh_pwd(t_msh *msh);
 int		msh_env(t_msh *msh);
 int		msh_setenv(t_msh *msh);
+int		msh_unsetenv(t_msh *msh);
 int		msh_exit(t_msh *msh);
 
 char	*get_env_var(char **env, char *var);

@@ -21,7 +21,8 @@ char	*builtin_str[] = {
 	"echo",
 	"pwd",
 	"env",
-	/* "setenv", */
+	"setenv",
+	"unsetenv",
 	"exit"
 };
 
@@ -30,7 +31,8 @@ int	(*builtin_func[]) (t_msh *msh) = {
 	&msh_echo,
 	&msh_pwd,
 	&msh_env,
-	/* &msh_setenv, */
+	&msh_setenv,
+	&msh_unsetenv,
 	&msh_exit
 };
 
