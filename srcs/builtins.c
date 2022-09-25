@@ -54,107 +54,15 @@ int	msh_env(t_msh *msh)
 
 	i = 0;
 	while (msh->env[i])
-		ft_printf("%s\n", msh->env[i++]);
-	return (1);
-}
-
-//after CD next priotity is setenv and unsetenv
-char	*extract_key(char *key_value)
-{
-	char	*key;
-	size_t	i;
-
-	i = 0;
-	while (key_value[i] != '=')
+	{
+		if (msh->env[i][0])
+			ft_printf("%s\n", msh->env[i]);
 		i++;
-	key = ft_strnew(ft_strlen(key_value));
-	ft_strncpy(key, key_value, i);
-	ft_strcat(key, "=");
-	return (key);
-}
-
-int	msh_setenv(t_msh *msh)
-{
-	char 	*key;
-	size_t	i;
-
-
-	i = 0;
-	if (ft_arrlen(msh->args) == 2)
-	{
-		if (strchr(msh->args[1], '='))
-		{
-			key = extract_key(msh->args[1]);
-			while (msh->env[i])
-			{
-				if (!ft_strncmp(msh->env[i], key, ft_strlen(key)))
-				{
-					ft_putstr_fd("error: key is already set\n", STDERR_FILENO);
-					/* Shall i just reset it if it exists? */
-				}
-				i++;
-			}
-			free(key);
-			char	*key_value = ft_strdup(msh->args[1]); //will this be a leak?
-			msh->env[i] = key_value;
-			// msh->env[++i] = NULL;
-		}
-		else
-		{
-			ft_putstr_fd("usage: setenv key=value\n", STDERR_FILENO);
-			return (0);
-		}
-	}
-	else
-	{
-		ft_putstr_fd("Error, you can only set one variable at a time\n", STDERR_FILENO);
-		ft_putstr_fd("usage: setenv key=value\n", STDERR_FILENO);
-		return (0);
 	}
 	return (1);
 }
 
-//needs more testing for setenv and unsetenv!
-int	msh_unsetenv(t_msh *msh)
-{
-	char 	*key;
-	size_t	i;
 
-
-	i = 0;
-	if (ft_arrlen(msh->args) == 2)
-	{
-		if (strchr(msh->args[1], '='))
-		{
-			key = extract_key(msh->args[1]);
-			while (msh->env[i])
-			{
-				if (!ft_strncmp(msh->env[i], key, ft_strlen(key)))
-				{
-					ft_memset(msh->env[i], 0, ft_strlen(msh->env[i]));
-					/* Shall i just reset it if it exists? */
-				}
-				i++;
-			}
-			// free(key);
-			// char	*key_value = ft_strdup(msh->args[1]); //will this be a leak?
-			// msh->env[i] = key_value;
-			// msh->env[++i] = NULL;
-		}
-		else
-		{
-			ft_putstr_fd("usage: unsetenv key=value\n", STDERR_FILENO);
-			return (0);
-		}
-	}
-	else
-	{
-		ft_putstr_fd("Error, you can only set one variable at a time\n", STDERR_FILENO);
-		ft_putstr_fd("usage: setenv key=value\n", STDERR_FILENO);
-		return (0);
-	}
-	return (1);
-}
 
 int msh_exit(t_msh *msh)
 {

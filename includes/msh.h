@@ -53,6 +53,7 @@ int		msh_setenv(t_msh *msh);
 int		msh_unsetenv(t_msh *msh);
 int		msh_exit(t_msh *msh);
 
+/* Init and free */
 char	*get_env_var(char **env, char *var);
 void	free_mem(t_msh *msh);
 void	init_msh(t_msh *msh);

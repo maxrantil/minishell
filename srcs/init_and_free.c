@@ -29,21 +29,21 @@ static char	**get_env()
 			env[i] = change_shlvl(environ[i]);				//this is malloced and needs to be free'ed
 		else
 			env[i] = ft_strsep(&environ[i], "\n");			//use strsplit here to being able to manipulate the variables
-		ft_printf("env[%d]: %s\n", i, env[i]);
+		// ft_printf("env[%d]: %s\n", i, env[i]);
 		i++;
 	}
-	env[i] = NULL;
-		ft_printf("env[i]: %s\n", env[i]);
+	// env[i] = NULL;
+		// ft_printf("env[i]: %s\n", env[i]);
 	return (env); 
 }
 
 void	init_msh(t_msh *msh)
 {
-	ft_printf("\n******************"
+	ft_printf("\n{blu}******************"
         "************************");
-	ft_printf("\n\t******MINISHELL******");
-	ft_printf("\n*******************"
-        "***********************\n");
+	ft_printf("\n\t{cya}******{yel}M{gre}I{red}N{blu}I{mag}S{blu}H{red}E{gre}L{yel}L{cya}******{nor}");
+	ft_printf("\n{blu}*******************"
+        "***********************{nor}\n");
 	msh->args = NULL;
 	msh->cli = NULL;
 	msh->env = get_env();
