@@ -6,7 +6,7 @@
 #    By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/17 18:22:31 by mrantil           #+#    #+#              #
-#    Updated: 2022/09/20 15:17:33 by mrantil          ###   ########.fr        #
+#    Updated: 2022/09/26 16:26:24 by mrantil          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -64,9 +64,9 @@ FILES 		= 	builtin_cd \
 				builtin_env \
 				builtins \
 				change_env_var \
-				get_env_var	\
 				init_and_free \
 				main \
+				tools_env_var	\
 
 H_PATHS 	= 	$(addsuffix .h, $(addprefix $(INCLUDES)/, $(H_FILES)))
 C_PATHS 	= 	$(addsuffix .c, $(addprefix $(SOURCES)/, $(FILES)))

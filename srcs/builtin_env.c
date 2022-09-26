@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 17:22:46 by mrantil           #+#    #+#             */
-/*   Updated: 2022/09/26 14:07:35 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/09/26 16:26:12 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ static char	*extract_key(char *key_value)
 int	msh_setenv(t_msh *msh)
 {
 	char 	*key;
-	/* char 	*key_value; */
 	size_t	i;
 
 
@@ -56,8 +55,6 @@ int	msh_setenv(t_msh *msh)
 			}
 			msh->env = set_env_var(msh->env, key, ft_strchr(msh->args[1], '=') + 1, 0);
 			free(key);
-			/* key_value = ft_strdup(msh->args[1]); //will this be a leak?
-			msh->env[i] = key_value; */
 		}
 		else
 		{
@@ -92,7 +89,8 @@ int	msh_unsetenv(t_msh *msh)
 				if (!ft_strncmp(key, "PWD=", 4) || !ft_strncmp(key, "OLDPWD=", 7))
 					return (2);
 				msh->env = unset_env_var(msh->env, key); //doesnt continue, check it!
-				return (2);
+				free(key);
+				return (1);
 			}
 			i++;
 		}

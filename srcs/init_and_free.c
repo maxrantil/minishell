@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/17 15:09:44 by mrantil           #+#    #+#             */
-/*   Updated: 2022/09/26 10:52:47 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/09/26 15:37:47 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,11 @@ static char	**get_env()
 void	init_msh(t_msh *msh)
 {
 	ft_printf("\n{blu}******************"
-        "************************");
-	ft_printf("\n\t{cya}******{yel}M{gre}I{red}N{blu}I{mag}S{blu}H{red}E{gre}L{yel}L{cya}******{nor}");
-	ft_printf("\n{blu}*******************"
-        "***********************{nor}\n");
+        "************************\n");
+	ft_printf("\t{cya}****** \
+	{yel}M{gre}I{red}N{blu}I{mag}S{blu}H{red}E{gre}L{yel}L{cya}******{nor}\n");
+	ft_printf("{blu}*******************"
+        "***********************{nor}\n\n");
 	msh->args = NULL;
 	msh->cli = NULL;
 	msh->env = get_env();
