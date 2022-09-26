@@ -1,26 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_arrlen.c                                        :+:      :+:    :+:   */
+/*   ft_arrfree.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/26 10:51:27 by mrantil           #+#    #+#             */
-/*   Updated: 2022/09/26 10:54:16 by mrantil          ###   ########.fr       */
+/*   Created: 2022/09/26 10:52:49 by mrantil           #+#    #+#             */
+/*   Updated: 2022/09/26 10:53:07 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-size_t	ft_arrlen(char **arr)
+void	ft_arrfree(char **arr, size_t len)
 {
-	size_t	len;
-
-	len = 0;
-	if (*arr)
+	if (!arr || !len)
+		return ;
+	while (len--)
 	{
-		while (*arr++)
-			len++;
+		if (arr[len] != NULL)
+		{
+			free(arr[len]);
+			arr[len] = NULL;
+		}
 	}
-	return (len);
+	free(arr);
+	arr = NULL;
 }

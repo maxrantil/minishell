@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 11:44:45 by mrantil           #+#    #+#             */
-/*   Updated: 2022/09/20 17:53:07 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/09/26 13:54:35 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,13 @@
 # include <string.h>
 # include <unistd.h>
 //for linux
-# include <sys/wait.h>
-# include <sys/types.h>
+/* # include <sys/wait.h> */
+/* # include <sys/types.h> */
 /* for lstat */
 #include <sys/stat.h>
 
 # define MSH_TOK_BUFSIZE 64
 # define MAX_PATHLEN 1024
-
 
 typedef struct s_msh
 {
@@ -60,6 +59,30 @@ void	init_msh(t_msh *msh);
 
 /* Change envirionment variables */
 char	*change_shlvl(char *shlvl);
-void	update_pwd(char **env);
+char	**update_pwd(char **env);
+char	**set_env_var(char **env, char *key, char *value, size_t i);
+char	**unset_env_var(char **env, char *key);
+
+static const char		*g_builtin_str[] = {
+	"cd",
+	"echo",
+	"pwd",
+	"env",
+	"setenv",
+	"unsetenv",
+	"exit"
+};
+
+typedef int				(*t_fptr)(t_msh *msh);
+
+static const t_fptr		g_builtin_func[] = {
+	&msh_cd,
+	&msh_echo,
+	&msh_pwd,
+	&msh_env,
+	&msh_setenv,
+	&msh_unsetenv,
+	&msh_exit
+};
 
 #endif

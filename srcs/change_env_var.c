@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 18:28:00 by mrantil           #+#    #+#             */
-/*   Updated: 2022/09/20 18:28:06 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/09/26 13:53:03 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,57 +31,46 @@ char	*change_shlvl(char *shlvl)
 	return (ret);
 }
 
-static void	change_pwd(char ** env, size_t i)
+static void	change_pwd(char **env, size_t i)
 {
-	char		cwd[MAX_PATHLEN];
-	char 		*pwd;
-	static int	st;
+	char	cwd[MAX_PATHLEN];
 
 	getcwd(cwd, sizeof(cwd));
-	if (st)
-		free(env[i]);
-	st++;
-	if (st == 0)
-		st = 1;
-	pwd = ft_strnew(4 + ft_strlen(cwd));
-	ft_strcpy(pwd, "PWD=");
-	ft_strcat(pwd, cwd);
-	env[i] = pwd;
+	free(env[i]);
+	env[i] = ft_strjoin("PWD=", cwd);
 }
 
-static void	change_oldpwd(char **env, size_t i)
+static char	**change_oldpwd(char **env, size_t i)
 {
-	static int	st;
-	size_t		j;
+	size_t	j;
 
 	j = 0;
 	while (env[j])
 	{
 		if (!ft_strncmp(env[j], "OLDPWD=", 7))
 		{
-			if (st)
-				free(env[j]);
-			st++;
-			if (st == 0)
-				st = 1;
+			free(env[j]);
 			env[j] = ft_strjoin("OLDPWD=", ft_strchr(env[i], '/'));
+			return (env);
 		}
 		j++;
 	}
+	return (set_env_var(env, "OLDPWD=", NULL, i));
 }
 
-void	update_pwd(char **env)
+char	**update_pwd(char **env)
 {
 	size_t	i;
 
 	i = 0;
 	while (env[i])
 	{
-		if (!ft_strncmp(env[i], "PWD=", 4))	//error handling if somone unset PWD
+		if (!ft_strncmp(env[i], "PWD=", 4))
 		{
-			change_oldpwd(env, i);
+			env = change_oldpwd(env, i);
 			change_pwd(env, i);
 		}
 		i++;
 	}
+	return (env);
 }

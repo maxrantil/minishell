@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 13:33:14 by mrantil           #+#    #+#             */
-/*   Updated: 2022/09/20 18:34:57 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/09/26 11:30:03 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,14 +55,12 @@ int	msh_env(t_msh *msh)
 	i = 0;
 	while (msh->env[i])
 	{
-		if (msh->env[i][0])
+/* 		if (msh->env[i][0]) */
 			ft_printf("%s\n", msh->env[i]);
 		i++;
 	}
 	return (1);
 }
-
-
 
 int msh_exit(t_msh *msh)
 {

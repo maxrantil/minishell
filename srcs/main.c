@@ -6,35 +6,11 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 15:09:44 by mrantil           #+#    #+#             */
-/*   Updated: 2022/09/20 18:35:08 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/09/26 13:51:00 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "msh.h"
-
-/*
-**	List of builtin commands, followed by their corresponding functions.
-*/
-
-char	*builtin_str[] = {
-	"cd",
-	"echo",
-	"pwd",
-	"env",
-	"setenv",
-	"unsetenv",
-	"exit"
-};
-
-int	(*builtin_func[]) (t_msh *msh) = {
-	&msh_cd,
-	&msh_echo,
-	&msh_pwd,
-	&msh_env,
-	&msh_setenv,
-	&msh_unsetenv,
-	&msh_exit
-};
 
 int	check_paths(t_msh *msh)
 {
@@ -105,7 +81,7 @@ int	msh_launch(t_msh *msh)
 
 static size_t num_builtins()
 {
-	return (sizeof(builtin_str) / sizeof(char *));
+	return (sizeof(g_builtin_str) / sizeof(char *));
 }
 
 int	exec_args(t_msh *msh)
@@ -117,8 +93,8 @@ int	exec_args(t_msh *msh)
 	i = 0;
 	while (i < num_builtins())
 	{
-		if (!ft_strcmp(msh->args[0], builtin_str[i]))
-			return ((*builtin_func[i])(msh));
+		if (!ft_strcmp(msh->args[0], g_builtin_str[i]))
+			return (g_builtin_func[i](msh));
 		i++;
 	}
 	return (msh_launch(msh));
@@ -149,7 +125,7 @@ int	main(void)
 {
 	t_msh	msh;
 	int		status;
-	
+
 	init_msh(&msh);
 	status = 1;
 	while (status)
