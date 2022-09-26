@@ -40,7 +40,7 @@ char	**set_env_var(char **env, char *key, char *value, size_t i)
 	size_t	j;
 
 	count = ft_arrlen(env);
-	new_env = (char **)ft_memalloc(count);
+	new_env = (char **)ft_memalloc(count + 1);
 	j = 0;
 	while (j < count)
 	{

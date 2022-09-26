@@ -57,6 +57,9 @@ char	*get_env_var(char **env, char *var);
 void	free_mem(t_msh *msh);
 void	init_msh(t_msh *msh);
 
+/* Launcher */
+int	msh_launch(t_msh *msh);
+
 /* Change envirionment variables */
 char	*change_shlvl(char *shlvl);
 char	**update_pwd(char **env);

@@ -31,9 +31,27 @@ static char	*extract_key(char *key_value)
 	return (key);
 }
 
+char	*ft_strtrim_quotes(char const *s)
+{
+	char		*st;
+	size_t		sl;
+
+	if (!s)
+		return (NULL);
+	while (*s == '\"')
+		s++;
+	sl = ft_strlen(s);
+	if (*s)
+		while (s[sl - 1] == '\"')
+			sl--;
+	st = ft_strsub(s, 0, sl);
+	return (st);
+}
+
 //return 2 is error with continue
 int	msh_setenv(t_msh *msh)
 {
+	char 	*key_value;
 	char 	*key;
 	size_t	i;
 
@@ -43,18 +61,21 @@ int	msh_setenv(t_msh *msh)
 	{
 		if (strchr(msh->args[1], '='))
 		{
-			key = extract_key(msh->args[1]);
+			key_value = ft_strtrim_quotes(msh->args[1]);
+			key = extract_key(key_value);
 			while (msh->env[i])
 			{
 				if (!ft_strncmp(msh->env[i], key, ft_strlen(key)))
 				{
-					ft_memset(msh->env[i], 0, ft_strlen(msh->env[i])); //dup the old into a new without the one
+					//ft_memset(msh->env[i], 0, ft_strlen(msh->env[i])); //dup the old into a new without the one
+					msh->env = unset_env_var(msh->env, key); 
 					break ;
 				}
 				i++;
 			}
-			msh->env = set_env_var(msh->env, key, ft_strchr(msh->args[1], '=') + 1, 0);
+			msh->env = set_env_var(msh->env, key, ft_strchr(key_value, '=') + 1, 0);
 			free(key);
+			free(key_value);
 		}
 		else
 		{
@@ -71,7 +92,7 @@ int	msh_setenv(t_msh *msh)
 	return (1);
 }
 
-//needs more testing for setenv and unsetenv!
+//needs more testing for setenv and unsetenv! go through the eval tests
 int	msh_unsetenv(t_msh *msh)
 {
 	char 	*key;

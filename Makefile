@@ -63,11 +63,13 @@ SOURCE_COUNT = $(words $(FILES))
 H_FILES 	= 	msh
 
 FILES 		= 	builtin_cd \
-				builtin_env \
+				builtin_echo \
+				builtin_set_unset_env \
 				builtins \
 				change_env_var \
 				init_and_free \
 				main \
+				msh_launch \
 				tools_env_var	\
 
 H_PATHS 	= 	$(addsuffix .h, $(addprefix $(INCLUDES)/, $(H_FILES)))
