@@ -12,15 +12,38 @@
 
 #include "msh.h"
 
+static size_t	count_strings(char **args)
+{
+	size_t	count;
+	size_t	i;
+
+	count = 0;
+	i = 0;
+	while (args[i])
+	{
+		if (ft_strchr(args[i], '\"'))
+			++count;
+		i++;
+	}
+	return (count);
+}
+
 int	msh_echo(t_msh *msh)		//do i need to take cli to get correct spaces? //double strings with quotes doesnt work now
 {
 	size_t	arrlen;
 	size_t	i;
+	size_t	count;
 
 	arrlen = ft_arrlen(msh->args) - 1;
 	i = 1;
-	while (i <= arrlen)
+	count = count_strings(msh->args);
+	if (count % 2 != 0)
 	{
+		ft_putstr_fd("error, double quotes don't match\n", STDERR_FILENO);
+		return (2);
+	}
+	while (i <= arrlen)
+	{					//use strlen to check where the quote is
 		if (i != arrlen && (ft_strchr(msh->args[i], '\"') || ft_strchr(msh->args[i], '\'')))
 			ft_printf("%s", msh->args[i] + 1);
 		else if (i == arrlen && (ft_strchr(msh->args[i], '\"') || ft_strchr(msh->args[i], '\'')))
@@ -54,11 +77,7 @@ int	msh_env(t_msh *msh)
 
 	i = 0;
 	while (msh->env[i])
-	{
-/* 		if (msh->env[i][0]) */
-			ft_printf("%s\n", msh->env[i]);
-		i++;
-	}
+		ft_printf("%s\n", msh->env[i++]);
 	return (1);
 }
 

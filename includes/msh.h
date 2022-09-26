@@ -24,11 +24,11 @@
 # include <stdio.h>
 # include <string.h>
 # include <unistd.h>
-//for linux
-/* # include <sys/wait.h> */
-/* # include <sys/types.h> */
 /* for lstat */
 #include <sys/stat.h>
+//for linux
+# include <sys/wait.h>
+# include <sys/types.h>
 
 # define MSH_TOK_BUFSIZE 64
 # define MAX_PATHLEN 1024
