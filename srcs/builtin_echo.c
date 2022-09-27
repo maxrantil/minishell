@@ -12,7 +12,7 @@
 
 #include "msh.h"
 
-static char	*get_tilde(t_msh *msh, char *arg)
+static char	*get_tilde(t_msh *msh, char *arg, size_t i)
 {
 	char	*tilde;
 
@@ -24,7 +24,8 @@ static char	*get_tilde(t_msh *msh, char *arg)
 	}
 	else
 		tilde = get_env_value(msh->env, "HOME=");
-		/* ft_printf("address: %p", &msh->args[i]); */
+	// free(arg);
+	ft_strjoin(tilde, msh->args[i] + ft_strlen(arg));// this is maybe error but i need to combine if echo ~/foo for example
 	return (tilde);
 }
 
@@ -53,7 +54,7 @@ static char	**get_dollar(t_msh *msh, char *dollar, size_t j)
 	return (msh->args);
 }
 
-static void print_echo(t_msh *msh)
+static char **print_echo(t_msh *msh)
 {
 	size_t	arrlen;
 	size_t	i;
@@ -64,18 +65,12 @@ static void print_echo(t_msh *msh)
 	while (i <= arrlen)
 	{
 		j = 0;
-		while (msh->args[i][j])
+		while (msh->args[i][j] != '\0')
 		{
 			if (msh->args[i][0] == '$')
 				msh->args = get_dollar(msh, ft_strchr(msh->args[i], '$') + 1, i);
 			else if (msh->args[i][0] == '~')
-			{
-				if (get_tilde(msh, ft_strchr(msh->args[i], '~')))
-				{
-					free(msh->args[i]);
-					msh->args[i] = get_tilde(msh, ft_strchr(msh->args[i], '~'));
-				}
-			}
+				msh->args[i] = get_tilde(msh, msh->args[i], i);
 			if (msh->args[i][j] != '\"' || msh->args[i][j] != '\0')
 				write(1, &msh->args[i][j], 1);
 			j++;
@@ -84,6 +79,7 @@ static void print_echo(t_msh *msh)
 			ft_putchar(' ');
 		i++;
 	}
+	return (msh->args);
 }
 
 static size_t	count_strings(char **args)
@@ -118,7 +114,7 @@ int	msh_echo(t_msh *msh)
 		ft_putstr_fd("error, double quotes don't match\n", STDERR_FILENO);
 		return (2);
 	}
-	print_echo(msh);
+	msh->args = print_echo(msh);
 	ft_putchar('\n');
 	return (1);
 }

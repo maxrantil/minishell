@@ -24,7 +24,7 @@ char	*get_env_value(char **env, char *var)
 	{
 		if (!ft_strncmp(env[i], var, len))
 		{
-			ret = (char *)ft_memalloc(sizeof(char) * ft_strlen(env[i] - len)); //+1 ??
+			ret = ft_strnew(ft_strlen(env[i]) - len); //+1 ?? if somehitng is missing in the value it needs +1
 			ft_strcpy(ret, ft_strchr(env[i], '=') + 1);
 			/* ft_strcat(ret, "\0"); */
 			return (ret);

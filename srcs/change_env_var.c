@@ -90,7 +90,6 @@ char	**update_env_var(t_msh *msh)	//fix unserscore and echo $_
 	i = 0;
 	while (msh->env[i])
 	{
-			/* ft_printf("HEHEHE\n"); */
 		if (!ft_strncmp(msh->env[i], "_=", 2))// && ft_strcmp(msh->args[1], "$_"))
 		{
 			free(msh->env[i]);

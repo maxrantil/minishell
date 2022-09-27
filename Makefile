@@ -70,7 +70,7 @@ FILES 		= 	builtin_cd \
 				init_and_free \
 				main \
 				msh_launch \
-				tools_env_var	\
+				tools_env_var
 
 H_PATHS 	= 	$(addsuffix .h, $(addprefix $(INCLUDES)/, $(H_FILES)))
 C_PATHS 	= 	$(addsuffix .c, $(addprefix $(SOURCES)/, $(FILES)))
