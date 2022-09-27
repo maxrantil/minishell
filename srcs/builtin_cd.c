@@ -14,11 +14,9 @@
 
 static void	exec_tilde(t_msh *msh)
 {
-	char	*home;
 	char	*tilde;
 
-	home = get_env_value(msh->env, "HOME=");
-	tilde = ft_strupdate(home, msh->args[1] + 1);
+	tilde = get_tilde(msh, 1);
 	if (chdir(tilde) != 0)
 		ft_putstr_fd("ERROR, cd: tilde", STDERR_FILENO);
 	free(tilde);

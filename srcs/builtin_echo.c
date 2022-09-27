@@ -12,20 +12,27 @@
 
 #include "msh.h"
 
-static char	*get_tilde(t_msh *msh, char *arg, size_t i)
+char	*get_tilde(t_msh *msh, size_t i)
 {
 	char	*tilde;
 
-	if (arg[1] == '-')
+	if (msh->args[i][1] == '-')
 	{
 		tilde = get_env_value(msh->env, "OLDPWD=");
 		if (!tilde)
 			return (NULL);
+		tilde = ft_strupdate(tilde, msh->args[i] + 2);
+	}
+	else if (msh->args[i][1] == '+')
+	{
+		tilde = get_env_value(msh->env, "PWD=");
+		tilde = ft_strupdate(tilde, msh->args[i] + 2);
 	}
 	else
+	{
 		tilde = get_env_value(msh->env, "HOME=");
-	// free(arg);
-	ft_strjoin(tilde, msh->args[i] + ft_strlen(arg));// this is maybe error but i need to combine if echo ~/foo for example
+		tilde = ft_strupdate(tilde, msh->args[i] + 1);
+	}
 	return (tilde);
 }
 
@@ -70,7 +77,7 @@ static char **print_echo(t_msh *msh)
 			if (msh->args[i][0] == '$')
 				msh->args = get_dollar(msh, ft_strchr(msh->args[i], '$') + 1, i);
 			else if (msh->args[i][0] == '~')
-				msh->args[i] = get_tilde(msh, msh->args[i], i);
+				msh->args[i] = get_tilde(msh, i);
 			if (msh->args[i][j] != '\"' || msh->args[i][j] != '\0')
 				write(1, &msh->args[i][j], 1);
 			j++;

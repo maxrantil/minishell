@@ -51,8 +51,6 @@ CFLAGS		+=	-Wunreachable-code -Wtype-limits
 LEAK_CHECK	=	-g
 #LEAK_CHECK	+=	-fsanitize=address
 
-#TERMCAPS	=	-ltermcap
-
 SOURCES 	= 	srcs
 OBJECTS 	= 	objs
 INCLUDES	= 	includes

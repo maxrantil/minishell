@@ -67,6 +67,9 @@ char	**update_env_var(t_msh *msh);
 char	**set_env_var(char **env, char *key, char *value, size_t i);
 char	**unset_env_var(char **env, char *key);
 
+/* Tools */
+char	*get_tilde(t_msh *msh, size_t i);
+
 static const char		*g_builtin_str[] = {
 	"cd",
 	"echo",
