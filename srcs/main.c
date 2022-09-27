@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 15:09:44 by mrantil           #+#    #+#             */
-/*   Updated: 2022/09/26 13:51:00 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/09/27 11:03:47 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,7 @@ static char	**split_tokens(char *cli, char *delimit)
 	}
 	i = 0;
 	while ((token = ft_strsep(&cli, delimit)) != NULL)
-	{
-		if (ft_strlen(token))
-			tokens[i++] = token;
-	}
+		tokens[i++] = ft_strdup(token);
 	return (tokens);
 }
 
@@ -66,7 +63,8 @@ int	main(void)
 		ft_printf("{yel}${gre}>{nor} ");
 		if (get_next_line(STDIN_FILENO, &msh.cli) == 1)
 		{
-			msh.args = split_tokens(msh.cli, " \t\n\v\f\r");
+			msh.args = split_tokens(msh.cli, " \t\n");
+			msh.env = update_env_var(&msh);
 			status = exec_args(&msh);
 		}
 		else
@@ -74,7 +72,7 @@ int	main(void)
 		free_mem(&msh);
 	}
 	//free env here?
-	/* if (msh->env)
-		ft_arrfree(msh->env, ft_arrlen(msh->env)); */
+	if (msh.env)
+		ft_arrfree(msh.env, ft_arrlen(msh.env));
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 18:28:00 by mrantil           #+#    #+#             */
-/*   Updated: 2022/09/26 13:53:03 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/09/27 11:11:03 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,4 +73,28 @@ char	**update_pwd(char **env)
 		i++;
 	}
 	return (env);
+}
+
+static void	change_underscore(char **env, char **args, size_t i)
+{
+	size_t	last_arg;
+	
+	free(env[i]);
+	last_arg = ft_arrlen(args) - 1;
+	ft_printf("args num len %d\n", last_arg);
+	env[i] = ft_strjoin("_=", args[last_arg]);
+}
+
+char	**update_env_var(t_msh *msh)	//fix unserscore and echo $_
+{
+	size_t	i;
+
+	i = 0;
+	while (msh->env[i])
+	{
+		if (!ft_strncmp(msh->env[i], "_=", 2))
+			change_underscore(msh->env, msh->args, i);
+		i++;
+	}
+	return (msh->env);
 }

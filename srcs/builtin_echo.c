@@ -20,7 +20,7 @@ static void	print_dollar(char **env, char *dollar)
 	{
 		while (env[i])
 		{
-			if (!ft_strncmp(env[i], dollar, ft_strlen(dollar)))
+			if (!ft_strncmp(env[i], dollar, ft_strlen(dollar))) //m,aybe wrong here//
 				ft_printf("%s", ft_strchr(env[i], '=') + 1);
 			i++;
 		}
@@ -40,7 +40,7 @@ static void print_echo(t_msh *msh)
 		j = 0;
 		while (msh->args[i][j])
 		{
-			if (msh->args[i][0] == '$' && ft_isalpha(msh->args[i][1])) //isalpha might implement some bugs later
+			if (msh->args[i][0] == '$')
 			{
 				print_dollar(msh->env, ft_strchr(msh->args[i], '$') + 1);
 				break ;

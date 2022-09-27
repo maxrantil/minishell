@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/17 15:09:44 by mrantil           #+#    #+#             */
-/*   Updated: 2022/09/26 15:37:47 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/09/27 10:41:48 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	init_msh(t_msh *msh)
 
 void	free_mem(t_msh *msh)
 {
-	free(msh->args);
-	msh->args = NULL;
+	if (msh->args)
+		ft_arrfree(msh->args, ft_arrlen(msh->args));
 	ft_strdel(&msh->cli);
 }

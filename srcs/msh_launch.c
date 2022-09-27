@@ -53,9 +53,11 @@ int	msh_launch(t_msh *msh)
 	pid = fork();
 	if (pid == 0)
 	{
-		check_paths(msh);
-		execve(msh->args[0], msh->args, msh->env);
-		execve(verify_arg(msh), msh->args, msh->env);
+		if (execve(msh->args[0], msh->args, msh->env) < 0)
+		{
+			check_paths(msh);
+			execve(verify_arg(msh), msh->args, msh->env);
+		}
 		ft_printf("minishell: %s: ", msh->args[0]);
 		ft_putstr_fd("command not found\n", STDERR_FILENO);
 		exit(EXIT_FAILURE);

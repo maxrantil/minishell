@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 11:44:45 by mrantil           #+#    #+#             */
-/*   Updated: 2022/09/26 13:54:35 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/09/27 10:59:22 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ void	init_msh(t_msh *msh);
 int	msh_launch(t_msh *msh);
 
 /* Change envirionment variables */
+char	**update_env_var(t_msh *msh);
 char	*change_shlvl(char *shlvl);
 char	**update_pwd(char **env);
 char	**set_env_var(char **env, char *key, char *value, size_t i);
