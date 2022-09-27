@@ -1,15 +1,29 @@
 #include "msh.h"
 
+static void	print_tilde(char **env, char *arg)
+{
+	char	*home;
+	char	*tilde;
+
+	home = get_env_var(env, "HOME=");
+	tilde = ft_strupdate(home, arg);
+	ft_printf("%s", tilde);
+	free(tilde);
+}
+
 static void	print_dollar(char **env, char *dollar)
 {
 	size_t	i;
 
 	i = 0;
-	while (env[i])
+	if (dollar)
 	{
-		if (!ft_strncmp(env[i], dollar, ft_strlen(dollar)))
-			ft_printf("%s", ft_strchr(env[i], '=') + 1);
-		i++;
+		while (env[i])
+		{
+			if (!ft_strncmp(env[i], dollar, ft_strlen(dollar)))
+				ft_printf("%s", ft_strchr(env[i], '=') + 1);
+			i++;
+		}
 	}
 }
 
@@ -26,9 +40,14 @@ static void print_echo(t_msh *msh)
 		j = 0;
 		while (msh->args[i][j])
 		{
-			if (msh->args[i][0] == '$')
+			if (msh->args[i][0] == '$' && ft_isalpha(msh->args[i][1])) //isalpha might implement some bugs later
 			{
 				print_dollar(msh->env, ft_strchr(msh->args[i], '$') + 1);
+				break ;
+			}
+			else if (msh->args[i][0] == '~')
+			{
+				print_tilde(msh->env, ft_strchr(msh->args[i], '~') + 1);
 				break ;
 			}
 			else if (msh->args[i][j] != '\"')

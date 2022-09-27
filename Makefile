@@ -44,7 +44,7 @@ CC			=	gcc
 CFLAGS 		= 	-Wall -Wextra
 #for linux and the g_builtin_str 
 #CFLAGS 		+= 	-Werror
-CFLAGS		+=	-Wunreachable-code -Wtype-limits
+CFLAGS		+=	-Wunreachable-code -Wtype-limits 
 #CFLAGS		+=	-Wpedantic(cant use 0b for defining my bits)
 #CFLAGS		+=	-O3 -flto -fPIC -shared
 
