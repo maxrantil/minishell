@@ -6,13 +6,13 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 17:37:30 by mrantil           #+#    #+#             */
-/*   Updated: 2022/09/26 16:27:09 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/09/27 16:22:48 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <msh.h>
+#include "msh.h"
 
-char	*get_env_var(char **env, char *var)
+char	*get_env_value(char **env, char *var)
 {
 	char	*ret;
 	size_t	i;
@@ -24,8 +24,9 @@ char	*get_env_var(char **env, char *var)
 	{
 		if (!ft_strncmp(env[i], var, len))
 		{
-			ret = (char *)ft_memalloc(sizeof(char) * ft_strlen(env[i] - len));
-			ft_strcpy(ret, ft_strchr(env[i], '/'));
+			ret = (char *)ft_memalloc(sizeof(char) * ft_strlen(env[i] - len)); //+1 ??
+			ft_strcpy(ret, ft_strchr(env[i], '=') + 1);
+			/* ft_strcat(ret, "\0"); */
 			return (ret);
 		}
 		i++;
@@ -74,6 +75,5 @@ char	**unset_env_var(char **env, char *key)
 		i++;
 	}
 	ft_arrfree(env, count);
-	/* new_env[j] = NULL; */
 	return (new_env);
 }

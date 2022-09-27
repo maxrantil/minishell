@@ -1,30 +1,56 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   builtin_echo.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/09/27 14:34:59 by mrantil           #+#    #+#             */
+/*   Updated: 2022/09/27 16:35:19 by mrantil          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "msh.h"
 
-static void	print_tilde(char **env, char *arg)
+static char	*get_tilde(t_msh *msh, char *arg)
 {
-	char	*home;
 	char	*tilde;
 
-	home = get_env_var(env, "HOME=");
-	tilde = ft_strupdate(home, arg);
-	ft_printf("%s", tilde);
-	free(tilde);
+	if (arg[1] == '-')
+	{
+		tilde = get_env_value(msh->env, "OLDPWD=");
+		if (!tilde)
+			return (NULL);
+	}
+	else
+		tilde = get_env_value(msh->env, "HOME=");
+		/* ft_printf("address: %p", &msh->args[i]); */
+	return (tilde);
 }
 
-static void	print_dollar(char **env, char *dollar)
+static char	**get_dollar(t_msh *msh, char *dollar, size_t j)
 {
+	char	*combo;
 	size_t	i;
 
 	i = 0;
 	if (dollar)
 	{
-		while (env[i])
+		combo = ft_strnew(MAX_PATHLEN);
+		ft_strcpy(combo, dollar);
+		ft_strcat(combo, "=");
+		while (msh->env[i])
 		{
-			if (!ft_strncmp(env[i], dollar, ft_strlen(dollar))) //m,aybe wrong here//
-				ft_printf("%s", ft_strchr(env[i], '=') + 1);
+			if (!ft_strncmp(msh->env[i], combo, ft_strlen(combo)))
+			{
+				free(msh->args[j]);
+				msh->args[j] = ft_strdup(ft_strchr(msh->env[i], '=') + 1); //use ft_strupdate?
+			}
 			i++;
 		}
+		free(combo);
 	}
+	return (msh->args);
 }
 
 static void print_echo(t_msh *msh)
@@ -41,16 +67,16 @@ static void print_echo(t_msh *msh)
 		while (msh->args[i][j])
 		{
 			if (msh->args[i][0] == '$')
-			{
-				print_dollar(msh->env, ft_strchr(msh->args[i], '$') + 1);
-				break ;
-			}
+				msh->args = get_dollar(msh, ft_strchr(msh->args[i], '$') + 1, i);
 			else if (msh->args[i][0] == '~')
 			{
-				print_tilde(msh->env, ft_strchr(msh->args[i], '~') + 1);
-				break ;
+				if (get_tilde(msh, ft_strchr(msh->args[i], '~')))
+				{
+					free(msh->args[i]);
+					msh->args[i] = get_tilde(msh, ft_strchr(msh->args[i], '~'));
+				}
 			}
-			else if (msh->args[i][j] != '\"')
+			if (msh->args[i][j] != '\"' || msh->args[i][j] != '\0')
 				write(1, &msh->args[i][j], 1);
 			j++;
 		}

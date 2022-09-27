@@ -6,13 +6,11 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 13:33:14 by mrantil           #+#    #+#             */
-/*   Updated: 2022/09/26 11:30:03 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/09/27 16:02:14 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "msh.h"
-
-
 
 int	msh_pwd(t_msh *msh)
 {
@@ -32,8 +30,11 @@ int	msh_env(t_msh *msh)
 	size_t	i;
 
 	i = 0;
-	while (msh->env[i])
-		ft_printf("%s\n", msh->env[i++]);
+	if (ft_arrlen(msh->args) == 1)
+	{
+		while (msh->env[i])
+			ft_printf("%s\n", msh->env[i++]);
+	}
 	return (1);
 }
 

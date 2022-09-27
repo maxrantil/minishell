@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 11:44:45 by mrantil           #+#    #+#             */
-/*   Updated: 2022/09/27 10:59:22 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/09/27 15:12:00 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,17 +53,17 @@ int		msh_unsetenv(t_msh *msh);
 int		msh_exit(t_msh *msh);
 
 /* Init and free */
-char	*get_env_var(char **env, char *var);
 void	free_mem(t_msh *msh);
 void	init_msh(t_msh *msh);
 
 /* Launcher */
-int	msh_launch(t_msh *msh);
+int		msh_launch(t_msh *msh);
 
 /* Change envirionment variables */
-char	**update_env_var(t_msh *msh);
 char	*change_shlvl(char *shlvl);
 char	**update_pwd(char **env);
+char	*get_env_value(char **env, char *var);
+char	**update_env_var(t_msh *msh);
 char	**set_env_var(char **env, char *key, char *value, size_t i);
 char	**unset_env_var(char **env, char *key);
 

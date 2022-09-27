@@ -50,6 +50,7 @@ int	msh_launch(t_msh *msh)
 	pid_t	pid;
 	int		status;
 
+	/* msh->env = update_env_var(msh); */
 	pid = fork();
 	if (pid == 0)
 	{

@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 15:09:44 by mrantil           #+#    #+#             */
-/*   Updated: 2022/09/27 11:03:47 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/09/27 16:05:49 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,14 +64,13 @@ int	main(void)
 		if (get_next_line(STDIN_FILENO, &msh.cli) == 1)
 		{
 			msh.args = split_tokens(msh.cli, " \t\n");
-			msh.env = update_env_var(&msh);
 			status = exec_args(&msh);
+			msh.env = update_env_var(&msh);
 		}
 		else
 			ft_putstr_fd("minishell: could not read input\n", STDERR_FILENO);
 		free_mem(&msh);
 	}
-	//free env here?
 	if (msh.env)
 		ft_arrfree(msh.env, ft_arrlen(msh.env));
 	return (0);

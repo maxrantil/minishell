@@ -1,0 +1,8 @@
+#!/bin/bash
+
+printf "\ntests for ~:\n"
+echo ~-
+printf "~- is correct\n"
+cd ..
+echo ~-
+printf "/Users/login/.../minishell\n"

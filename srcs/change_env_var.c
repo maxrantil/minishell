@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 18:28:00 by mrantil           #+#    #+#             */
-/*   Updated: 2022/09/27 11:11:03 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/09/27 16:14:24 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,14 +75,12 @@ char	**update_pwd(char **env)
 	return (env);
 }
 
-static void	change_underscore(char **env, char **args, size_t i)
+static char	*change_underscore(t_msh *msh)
 {
 	size_t	last_arg;
 	
-	free(env[i]);
-	last_arg = ft_arrlen(args) - 1;
-	ft_printf("args num len %d\n", last_arg);
-	env[i] = ft_strjoin("_=", args[last_arg]);
+	last_arg = ft_arrlen(msh->args) - 1;
+	return (ft_strjoin("_=", msh->args[last_arg]));
 }
 
 char	**update_env_var(t_msh *msh)	//fix unserscore and echo $_
@@ -92,8 +90,12 @@ char	**update_env_var(t_msh *msh)	//fix unserscore and echo $_
 	i = 0;
 	while (msh->env[i])
 	{
-		if (!ft_strncmp(msh->env[i], "_=", 2))
-			change_underscore(msh->env, msh->args, i);
+			/* ft_printf("HEHEHE\n"); */
+		if (!ft_strncmp(msh->env[i], "_=", 2))// && ft_strcmp(msh->args[1], "$_"))
+		{
+			free(msh->env[i]);
+			msh->env[i] = change_underscore(msh);
+		}
 		i++;
 	}
 	return (msh->env);
