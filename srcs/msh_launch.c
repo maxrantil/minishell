@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 10:52:53 by mrantil           #+#    #+#             */
-/*   Updated: 2022/09/28 10:53:07 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/09/28 12:04:01 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,12 @@ static int	check_paths(t_msh *msh)
 			msh->paths = (char **)ft_memalloc(sizeof(char *) * MSH_TOK_BUFSIZE);
 			j = 0;
 			dup_paths = ft_strdup(msh->env[i]);
-			while ((path = ft_strsep(&dup_paths, ":")) != NULL)
+			path = ft_strsep(&dup_paths, ":");
+			while (path)
+			{
 				msh->paths[j++] = ft_strchr(path, '/');
+				path = ft_strsep(&dup_paths, ":");
+			}
 			return (1);
 		}
 		i++;
@@ -63,7 +67,6 @@ int	msh_launch(t_msh *msh)
 	pid_t	pid;
 	int		status;
 
-	/* msh->env = update_env_var(msh); */
 	pid = fork();
 	if (pid == 0)
 	{

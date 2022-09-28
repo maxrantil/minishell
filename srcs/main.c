@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 15:09:44 by mrantil           #+#    #+#             */
-/*   Updated: 2022/09/28 10:51:32 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/09/28 12:02:12 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,12 @@ static char	**split_tokens(char *cli, char *delimit)
 		exit(EXIT_FAILURE);
 	}
 	i = 0;
-	while ((token = ft_strsep(&cli, delimit)) != NULL)
+	token = ft_strsep(&cli, delimit);
+	while (token)
+	{
 		tokens[i++] = ft_strdup(token);
+		token = ft_strsep(&cli, delimit);
+	}
 	return (tokens);
 }
 

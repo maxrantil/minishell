@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/17 15:09:44 by mrantil           #+#    #+#             */
-/*   Updated: 2022/09/28 10:51:09 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/09/28 12:03:46 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static char	*change_shlvl(char *shlvl)
 	return (ret);
 }
 
-static char	**get_env()
+static char	**get_env(void)
 {
 	extern char	**environ;
 	char		**env;
