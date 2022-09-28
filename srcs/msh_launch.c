@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 10:52:53 by mrantil           #+#    #+#             */
-/*   Updated: 2022/09/28 12:04:01 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/09/28 16:46:44 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,11 +70,9 @@ int	msh_launch(t_msh *msh)
 	pid = fork();
 	if (pid == 0)
 	{
-		if (execve(msh->args[0], msh->args, msh->env) < 0)
-		{
-			check_paths(msh);
-			execve(verify_arg(msh), msh->args, msh->env);
-		}
+		execve(msh->args[0], msh->args, msh->env);
+		check_paths(msh);
+		execve(verify_arg(msh), msh->args, msh->env);
 		ft_printf("minishell: %s: ", msh->args[0]);
 		ft_putstr_fd("command not found\n", STDERR_FILENO);
 		exit(EXIT_FAILURE);
