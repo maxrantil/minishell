@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/27 14:34:59 by mrantil           #+#    #+#             */
-/*   Updated: 2022/09/28 16:34:11 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/09/28 17:16:00 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static char	**get_dollar(t_msh *msh, char *dollar, size_t j)
 	i = 0;
 	if (dollar)
 	{
-		combo = ft_strjoin(combo, dollar);
+		combo = ft_strdup(dollar);
 		combo = ft_strupdate(combo, "=");
 		while (msh->env[i])
 		{
