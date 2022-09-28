@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/27 14:34:59 by mrantil           #+#    #+#             */
-/*   Updated: 2022/09/28 10:34:49 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/09/28 16:34:11 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,19 +20,23 @@ static char	**get_dollar(t_msh *msh, char *dollar, size_t j)
 	i = 0;
 	if (dollar)
 	{
-		combo = ft_strnew(MAX_PATHLEN);
-		ft_strcpy(combo, dollar);
-		ft_strcat(combo, "=");
+		combo = ft_strjoin(combo, dollar);
+		combo = ft_strupdate(combo, "=");
 		while (msh->env[i])
 		{
 			if (!ft_strncmp(msh->env[i], combo, ft_strlen(combo)))
 			{
-				free(msh->args[j]);
-				msh->args[j] = ft_strdup(ft_strchr(msh->env[i], '=') + 1);
+				ft_memset(ft_strchr(msh->args[j], '$'), '\0', \
+				ft_strlen(msh->args[j]) - ft_strlen(dollar) + 1);
+				msh->args[j] = ft_strupdate(msh->args[j], \
+				ft_strchr(msh->env[i], '=') + 1);
+				break ;
 			}
 			i++;
 		}
 		free(combo);
+		if (msh->env[i] == NULL)
+			ft_memset((void *)msh->args[j], '\0', ft_strlen(msh->args[j]));
 	}
 	return (msh->args);
 }
@@ -61,12 +65,12 @@ static char	**print_echo(t_msh *msh)
 		j = 0;
 		while (msh->args[i][j] != '\0')
 		{
-			if (msh->args[i][0] == '$')
+			if (msh->args[i][j] == '$')
 				msh->args = get_dollar(msh, \
 				ft_strchr(msh->args[i], '$') + 1, i);
 			else if (msh->args[i][0] == '~')
 				check_tilde(msh, i);
-			if (msh->args[i][j] != '\"' || msh->args[i][j] != '\0')
+			if (msh->args[i][j] != '\"' && msh->args[i][j] != '\0')
 				write(1, &msh->args[i][j], 1);
 			j++;
 		}
@@ -106,7 +110,7 @@ int	msh_echo(t_msh *msh)
 	count = count_strings(msh->args);
 	if (count % 2 != 0)
 	{
-		ft_putstr_fd("error, double quotes don't match\n", STDERR_FILENO);
+		ft_putstr_fd("error, double quotes don't match.\n", STDERR_FILENO);
 		return (2);
 	}
 	msh->args = print_echo(msh);

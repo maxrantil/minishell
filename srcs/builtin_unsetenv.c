@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 17:22:46 by mrantil           #+#    #+#             */
-/*   Updated: 2022/09/28 09:59:38 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/09/28 13:29:13 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ static int	loop_for_unsetenv(t_msh *msh)
 			{
 				ft_putstr_fd("error, you are not allowed to unset PWD.\n", \
 				STDERR_FILENO);
+				free(key);
 				return (2);
 			}
 			msh->env = unset_env_var(msh->env, key);
@@ -35,6 +36,7 @@ static int	loop_for_unsetenv(t_msh *msh)
 		}
 		i++;
 	}
+	free(key);
 	return (1);
 }
 

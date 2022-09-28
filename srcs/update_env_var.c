@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   change_pwd_oldpwd copy.c                           :+:      :+:    :+:   */
+/*   update_env_var.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 18:28:00 by mrantil           #+#    #+#             */
-/*   Updated: 2022/09/28 10:45:49 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/09/28 15:44:37 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ static char	*change_underscore(t_msh *msh)
 	size_t	last_arg;
 
 	last_arg = ft_arrlen(msh->args) - 1;
+	if (!ft_strncmp(msh->args[last_arg], "\0", 1) && last_arg > 0)
+		--last_arg;
 	return (ft_strjoin("_=", msh->args[last_arg]));
 }
 
@@ -39,7 +41,7 @@ static char	**change_oldpwd(char **env, size_t i)
 		if (!ft_strncmp(env[j], "OLDPWD=", 7))
 		{
 			free(env[j]);
-			env[j] = ft_strjoin("OLDPWD=", ft_strchr(env[i], '/'));
+			env[j] = ft_strjoin("OLDPWD=", ft_strchr(env[i], '=') + 1);
 			return (env);
 		}
 		j++;
@@ -59,7 +61,19 @@ char	**update_env_var(t_msh *msh)
 			free(msh->env[i]);
 			msh->env[i] = change_underscore(msh);
 		}
-		else if (!ft_strncmp(msh->env[i], "PWD=", 4))
+		i++;
+	}
+	return (msh->env);
+}
+
+char	**update_pwd(t_msh *msh)
+{
+	size_t	i;
+
+	i = 0;
+	while (msh->env[i])
+	{
+		if (!ft_strncmp(msh->env[i], "PWD=", 4))
 		{
 			msh->env = change_oldpwd(msh->env, i);
 			change_pwd(msh->env, i);
