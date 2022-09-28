@@ -6,7 +6,7 @@
 #    By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/17 18:22:31 by mrantil           #+#    #+#              #
-#    Updated: 2022/09/27 16:24:13 by mrantil          ###   ########.fr        #
+#    Updated: 2022/09/28 10:46:43 by mrantil          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -62,13 +62,15 @@ H_FILES 	= 	msh
 
 FILES 		= 	builtin_cd \
 				builtin_echo \
-				builtin_set_unset_env \
-				builtins \
-				change_env_var \
+				builtin_unsetenv \
+				builtin_setenv \
+				builtins_pwd_env_exit \
 				init_and_free \
 				main \
 				msh_launch \
-				tools_env_var
+				tools_env_var \
+				tools \
+				update_env_var \
 
 H_PATHS 	= 	$(addsuffix .h, $(addprefix $(INCLUDES)/, $(H_FILES)))
 C_PATHS 	= 	$(addsuffix .c, $(addprefix $(SOURCES)/, $(FILES)))

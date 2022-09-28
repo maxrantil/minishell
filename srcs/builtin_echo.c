@@ -6,35 +6,11 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/27 14:34:59 by mrantil           #+#    #+#             */
-/*   Updated: 2022/09/27 16:35:19 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/09/28 10:34:49 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "msh.h"
-
-char	*get_tilde(t_msh *msh, size_t i)
-{
-	char	*tilde;
-
-	if (msh->args[i][1] == '-')
-	{
-		tilde = get_env_value(msh->env, "OLDPWD=");
-		if (!tilde)
-			return (NULL);
-		tilde = ft_strupdate(tilde, msh->args[i] + 2);
-	}
-	else if (msh->args[i][1] == '+')
-	{
-		tilde = get_env_value(msh->env, "PWD=");
-		tilde = ft_strupdate(tilde, msh->args[i] + 2);
-	}
-	else
-	{
-		tilde = get_env_value(msh->env, "HOME=");
-		tilde = ft_strupdate(tilde, msh->args[i] + 1);
-	}
-	return (tilde);
-}
 
 static char	**get_dollar(t_msh *msh, char *dollar, size_t j)
 {
@@ -52,7 +28,7 @@ static char	**get_dollar(t_msh *msh, char *dollar, size_t j)
 			if (!ft_strncmp(msh->env[i], combo, ft_strlen(combo)))
 			{
 				free(msh->args[j]);
-				msh->args[j] = ft_strdup(ft_strchr(msh->env[i], '=') + 1); //use ft_strupdate?
+				msh->args[j] = ft_strdup(ft_strchr(msh->env[i], '=') + 1);
 			}
 			i++;
 		}
@@ -61,7 +37,18 @@ static char	**get_dollar(t_msh *msh, char *dollar, size_t j)
 	return (msh->args);
 }
 
-static char **print_echo(t_msh *msh)
+static void	check_tilde(t_msh *msh, size_t i)
+{
+	char	*tilde;
+
+	if (get_tilde(msh, &tilde, i))
+	{
+		free(msh->args[i]);
+		msh->args[i] = tilde;
+	}
+}
+
+static char	**print_echo(t_msh *msh)
 {
 	size_t	arrlen;
 	size_t	i;
@@ -75,9 +62,10 @@ static char **print_echo(t_msh *msh)
 		while (msh->args[i][j] != '\0')
 		{
 			if (msh->args[i][0] == '$')
-				msh->args = get_dollar(msh, ft_strchr(msh->args[i], '$') + 1, i);
+				msh->args = get_dollar(msh, \
+				ft_strchr(msh->args[i], '$') + 1, i);
 			else if (msh->args[i][0] == '~')
-				msh->args[i] = get_tilde(msh, i);
+				check_tilde(msh, i);
 			if (msh->args[i][j] != '\"' || msh->args[i][j] != '\0')
 				write(1, &msh->args[i][j], 1);
 			j++;

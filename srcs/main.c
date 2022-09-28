@@ -6,13 +6,13 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 15:09:44 by mrantil           #+#    #+#             */
-/*   Updated: 2022/09/27 16:05:49 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/09/28 10:51:32 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "msh.h"
 
-static size_t num_builtins()
+static size_t	num_builtins(void)
 {
 	return (sizeof(g_builtin_str) / sizeof(char *));
 }

@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 17:37:30 by mrantil           #+#    #+#             */
-/*   Updated: 2022/09/27 16:22:48 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/09/28 09:19:40 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,8 @@ char	*get_env_value(char **env, char *var)
 	{
 		if (!ft_strncmp(env[i], var, len))
 		{
-			ret = ft_strnew(ft_strlen(env[i]) - len); //+1 ?? if somehitng is missing in the value it needs +1
+			ret = ft_strnew(ft_strlen(env[i]) - len);
 			ft_strcpy(ret, ft_strchr(env[i], '=') + 1);
-			/* ft_strcat(ret, "\0"); */
 			return (ret);
 		}
 		i++;

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtins.c                                         :+:      :+:    :+:   */
+/*   builtins_pwd_env_exit.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 13:33:14 by mrantil           #+#    #+#             */
-/*   Updated: 2022/09/27 16:02:14 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/09/28 10:39:48 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	msh_pwd(t_msh *msh)
 	{
 		getcwd(cwd, sizeof(cwd));
 		ft_printf("%s\n", cwd);
-		return (1);	
+		return (1);
 	}
 	return (0);
 }
@@ -38,7 +38,7 @@ int	msh_env(t_msh *msh)
 	return (1);
 }
 
-int msh_exit(t_msh *msh)
+int	msh_exit(t_msh *msh)
 {
 	if (*msh->args)
 		return (0);

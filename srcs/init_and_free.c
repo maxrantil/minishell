@@ -6,11 +6,30 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/17 15:09:44 by mrantil           #+#    #+#             */
-/*   Updated: 2022/09/27 10:41:48 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/09/28 10:51:09 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "msh.h"
+
+static char	*change_shlvl(char *shlvl)
+{
+	int		lvl;
+	char	*str_lvl;
+	char	*ret;
+
+	lvl = ft_atoi(ft_strchr(shlvl, '=') + 1);
+	if (lvl <= 999)
+		++lvl;
+	else
+		lvl = 1;
+	str_lvl = ft_itoa(lvl);
+	ret = ft_strnew(9);
+	ft_strcpy(ret, "SHLVL=");
+	ft_strcat(ret, str_lvl);
+	ft_strdel(&str_lvl);
+	return (ret);
+}
 
 static char	**get_env()
 {
@@ -31,17 +50,15 @@ static char	**get_env()
 			env[i] = ft_strdup(environ[i]);
 		i++;
 	}
-	return (env); 
+	return (env);
 }
 
 void	init_msh(t_msh *msh)
 {
-	ft_printf("\n{blu}******************"
-        "************************\n");
+	ft_printf("\n{blu}******************************************\n");
 	ft_printf("\
 	\t{yel}M{gre}I{red}N{blu}I{mag}S{blu}H{red}E{gre}L{yel}L{cya}\n");
-	ft_printf("{blu}*******************"
-        "***********************{nor}\n\n");
+	ft_printf("{blu}******************************************{nor}\n\n");
 	msh->args = NULL;
 	msh->cli = NULL;
 	msh->env = get_env();

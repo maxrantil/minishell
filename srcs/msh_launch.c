@@ -1,8 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   msh_launch.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/09/28 10:52:53 by mrantil           #+#    #+#             */
+/*   Updated: 2022/09/28 10:53:07 by mrantil          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "msh.h"
 
 static int	check_paths(t_msh *msh)
 {
 	char	*path;
+	char	*dup_paths;
 	size_t	i;
 	size_t	j;
 
@@ -11,9 +24,9 @@ static int	check_paths(t_msh *msh)
 	{
 		if (!ft_strncmp(msh->env[i], "PATH=", 5))
 		{
-			msh->paths = (char **)ft_memalloc(sizeof(char *) * MSH_TOK_BUFSIZE); //need to fix the correct bufsize?
+			msh->paths = (char **)ft_memalloc(sizeof(char *) * MSH_TOK_BUFSIZE);
 			j = 0;
-			char *dup_paths = ft_strdup(msh->env[i]);
+			dup_paths = ft_strdup(msh->env[i]);
 			while ((path = ft_strsep(&dup_paths, ":")) != NULL)
 				msh->paths[j++] = ft_strchr(path, '/');
 			return (1);

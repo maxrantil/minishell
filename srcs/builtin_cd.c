@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 15:16:41 by mrantil           #+#    #+#             */
-/*   Updated: 2022/09/27 15:12:16 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/09/28 10:48:32 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static void	exec_tilde(t_msh *msh)
 {
 	char	*tilde;
 
-	tilde = get_tilde(msh, 1);
+	get_tilde(msh, &tilde, 1);
 	if (chdir(tilde) != 0)
 		ft_putstr_fd("ERROR, cd: tilde", STDERR_FILENO);
 	free(tilde);
@@ -58,6 +58,6 @@ int	msh_cd(t_msh *msh)
 			ft_putstr_fd(": No such file or directory\n", STDERR_FILENO);
 		}
 	}
-	msh->env = update_pwd(msh->env);
+	msh->env = update_env_var(msh);
 	return (1);
 }
