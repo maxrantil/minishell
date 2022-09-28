@@ -6,7 +6,7 @@
 #    By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/17 18:22:31 by mrantil           #+#    #+#              #
-#    Updated: 2022/09/28 10:46:43 by mrantil          ###   ########.fr        #
+#    Updated: 2022/09/28 16:57:26 by mrantil          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,14 +41,12 @@ MAKEFLAGS	+= --no-print-directory
 
 NAME		=	minishell
 CC			=	gcc
-CFLAGS 		= 	-Wall -Wextra
-#for linux and the g_builtin_str 
-#CFLAGS 		+= 	-Werror
+CFLAGS 		= 	-Wall -Wextra -Werror
 CFLAGS		+=	-Wunreachable-code -Wtype-limits 
-#CFLAGS		+=	-Wpedantic(cant use 0b for defining my bits)
-#CFLAGS		+=	-O3 -flto -fPIC -shared
+CFLAGS		+=	-Wpedantic
+CFLAGS		+=	-O3
 
-LEAK_CHECK	=	-g
+#LEAK_CHECK	=	-g
 #LEAK_CHECK	+=	-fsanitize=address
 
 SOURCES 	= 	srcs
