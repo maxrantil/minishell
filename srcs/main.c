@@ -49,6 +49,7 @@ static char	**split_tokens(char *cli, char *delimit)
 	token = ft_strsep(&cli, delimit);
 	while (token)
 	{
+		ft_printf("token [%s]\n", token);
 		tokens[i++] = ft_strdup(token);
 		token = ft_strsep(&cli, delimit);
 	}
@@ -67,7 +68,8 @@ int	main(void)
 		ft_printf("{yel}${gre}>{nor} ");
 		if (get_next_line(STDIN_FILENO, &msh.cli) == 1)
 		{
-			msh.args = split_tokens(msh.cli, " \t\n");
+			msh.args = split_tokens(msh.cli, " \t");
+			//implement fix for parser
 			status = exec_args(&msh);
 			msh.env = update_env_var(&msh);
 		}

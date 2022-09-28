@@ -16,12 +16,14 @@ static int	loop_for_unsetenv(t_msh *msh)
 {
 	char	*key;
 	size_t	i;
+	size_t	len;
 
 	i = 0;
 	key = extract_key(msh->args[1]);
+	len = ft_strlen(key);
 	while (msh->env[i])
 	{
-		if (!ft_strncmp(msh->env[i], key, ft_strlen(key)))
+		if (!ft_strncmp(msh->env[i], key, len))
 		{
 			if (!ft_strncmp(key, "PWD=", 4))
 			{

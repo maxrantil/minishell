@@ -37,18 +37,19 @@ static char	**get_env(void)
 	char		**env;
 	int			i;
 
-	i = 0;
-	while (environ[i])
-		i++;
-	env = (char **)ft_memalloc(sizeof(char *) * i);
-	i = 0;
-	while (environ[i])
+	if (*environ)
 	{
-		if (!ft_strncmp(environ[i], "SHLVL=", 6))
-			env[i] = change_shlvl(environ[i]);
-		else
-			env[i] = ft_strdup(environ[i]);
-		i++;
+		env = (char **)ft_memalloc(sizeof(char *) * ft_arrlen(environ));
+		i = 0;
+		while (environ[i])
+		{
+			if (!ft_strncmp(environ[i], "SHLVL=", 6))
+				env[i] = change_shlvl(environ[i]);
+			else
+				env[i] = ft_strdup(environ[i]);
+			i++;
+		}
+		env[i] = NULL;
 	}
 	return (env);
 }

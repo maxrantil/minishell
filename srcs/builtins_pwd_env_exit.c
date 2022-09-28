@@ -25,7 +25,7 @@ int	msh_pwd(t_msh *msh)
 	return (0);
 }
 
-int	msh_env(t_msh *msh)
+int	msh_env(t_msh *msh) // add so you can add temporary env variables
 {
 	size_t	i;
 

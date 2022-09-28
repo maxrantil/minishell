@@ -73,6 +73,7 @@ char	**unset_env_var(char **env, char *key)
 			new_env[j++] = ft_strdup(env[i]);
 		i++;
 	}
+	new_env[j] = NULL;
 	ft_arrfree(env, count);
 	return (new_env);
 }

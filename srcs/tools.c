@@ -27,7 +27,7 @@ char	*extract_key(char *key_value)
 	}
 	else
 		ft_strcpy(key, key_value);
-	ft_strcat(key, "=");
+	key = ft_strupdate(key, "=");
 	return (key);
 }
 

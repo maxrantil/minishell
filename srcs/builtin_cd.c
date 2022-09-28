@@ -16,9 +16,9 @@ static void	exec_tilde(t_msh *msh)
 {
 	char	*tilde;
 
-	get_tilde(msh, &tilde, 1);
+	get_tilde(msh, &tilde, 1); //change so it will work even if unset HOME is done
 	if (chdir(tilde) != 0)
-		ft_putstr_fd("error, cd: tilde\n", STDERR_FILENO);
+		ft_putstr_fd("minishell: cd: HOME not set\n", STDERR_FILENO);
 	free(tilde);
 }
 
