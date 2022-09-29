@@ -12,34 +12,7 @@
 
 #include "msh.h"
 
-static char	**get_dollar(t_msh *msh, char *dollar, size_t j)
-{
-	char	*combo;
-	size_t	i;
 
-	i = 0;
-	if (dollar)
-	{
-		combo = ft_strdup(dollar);
-		combo = ft_strupdate(combo, "=");
-		while (msh->env[i])
-		{
-			if (!ft_strncmp(msh->env[i], combo, ft_strlen(combo)))
-			{
-				ft_memset(ft_strchr(msh->args[j], '$'), '\0', \
-				ft_strlen(msh->args[j]) - ft_strlen(dollar) + 1);
-				msh->args[j] = ft_strupdate(msh->args[j], \
-				ft_strchr(msh->env[i], '=') + 1);
-				break ;
-			}
-			i++;
-		}
-		free(combo);
-		if (msh->env[i] == NULL)
-			ft_memset((void *)msh->args[j], '\0', ft_strlen(msh->args[j]));
-	}
-	return (msh->args);
-}
 
 /* static void	check_tilde(t_msh *msh, size_t i)
 {
@@ -64,16 +37,7 @@ static char	**print_echo(t_msh *msh)
 	{
 		j = 0;
 		while (msh->args[i][j] != '\0')
-		{
-			if (msh->args[i][j] == '$')
-				msh->args = get_dollar(msh, \
-				ft_strchr(msh->args[i], '$') + 1, i);
-			/* else if (msh->args[i][0] == '~')
-				check_tilde(msh, i); */
-			if (msh->args[i][j] != '\"' && msh->args[i][j] != '\0')
-				write(1, &msh->args[i][j], 1);
-			j++;
-		}
+			write(1, &msh->args[i][j++], 1);
 		if (i != arrlen)
 			ft_putchar(' ');
 		i++;

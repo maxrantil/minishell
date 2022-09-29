@@ -126,21 +126,62 @@ static int	get_tilde(t_msh *msh, char **tilde, size_t i)
 	return (1);
 }
 
-static void	change_tilde(t_msh *msh)
+static char	**get_dollar(t_msh *msh, char *dollar, size_t j) //use ft_strsplit here to split the arguments of non aplpha to be able to combine dollars
+{
+	char	*combo;
+	size_t	i;
+
+	i = 0;
+	if (dollar)
+	{
+		combo = ft_strdup(dollar);
+		combo = ft_strupdate(combo, "=");
+		while (msh->env[i])
+		{
+			if (!ft_strncmp(msh->env[i], combo, ft_strlen(combo)))
+			{
+				ft_memset(ft_strchr(msh->args[j], '$'), '\0', \
+				ft_strlen(msh->args[j]) - ft_strlen(dollar) + 1);
+				msh->args[j] = ft_strupdate(msh->args[j], \
+				ft_strchr(msh->env[i], '=') + 1);
+				break ;
+			}
+			i++;
+		}
+		free(combo);
+		if (msh->env[i] == NULL)
+			ft_memset((void *)msh->args[j], '\0', ft_strlen(msh->args[j]));
+	}
+	return (msh->args);
+}
+
+static void	change_variables(t_msh *msh)
 {
 	char	*tilde;
 	size_t	i;
+	size_t	arrlen;
+	size_t	j;
 
+	arrlen = ft_arrlen(msh->args) - 1;
 	i = 1;
-	while (msh->args[i])
+	while (i <= arrlen)
 	{
-		if (msh->args[i][0] == '~')
+		j = 0;
+		while (msh->args[i][j] != '\0')
 		{
-			if (get_tilde(msh, &tilde, i))
+			if (msh->args[i][0] == '~')
 			{
-				free(msh->args[i]);
-				msh->args[i] = tilde;
+				if (get_tilde(msh, &tilde, i))
+				{
+					/* free(msh->args[i]);
+					msh->args[i] = tilde; */
+					msh->args[i] = ft_strupdate(msh->args[i], tilde);
+				}
 			}
+			if (msh->args[i][j] == '$')
+				msh->args = get_dollar(msh, \
+				ft_strchr(msh->args[i], '$') + 1, i);
+			j++;
 		}
 		i++;
 	}
@@ -152,7 +193,6 @@ int	parser(t_msh *msh)
 		return (0);
 	trim_cli(&msh->cli);
 	msh->args = split_tokens(&msh->cli, " \t\n\0");
-	change_tilde(msh);	///try in school what will show if you append letters to tilde variants
-	// change_doll
+	change_variables(msh);	///try in school what will show if you append letters to tilde variants
 	return (1);
 }
