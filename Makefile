@@ -67,6 +67,7 @@ FILES 		= 	builtin_cd \
 				init_and_free \
 				main \
 				msh_launch \
+				parser \
 				tools_env_var \
 				tools \
 				update_env_var \

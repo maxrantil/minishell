@@ -81,38 +81,10 @@ static char	**print_echo(t_msh *msh)
 	return (msh->args);
 }
 
-static size_t	count_strings(char **args)
-{
-	size_t	count;
-	size_t	i;
-	size_t	j;
 
-	count = 0;
-	i = 0;
-	while (args[i])
-	{
-		j = 0;
-		while (args[i][j])
-		{
-			if (args[i][j] == '\"')
-				++count;
-			j++;
-		}
-		i++;
-	}
-	return (count);
-}
 
 int	msh_echo(t_msh *msh)
 {
-	size_t	count;
-
-	count = count_strings(msh->args);
-	if (count % 2 != 0)
-	{
-		ft_putstr_fd("error, double quotes don't match.\n", STDERR_FILENO);
-		return (2);
-	}
 	msh->args = print_echo(msh);
 	ft_putchar('\n');
 	return (1);

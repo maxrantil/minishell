@@ -56,7 +56,8 @@ int		msh_exit(t_msh *msh);
 void	free_mem(t_msh *msh);
 void	init_msh(t_msh *msh);
 
-/* Launcher */
+/* From main */
+int		parser(t_msh *msh);
 int		msh_launch(t_msh *msh);
 
 /* Change envirionment variables */

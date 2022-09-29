@@ -33,29 +33,6 @@ static int	exec_args(t_msh *msh)
 	return (msh_launch(msh));
 }
 
-static char	**split_tokens(char *cli, char *delimit)
-{
-	char	**tokens;
-	char	*token;
-	size_t	i;
-
-	tokens = (char **)ft_memalloc(sizeof(char *) * MSH_TOK_BUFSIZE);
-	if (!tokens)
-	{
-		ft_putstr_fd("error: malloc tokens\n", STDERR_FILENO);
-		exit(EXIT_FAILURE);
-	}
-	i = 0;
-	token = ft_strsep(&cli, delimit);
-	while (token)
-	{
-		ft_printf("token [%s]\n", token);
-		tokens[i++] = ft_strdup(token);
-		token = ft_strsep(&cli, delimit);
-	}
-	return (tokens);
-}
-
 int	main(void)
 {
 	t_msh	msh;
@@ -68,10 +45,11 @@ int	main(void)
 		ft_printf("{yel}${gre}>{nor} ");
 		if (get_next_line(STDIN_FILENO, &msh.cli) == 1)
 		{
-			msh.args = split_tokens(msh.cli, " \t");
-			//implement fix for parser
-			status = exec_args(&msh);
-			msh.env = update_env_var(&msh);
+			if (parser(&msh))
+			{
+				status = exec_args(&msh);
+				msh.env = update_env_var(&msh);
+			}
 		}
 		else
 			ft_putstr_fd("minishell: could not read input\n", STDERR_FILENO);
