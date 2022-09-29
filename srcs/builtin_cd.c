@@ -12,7 +12,7 @@
 
 #include "msh.h"
 
-static void	exec_tilde(t_msh *msh)
+/* static void	exec_tilde(t_msh *msh)
 {
 	char	*tilde;
 
@@ -20,7 +20,7 @@ static void	exec_tilde(t_msh *msh)
 	if (chdir(tilde) != 0)
 		ft_putstr_fd("minishell: cd: HOME not set\n", STDERR_FILENO);
 	free(tilde);
-}
+} */
 
 static void	exec_dash(char **env)
 {
@@ -48,8 +48,8 @@ int	msh_cd(t_msh *msh)
 		exec_home(msh->env);
 	else if (!ft_strcmp(msh->args[1], "-"))
 		exec_dash(msh->env);
-	else if (msh->args[1][0] == '~')
-		exec_tilde(msh);
+	/* else if (msh->args[1][0] == '~')
+		exec_tilde(msh); */
 	else
 	{
 		if (chdir(msh->args[1]) != 0)

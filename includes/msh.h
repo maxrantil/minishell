@@ -69,7 +69,7 @@ char	**set_env_var(char **env, char *key, char *value, size_t i);
 char	**unset_env_var(char **env, char *key);
 
 /* Tools */
-int		get_tilde(t_msh *msh, char **hold, size_t i);
+/* int		get_tilde(t_msh *msh, char **hold, size_t i); */
 char	*extract_key(char *key_value);
 char	*ft_strtrim_quotes(char const *s);
 

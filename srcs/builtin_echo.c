@@ -41,7 +41,7 @@ static char	**get_dollar(t_msh *msh, char *dollar, size_t j)
 	return (msh->args);
 }
 
-static void	check_tilde(t_msh *msh, size_t i)
+/* static void	check_tilde(t_msh *msh, size_t i)
 {
 	char	*tilde;
 
@@ -50,7 +50,7 @@ static void	check_tilde(t_msh *msh, size_t i)
 		free(msh->args[i]);
 		msh->args[i] = tilde;
 	}
-}
+} */
 
 static char	**print_echo(t_msh *msh)
 {
@@ -68,8 +68,8 @@ static char	**print_echo(t_msh *msh)
 			if (msh->args[i][j] == '$')
 				msh->args = get_dollar(msh, \
 				ft_strchr(msh->args[i], '$') + 1, i);
-			else if (msh->args[i][0] == '~')
-				check_tilde(msh, i);
+			/* else if (msh->args[i][0] == '~')
+				check_tilde(msh, i); */
 			if (msh->args[i][j] != '\"' && msh->args[i][j] != '\0')
 				write(1, &msh->args[i][j], 1);
 			j++;

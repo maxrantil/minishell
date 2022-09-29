@@ -47,25 +47,3 @@ char	*ft_strtrim_quotes(char const *s)
 	st = ft_strsub(s, 0, sl);
 	return (st);
 }
-
-int	get_tilde(t_msh *msh, char **tilde, size_t i)
-{
-	if (msh->args[i][1] == '-')
-	{
-		*tilde = get_env_value(msh->env, "OLDPWD=");
-		if (!*tilde)
-			return (0);
-		*tilde = ft_strupdate(*tilde, msh->args[i] + 2);
-	}
-	else if (msh->args[i][1] == '+')
-	{
-		*tilde = get_env_value(msh->env, "PWD=");
-		*tilde = ft_strupdate(*tilde, msh->args[i] + 2);
-	}
-	else
-	{
-		*tilde = get_env_value(msh->env, "HOME=");
-		*tilde = ft_strupdate(*tilde, msh->args[i] + 1);
-	}
-	return (1);
-}
