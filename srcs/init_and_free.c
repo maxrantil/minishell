@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/17 15:09:44 by mrantil           #+#    #+#             */
-/*   Updated: 2022/09/28 12:03:46 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/09/29 17:50:18 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ static char	**get_env(void)
 	char		**env;
 	int			i;
 
+	env = NULL;
 	if (*environ)
 	{
 		env = (char **)ft_memalloc(sizeof(char *) * ft_arrlen(environ));

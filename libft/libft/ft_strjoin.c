@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 11:05:00 by mrantil           #+#    #+#             */
-/*   Updated: 2022/07/13 09:27:47 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/09/29 16:48:05 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	if (!s1 || !s2)
 		return (NULL);
 	i = 0;
-	j = 0;
-	sj = (char *)malloc(sizeof(char) * ft_strlen(s1) + ft_strlen(s2) + 1);
+	sj = ft_strnew(ft_strlen(s1) + ft_strlen(s2));
 	if (!sj)
 		return (NULL);
 	while (s1[i])
@@ -30,6 +29,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 		sj[i] = s1[i];
 		i++;
 	}
+	j = 0;
 	while (s2[j])
 	{
 		sj[i] = s2[j];
