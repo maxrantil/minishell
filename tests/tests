@@ -6,3 +6,25 @@ printf "~- is correct\n"
 cd ..
 echo ~-
 printf "/Users/login/.../minishell\n"
+echo max""
+printf "max\n"
+echo max''
+printf "max\n"
+echo max' '
+printf "max\n"
+
+
+
+
+Findings
+
+: Running ‘’cd -‘’ when OLDPWD is not set yet, only requires error message when this happens: Message should be: “bash: cd: OLDPWD not set”. Referenced from bash.
+
+: Freeing error with “echo ~$PATH”
+
+: Segfaults when environ is empty: When minis hell is ran as “env -i ./minishell”
+
+: Don’t add OLDPWD at startup
+
+: ~+ expansion to PWD
+

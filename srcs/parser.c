@@ -6,45 +6,33 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 13:29:40 by mrantil           #+#    #+#             */
-/*   Updated: 2022/09/30 17:26:20 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/09/30 17:58:16 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "msh.h"
 
-static size_t	count_quotes(char *cli)	//check for single quotes needs to be implemented
+static size_t    count_quotes(char *str)
 {
-	size_t	count;
-	size_t	i;
+    int    i;
+    int    found;
+    int    quote;
 
-	count = 0;
-	i = 0;
-	while (cli[i])
-	{
-		if (cli[i] == '\"')
-		{
-			if (i == 0 || cli[i] != '\\')
-				++count;
-		}	
-		i++;
-	}
-	return (count);
-}
-
-static int	check_quotes(char **cli)
-{
-	size_t	count;
-
-	if (*cli)
-	{
-		count = count_quotes(*cli);
-		if (count % 2 != 0)
-		{
-			ft_putstr_fd("error, double quotes don't match.\n", STDERR_FILENO);
-			return (0);
-		}
-	}
-	return (1);
+    found = 1;
+    i = -1;
+    while (str[++i])
+    {
+        if (str[i] == '\'' || str[i] == '\"')
+        {
+            found = 0;
+            quote = str[i++];
+            while (str[i] != quote && str[i])
+                i++;
+            if (str[i] == quote)
+                found = 1;
+        }
+    }
+    return (found);
 }
 
 static void	trim_cli(char **cli)
@@ -66,13 +54,50 @@ static char *skip_whitespaces(char *cli)
 	return (cli);
 }
 
+int    count_arguments(char *str)
+{
+    int    args;
+    int    i;
+    int    quote;
+
+    i = -1;
+    args = 0;
+    while (str[++i])
+    {
+        if (str[i] != '\t' && str[i] != ' ')
+        {
+            if (str[i] == '\'' || str[i] == '\"')
+            {
+                quote = str[i++];
+                while (str[i] != quote)
+                    i++;
+            }
+            else
+            {
+                while (str[i] != '\t' && str[i] != ' ' && str[i] && str[i] != '\'' && str[i] != '\"')
+                    i++;
+            }
+            args++;
+            if (!str[i])
+                break;
+        }
+        else
+        {
+            while (str[i] == '\t' || str[i] == ' ')
+                i++;
+            i--;
+        }
+    }
+    return (args);
+}
+
 static char	**split_tokens(char **cli, char *delimit)
 {
 	char	**tokens;
 	char	*ptr;
 	size_t	i;
 
-	tokens = (char **)ft_memalloc(sizeof(char *) * MSH_TOK_BUFSIZE);
+	tokens = (char **)ft_memalloc(sizeof(char *) * count_arguments(*cli));
 	if (!tokens)
 	{
 		ft_putstr_fd("error: malloc tokens\n", STDERR_FILENO);
@@ -201,7 +226,6 @@ static void	get_dollar(t_msh *msh, char *dollar, size_t j)
 static char	**change_variables(t_msh *msh)
 {
 	char	*tilde;
-	/* char	*dollar; */
 	size_t	arrlen;
 	size_t	i;
 	size_t	j;
@@ -224,10 +248,7 @@ static char	**change_variables(t_msh *msh)
 				}
 			}
 			else if (msh->args[i][j] == '$' && (msh->args[i][j + 1] == '_' || ft_isalpha(msh->args[i][j + 1]))) //ft_isascii as second parameter?
-			{
-				
 				get_dollar(msh, ft_strchr(msh->args[i], '$'), i);
-			}
 			else if (msh->args[i][j] == '$' && msh->args[i][j + 1] == '$') //bonus fun, works alone but not if you append to end of another $variable
 			{
 				ft_strdel(&msh->args[i]);
@@ -242,8 +263,11 @@ static char	**change_variables(t_msh *msh)
 
 int	parser(t_msh *msh)
 {
-	if (!check_quotes(&msh->cli))
+	if (!count_quotes(msh->cli))
+	{
+		ft_putstr_fd("error, double quotes don't match.\n", STDERR_FILENO);
 		return (0);
+	}
 	trim_cli(&msh->cli);
 	msh->args = split_tokens(&msh->cli, " \t"); 
 	msh->args = change_variables(msh);	///try in school what will show if you append letters to tilde variants
