@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 13:29:40 by mrantil           #+#    #+#             */
-/*   Updated: 2022/09/29 17:53:19 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/09/30 17:26:20 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,82 +126,118 @@ static int	get_tilde(t_msh *msh, char **tilde, size_t i)
 	return (1);
 }
 
-static char	**get_dollar(t_msh *msh, char *dollar, size_t j) //use ft_strsplit here to split the arguments of non aplpha to be able to combine dollars
+static char	*save_begin(t_msh *msh, size_t j)
 {
-	char	*combo;
-	char	**dollars;
-	size_t	i;
-	size_t	b;
+	char	*begin_arg;
+	size_t	len;
 
-	dollars = ft_strsplit(dollar, '$');
-	i = 0;
-	while (dollars[i])
+	len = ft_strclen(msh->args[j], '$');
+	if (len)
 	{
-		ft_printf("dollars %s\n", dollars[i]);
-		i++;
+		begin_arg = ft_strsub(msh->args[j], 0, len);
+		return (begin_arg);
 	}
-	ft_printf("dollars %s\n", dollars[i]);
-	ft_printf("dollar %s\n", dollar);
-	ft_printf("arg %s\n", msh->args[j]);
-	i = 0;
-	b = 0;
-	char *new_arg;
-	while (dollars[b])
+	return (NULL);
+}
+
+static char	*get_new_arg(t_msh *msh, char **dollars)
+{
+	char	*key;
+	char	*new_arg;
+	char	*temp;
+	size_t	i;
+	size_t	j;
+
+	new_arg = ft_strnew(1);
+	j = 0;
+	while (dollars[j])
 	{
-		combo = ft_strdup(dollars[b]);
-		combo = ft_strupdate(combo, "=");
+		key = ft_strdup(dollars[j]);
+		key = ft_strupdate(key, "=");
+		i = 0;
 		while (msh->env[i])
 		{
-			if (!ft_strncmp(msh->env[i], combo, ft_strlen(combo)))
+			if (!ft_strncmp(msh->env[i], key, ft_strlen(key)))
 			{
-				// ft_memset(ft_strchr(msh->args[j], '$'), '\0', \
-				ft_strlen(msh->args[j]) - ft_strlen(dollars[b]) + 1);
-				// msh->args[j] = ft_strupdate(msh->args[j], \
-				ft_strchr(msh->env[i], '=') + 1);
-				new_arg = ft_strjoin(ft_strchr(msh->args[j], '$'), ft_strchr(msh->env[i], '=') + 1);
-				// break ;
+				temp = ft_strdup(ft_strchr(msh->env[i], '=') + 1);
+				new_arg = ft_strupdate(new_arg, temp);
+				ft_strdel(&temp);
+				break ;
 			}
 			i++;
 		}
-		free(combo);
-		/* if (msh->env[i] == NULL)
-			ft_memset((void *)msh->args[j], '\0', ft_strlen(msh->args[j])); */
-		b++;
+		ft_strdel(&key);
+		j++;
 	}
-	return (msh->args);
+	ft_arrfree(dollars, ft_arrlen(dollars));
+	return (new_arg);
 }
 
-static void	change_variables(t_msh *msh)
+static void	get_dollar(t_msh *msh, char *dollar, size_t j)
+{
+	char	**dollars;
+	char	*new_arg;
+	char	*begin_arg;
+
+	begin_arg = save_begin(msh, j);
+	dollars = ft_strsplit(dollar, '$');
+	new_arg = get_new_arg(msh, dollars);
+	if (begin_arg)
+	{
+		ft_strdel(&msh->args[j]);
+		msh->args[j] = ft_strupdate(begin_arg, new_arg);
+	}
+	else if (new_arg)
+	{
+		ft_strdel(&msh->args[j]);
+		msh->args[j] = ft_strdup(new_arg);	
+	}
+	else
+		ft_memset((void *)msh->args[j], '\0', ft_strlen(msh->args[j]));
+	ft_strdel(&new_arg);
+	/* return (msh->args[j]); */
+}
+
+static char	**change_variables(t_msh *msh)
 {
 	char	*tilde;
+	/* char	*dollar; */
 	size_t	arrlen;
 	size_t	i;
 	size_t	j;
 
 	arrlen = ft_arrlen(msh->args) - 1;
 	i = 1;
-	while (i <= arrlen)
+	while (i <= arrlen) //take away =?
 	{
 		j = 0;
 		while (msh->args[i][j])
 		{
 			if (msh->args[i][0] == '~' && \
 			(msh->args[i][1] == ' ' || msh->args[i][1] == '-' || \
-			msh->args[i][0] == '+'))//try if echo ~max appends max or not in school if so add for + and - aswell
+			msh->args[i][0] == '+' || msh->args[i][1] == '\0'))//try if echo ~max appends max or not in school if so add for + and - aswell YES IT DOES
 			{
 				if (get_tilde(msh, &tilde, i)) 
 				{
-					free(msh->args[i]);
+					ft_strdel(&msh->args[i]);
 					msh->args[i] = tilde;
 				}
 			}
-			if (msh->args[i][j] == '$')
-				msh->args = get_dollar(msh, \
-				ft_strchr(msh->args[i], '$'), i);
+			else if (msh->args[i][j] == '$' && (msh->args[i][j + 1] == '_' || ft_isalpha(msh->args[i][j + 1]))) //ft_isascii as second parameter?
+			{
+				
+				get_dollar(msh, ft_strchr(msh->args[i], '$'), i);
+			}
+			else if (msh->args[i][j] == '$' && msh->args[i][j + 1] == '$') //bonus fun, works alone but not if you append to end of another $variable
+			{
+				ft_strdel(&msh->args[i]);
+				msh->args[i] = ft_itoa(getpid());
+			}
 			j++;
 		}
 		i++;
 	}
+	return (msh->args);
 }
 
 int	parser(t_msh *msh)
@@ -210,6 +246,6 @@ int	parser(t_msh *msh)
 		return (0);
 	trim_cli(&msh->cli);
 	msh->args = split_tokens(&msh->cli, " \t"); 
-	change_variables(msh);	///try in school what will show if you append letters to tilde variants
+	msh->args = change_variables(msh);	///try in school what will show if you append letters to tilde variants
 	return (1);
 }

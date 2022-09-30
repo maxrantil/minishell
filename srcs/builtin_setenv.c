@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 17:22:46 by mrantil           #+#    #+#             */
-/*   Updated: 2022/09/28 10:07:29 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/09/30 09:43:13 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,13 @@
 
 static void	loop_setenv(t_msh *msh)
 {
-	char	*key_value;
+	/* char	*key_value; */
 	char	*key;
 	size_t	i;
 
 	i = 0;
-	key_value = ft_strtrim_quotes(msh->args[1]);
-	key = extract_key(key_value);
+	/* key_value = ft_strtrim_quotes(msh->args[1]); */
+	key = extract_key(msh->args[1]);
 	while (msh->env[i])
 	{
 		if (!ft_strncmp(msh->env[i], key, ft_strlen(key)))
@@ -31,9 +31,9 @@ static void	loop_setenv(t_msh *msh)
 		i++;
 	}
 	msh->env = set_env_var(msh->env, key, \
-	ft_strchr(key_value, '=') + 1, 0);
+	ft_strchr(msh->args[1], '=') + 1, 0);
 	free(key);
-	free(key_value);
+	/* free(key_value); */
 }
 
 int	msh_setenv(t_msh *msh)

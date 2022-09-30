@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 11:44:45 by mrantil           #+#    #+#             */
-/*   Updated: 2022/09/28 13:08:04 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/09/30 09:41:04 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ char	**unset_env_var(char **env, char *key);
 /* Tools */
 /* int		get_tilde(t_msh *msh, char **hold, size_t i); */
 char	*extract_key(char *key_value);
-char	*ft_strtrim_quotes(char const *s);
+/* char	*ft_strtrim_quotes(char const *s); */
 
 typedef int			(*t_fptr)(t_msh *msh);
 

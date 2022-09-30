@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 13:33:14 by mrantil           #+#    #+#             */
-/*   Updated: 2022/09/28 13:19:03 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/09/30 13:48:28 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	msh_env(t_msh *msh) // add so you can add temporary env variables
 	size_t	i;
 
 	i = 0;
-	if (ft_arrlen(msh->args) == 1)
+	if (ft_arrlen(msh->args) == 1) //needs trimming , test for 'env -i ./minishell' from bash
 	{
 		while (msh->env[i])
 		{

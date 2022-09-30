@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 09:51:16 by mrantil           #+#    #+#             */
-/*   Updated: 2022/09/28 10:30:57 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/09/30 09:36:20 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ char	*extract_key(char *key_value)
 	return (key);
 }
 
-char	*ft_strtrim_quotes(char const *s)
+/* char	*ft_strtrim_quotes(char const *s)
 {
 	char		*st;
 	size_t		sl;
@@ -46,4 +46,4 @@ char	*ft_strtrim_quotes(char const *s)
 			sl--;
 	st = ft_strsub(s, 0, sl);
 	return (st);
-}
+} */

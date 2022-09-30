@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/17 15:09:44 by mrantil           #+#    #+#             */
-/*   Updated: 2022/09/29 17:50:18 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/09/30 17:21:01 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,11 @@ static char	**get_env(void)
 		{
 			if (!ft_strncmp(environ[i], "SHLVL=", 6))
 				env[i] = change_shlvl(environ[i]);
+			else if (!ft_strncmp(environ[i], "OLDPWD=", 7))	//will this give me a char** that has one space too much? problem ? if so check for that when you count the len and just -1 if its there.
+			{
+				i++;
+				continue ;
+			}
 			else
 				env[i] = ft_strdup(environ[i]);
 			i++;
