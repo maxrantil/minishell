@@ -12,19 +12,6 @@
 
 #include "msh.h"
 
-
-
-/* static void	check_tilde(t_msh *msh, size_t i)
-{
-	char	*tilde;
-
-	if (get_tilde(msh, &tilde, i))
-	{
-		free(msh->args[i]);
-		msh->args[i] = tilde;
-	}
-} */
-
 static char	**print_echo(t_msh *msh)
 {
 	size_t	arrlen;
@@ -44,8 +31,6 @@ static char	**print_echo(t_msh *msh)
 	}
 	return (msh->args);
 }
-
-
 
 int	msh_echo(t_msh *msh)
 {
