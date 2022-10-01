@@ -97,7 +97,8 @@ static char	**split_tokens(char **cli, char *delimit)
 	char	*ptr;
 	size_t	i;
 
-	tokens = (char **)ft_memalloc(sizeof(char *) * count_arguments(*cli));
+	ft_printf("args = %d\n", count_arguments(*cli));
+	tokens = (char **)ft_memalloc(sizeof(char *) * count_arguments(*cli)+ 1);
 	if (!tokens)
 	{
 		ft_putstr_fd("error: malloc tokens\n", STDERR_FILENO);
@@ -265,6 +266,7 @@ static char	**change_variables(t_msh *msh)
 
 int	parser(t_msh *msh)
 {
+	trim_cli(&msh->cli);
 	if (*msh->cli)
 	{
 		if (!count_quotes(msh->cli))
@@ -272,7 +274,6 @@ int	parser(t_msh *msh)
 			ft_putstr_fd("error, double quotes don't match.\n", STDERR_FILENO);
 			return (0);
 		}
-		trim_cli(&msh->cli);
 		msh->args = split_tokens(&msh->cli, " \t"); 
 		msh->args = change_variables(msh);	///try in school what will show if you append letters to tilde variants
 		return (1);

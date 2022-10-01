@@ -14,10 +14,10 @@
 
 size_t	ft_arrlen(char **arr)
 {
-	size_t	len;
+	size_t	i;
 
-	len = 0;
-	while (*arr++)
-		len++;
-	return (len);
+	i = 0;
+	while (arr[i])
+		i++;
+	return (i);
 }

@@ -14,18 +14,20 @@
 
 void	ft_arrfree(char **arr, size_t len)
 {
+	size_t	i;
+
 	if (!arr || !len)
 		return ;
-	while (len--)
+	i = 0;
+	while (i < len)
 	{
-		// ft_strdel(&arr[len]);
-		if (arr[len] != NULL)
+		if (arr[i] != NULL)
 		{
-			free(arr[len]);
-			arr[len] = NULL;
+			free(arr[i]);
+			arr[i] = NULL;
 		}
+		i++;
 	}
-	// ft_strdel(arr);
 	free(arr);
 	arr = NULL;
 }
