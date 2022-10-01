@@ -18,12 +18,14 @@ void	ft_arrfree(char **arr, size_t len)
 		return ;
 	while (len--)
 	{
+		// ft_strdel(&arr[len]);
 		if (arr[len] != NULL)
 		{
 			free(arr[len]);
 			arr[len] = NULL;
 		}
 	}
+	// ft_strdel(arr);
 	free(arr);
 	arr = NULL;
 }

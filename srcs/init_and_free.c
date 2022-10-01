@@ -31,6 +31,22 @@ static char	*change_shlvl(char *shlvl)
 	return (ret);
 }
 
+size_t	env_arrlen(char **arr)
+{
+	size_t	len;
+	size_t	i;
+
+	len = 0;
+	i = -1;
+	while (arr[++i])
+	{
+		/* if (!ft_strncmp(arr[i], "OLDPWD=", 7))
+			continue ; */
+		len++;
+	}
+	return (len);
+}
+
 static char	**get_env(void)
 {
 	extern char	**environ;
@@ -40,25 +56,27 @@ static char	**get_env(void)
 	env = NULL;
 	if (*environ)
 	{
-		env = (char **)ft_memalloc(sizeof(char *) * ft_arrlen(environ));
-		i = 0;
-		while (environ[i])
+		env = (char **)ft_memalloc(sizeof(char *) * env_arrlen(environ));
+		i = -1;
+		while (environ[++i])
 		{
 			if (!ft_strncmp(environ[i], "SHLVL=", 6))
 				env[i] = change_shlvl(environ[i]);
-			else if (!ft_strncmp(environ[i], "OLDPWD=", 7))	//will this give me a char** that has one space too much? problem ? if so check for that when you count the len and just -1 if its there.
-			{
-				i++;
-				continue ;
-			}
+			/* else if (!ft_strncmp(environ[i], "OLDPWD=", 7))	//will this give me a char** that has one space too much? problem ? if so check for that when you count the len and just -1 if its there.
+				continue ; */
 			else
 				env[i] = ft_strdup(environ[i]);
-			i++;
 		}
 		env[i] = NULL;
 	}
 	return (env);
 }
+
+/* $>dasdads
+$>retur
+fail.
+also
+failed when i just gave wrong argument. */
 
 void	init_msh(t_msh *msh)
 {
@@ -67,6 +85,7 @@ void	init_msh(t_msh *msh)
 	\t{yel}M{gre}I{red}N{blu}I{mag}S{blu}H{red}E{gre}L{yel}L{cya}\n");
 	ft_printf("{blu}******************************************{nor}\n\n");
 	msh->args = NULL;
+	msh->paths = NULL;
 	msh->cli = NULL;
 	msh->env = get_env();
 }
@@ -75,5 +94,7 @@ void	free_mem(t_msh *msh)
 {
 	if (msh->args)
 		ft_arrfree(msh->args, ft_arrlen(msh->args));
+	if (msh->paths)
+		ft_arrfree(msh->paths, ft_arrlen(msh->paths));
 	ft_strdel(&msh->cli);
 }

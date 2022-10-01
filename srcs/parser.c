@@ -40,7 +40,7 @@ static void	trim_cli(char **cli)
 	char	*trimmed;
 
 	trimmed = ft_strtrim(*cli);
-	free(*cli);
+	ft_strdel(cli);
 	*cli = trimmed;
 }
 
@@ -54,11 +54,11 @@ static char *skip_whitespaces(char *cli)
 	return (cli);
 }
 
-int    count_arguments(char *str)
+static int	count_arguments(char *str)
 {
-    int    args;
-    int    i;
-    int    quote;
+    int	args;
+    int	i;
+    int	quote;
 
     i = -1;
     args = 0;
@@ -75,7 +75,7 @@ int    count_arguments(char *str)
             else
             {
                 while (str[i] != '\t' && str[i] != ' ' && str[i] && str[i] != '\'' && str[i] != '\"')
-                    i++;
+                	i++;
             }
             args++;
             if (!str[i])
@@ -108,7 +108,7 @@ static char	**split_tokens(char **cli, char *delimit)
 	while (ptr)
 	{
 		ptr = skip_whitespaces(ptr);
-		if (*ptr == '"')
+		if (*ptr == '"' || *ptr == '\'')
 		{
 			ptr++;
 			tokens[i++] = ft_strdup(strsep(&ptr, "\""));
@@ -121,7 +121,7 @@ static char	**split_tokens(char **cli, char *delimit)
 		else
 			tokens[i++] = ft_strdup(strsep(&ptr, delimit));
 	}
-	tokens[i++] = NULL;
+	tokens[i] = NULL;
 	return (tokens);
 }
 
@@ -173,8 +173,8 @@ static char	*get_new_arg(t_msh *msh, char **dollars)
 	size_t	i;
 	size_t	j;
 
-	new_arg = ft_strnew(1);
 	j = 0;
+	new_arg = ft_strnew(1);
 	while (dollars[j])
 	{
 		key = ft_strdup(dollars[j]);
@@ -192,9 +192,11 @@ static char	*get_new_arg(t_msh *msh, char **dollars)
 			i++;
 		}
 		ft_strdel(&key);
+		free(dollars[j]);
 		j++;
 	}
-	ft_arrfree(dollars, ft_arrlen(dollars));
+	free(dollars);
+	// ft_arrfree(dollars, ft_arrlen(dollars));
 	return (new_arg);
 }
 
@@ -218,7 +220,7 @@ static void	get_dollar(t_msh *msh, char *dollar, size_t j)
 		msh->args[j] = ft_strdup(new_arg);	
 	}
 	else
-		ft_memset((void *)msh->args[j], '\0', ft_strlen(msh->args[j]));
+		ft_memset((void *)msh->args[j], '\0', ft_strlen(msh->args[j])); //will this be able to get freed?
 	ft_strdel(&new_arg);
 	/* return (msh->args[j]); */
 }
@@ -239,7 +241,7 @@ static char	**change_variables(t_msh *msh)
 		{
 			if (msh->args[i][0] == '~' && \
 			(msh->args[i][1] == ' ' || msh->args[i][1] == '-' || \
-			msh->args[i][0] == '+' || msh->args[i][1] == '\0'))//try if echo ~max appends max or not in school if so add for + and - aswell YES IT DOES
+			msh->args[i][1] == '+' || msh->args[i][1] == '\0'))//try if echo ~max appends max or not in school if so add for + and - aswell YES IT DOES
 			{
 				if (get_tilde(msh, &tilde, i)) 
 				{
@@ -263,13 +265,17 @@ static char	**change_variables(t_msh *msh)
 
 int	parser(t_msh *msh)
 {
-	if (!count_quotes(msh->cli))
+	if (*msh->cli)
 	{
-		ft_putstr_fd("error, double quotes don't match.\n", STDERR_FILENO);
-		return (0);
+		if (!count_quotes(msh->cli))
+		{
+			ft_putstr_fd("error, double quotes don't match.\n", STDERR_FILENO);
+			return (0);
+		}
+		trim_cli(&msh->cli);
+		msh->args = split_tokens(&msh->cli, " \t"); 
+		msh->args = change_variables(msh);	///try in school what will show if you append letters to tilde variants
+		return (1);
 	}
-	trim_cli(&msh->cli);
-	msh->args = split_tokens(&msh->cli, " \t"); 
-	msh->args = change_variables(msh);	///try in school what will show if you append letters to tilde variants
-	return (1);
+	return (0);
 }

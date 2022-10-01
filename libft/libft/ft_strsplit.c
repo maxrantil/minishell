@@ -12,95 +12,76 @@
 
 #include "libft.h"
 
-static int	countstrings(const char *s, char c)
+static void	*ft_freemal(char **ret, int index)
 {
-	int	i;
-	int	x;
-
-	i = 0;
-	x = 0;
-	while (s[i])
+	while (index--)
 	{
-		if (s[i] != c && (s[i + 1] == c || s[i + 1] == '\0'))
-			x++;
-		i++;
-	}
-	if (x == 0)
-		x = 1;
-	return (x);
+		if (ret[index])
+			free(ret[index]);
+	}		
+	free(ret);
+	return (NULL);
 }
 
-static int	freearrays(char **arr, int x)
+static int	word_count(char const *s, char c)
 {
-	while (x--)
+	int	state;
+	int	wc;
+
+	wc = 0;
+	state = OUT;
+	while (*s)
 	{
-		if (arr[x])
+		if (*s == c)
+			state = OUT;
+		else if (state == OUT)
 		{
-			free(arr[x]);
-			arr[x] = NULL;
+			state = IN;
+			++wc;
 		}
+		++s;
 	}
-	free(arr);
-	arr = NULL;
-	return (0);
+	return (wc);
 }
 
-static int	count_letters(const char *s, int i, char c)
+static char	**make_ret(char const *s, char c, char **ret)
 {
-	int	j;
+	t_strsplit	a;
 
-	j = 0;
-	while (s[i + j + 1] != c && s[i + j + 1] != '\0')
-		j++;
-	return (j);
-}
-
-static int	cptoarray(char **arr, const char *s, char c)
-{
-	int	i;
-	int	j;
-	int	x;
-	int	count;
-
-	i = 0;
-	j = 0;
-	x = 0;
-	while (s[i])
+	a.i = 0;
+	a.index = 0;
+	while (s[a.i])
 	{
-		count = 0;
-		if (s[i] != c)
+		while (s[a.i] == c)
+			a.i++;
+		a.e = a.i;
+		if (s[a.i] == '\0')
+			break ;
+		while (s[a.e] != c)
 		{
-			j = i;
-			count = count_letters(s, i, c);
-			i += count;
-			arr[x] = ft_strsub(s, j, count + 1);
-			if (!arr[x])
-				return (freearrays(arr, x));
-			x++;
+			a.e++;
+			if (!s[a.e])
+				break ;
 		}
-		i++;
+		ret[a.index] = ft_strsub(s, a.i, a.e - a.i);
+		if (!ret[a.index])
+			return (ft_freemal(ret, a.index));
+		a.index++;
+		a.i = a.e;
 	}
-	return (1);
+	ret[a.index] = NULL;
+	return (ret);
 }
 
-char	**ft_strsplit(const char *s, char c)
+char	**ft_strsplit(char const *s, char c)
 {
-	int		wrdlen;
-	char	**arr;
+	char		**ret;
 
 	if (!s)
 		return (NULL);
-	wrdlen = countstrings(s, c);
-	arr = (char **)ft_memalloc(sizeof(char *) * wrdlen + 1);
-	if (arr && cptoarray(arr, s, c))
-	{
-		arr[wrdlen] = (char *)ft_memalloc(sizeof(char) + 1);
-		if (!arr[wrdlen])
-		{
-			freearrays(arr, wrdlen);
-			return (NULL);
-		}
-		arr[wrdlen] = NULL;
-	}
-	return (arr);
+	ret = (char **)ft_memalloc(sizeof(char *) * word_count(s, c) + 1);
+	if (!ret)
+		return (NULL);
+	ret = make_ret(s, c, ret);
+	return (ret);
 }

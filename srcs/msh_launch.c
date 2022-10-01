@@ -12,27 +12,38 @@
 
 #include "msh.h"
 
+static size_t	count_paths(char *str)
+{
+	size_t	count;
+
+	count = 0;
+	while (*str)
+	{
+		if (*str == ':')
+			count++;
+		str++;
+	}
+	return (count);
+}
+
 static int	check_paths(t_msh *msh)
 {
 	char	*path;
 	char	*dup_paths;
 	size_t	i;
-	size_t	j;
 
 	i = 0;
 	while (msh->env[i])
 	{
 		if (!ft_strncmp(msh->env[i], "PATH=", 5))
 		{
-			msh->paths = (char **)ft_memalloc(sizeof(char *) * MSH_TOK_BUFSIZE);
-			j = 0;
+			msh->paths = (char **)ft_memalloc(sizeof(char *) * count_paths(msh->env[i]));
 			dup_paths = ft_strdup(msh->env[i]);
-			path = ft_strsep(&dup_paths, ":");
+			path = ft_strchr(dup_paths, '=') + 1;
+			i = 0;
 			while (path)
-			{
-				msh->paths[j++] = ft_strchr(path, '/');
-				path = ft_strsep(&dup_paths, ":");
-			}
+				msh->paths[i++] = ft_strdup(ft_strsep(&path, ":"));
+			ft_strdel(&dup_paths);
 			return (1);
 		}
 		i++;
@@ -49,13 +60,16 @@ static char	*verify_arg(t_msh *msh)
 	i = 0;
 	while (msh->paths[i])
 	{
-		verify = (char *)ft_memalloc(sizeof(char) * MAX_PATHLEN);
-		ft_strcpy(verify, msh->paths[i]);
-		ft_strcat(verify, "/");
-		ft_strcat(verify, msh->args[0]);
+		verify = ft_strjoin(msh->paths[i], "/");
+		verify = ft_strupdate(verify, msh->args[0]);
 		if (!lstat(verify, &statbuf))
-			return (verify);
-		free(verify);
+		{
+			ft_strdel(&msh->args[0]);
+			msh->args[0] = ft_strdup(verify);
+			ft_strdel(&verify);
+			return (msh->args[0]);
+		}
+		ft_strdel(&verify);
 		i++;
 	}
 	return (NULL);
@@ -72,9 +86,12 @@ int	msh_launch(t_msh *msh)
 	{
 		execve(msh->args[0], msh->args, msh->env);
 		check_paths(msh);
-		execve(verify_arg(msh), msh->args, msh->env);
-		ft_printf("minishell: %s: ", msh->args[0]);
+		execve(verify_arg(msh), msh->args, msh->env); //how to free this after?
+		ft_putstr_fd("minishell: ", STDERR_FILENO);
+		ft_putstr_fd(msh->args[0], STDERR_FILENO);
+		ft_putstr_fd(": ", STDERR_FILENO);
 		ft_putstr_fd("command not found\n", STDERR_FILENO);
+		free_mem(msh);
 		exit(EXIT_FAILURE);
 	}
 	else if (pid < 0)

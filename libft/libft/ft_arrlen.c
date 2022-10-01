@@ -17,10 +17,7 @@ size_t	ft_arrlen(char **arr)
 	size_t	len;
 
 	len = 0;
-	if (*arr)
-	{
-		while (*arr++)
-			len++;
-	}
+	while (*arr++)
+		len++;
 	return (len);
 }
