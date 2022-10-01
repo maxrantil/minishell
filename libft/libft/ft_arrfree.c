@@ -28,6 +28,5 @@ void	ft_arrfree(char **arr, size_t len)
 		}
 		i++;
 	}
-	free(arr);
-	arr = NULL;
+	ft_strdel(arr);
 }

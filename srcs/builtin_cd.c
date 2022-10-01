@@ -19,7 +19,7 @@
 	get_tilde(msh, &tilde, 1); //change so it will work even if unset HOME is done
 	if (chdir(tilde) != 0)
 		ft_putstr_fd("minishell: cd: HOME not set\n", STDERR_FILENO);
-	free(tilde);
+	ft_strdel(&tilde);
 } */
 
 static void	exec_dash(char **env)
@@ -29,7 +29,7 @@ static void	exec_dash(char **env)
 	oldpwd = get_env_value(env, "OLDPWD=");
 	if (chdir(oldpwd) != 0)
 		ft_putstr_fd("minishell: cd: OLDPWD not set\n", STDERR_FILENO);
-	free(oldpwd);
+	ft_strdel(&oldpwd);
 }
 
 static void	exec_home(char **env)
@@ -39,7 +39,7 @@ static void	exec_home(char **env)
 	home = get_env_value(env, "HOME=");
 	if (chdir(home) != 0)
 		ft_putstr_fd("minishell: cd: HOME not set\n", STDERR_FILENO);
-	free(home);
+	ft_strdel(&home);
 }
 
 int	msh_cd(t_msh *msh)
@@ -48,8 +48,8 @@ int	msh_cd(t_msh *msh)
 		exec_home(msh->env);
 	else if (!ft_strcmp(msh->args[1], "-"))
 		exec_dash(msh->env);
-	/* else if (msh->args[1][0] == '~')
-		exec_tilde(msh); */
+	/* else if (!ft_strcmp(msh->args[1], "~"))
+		exec_tilde(msh->env); */
 	else
 	{
 		if (chdir(msh->args[1]) != 0)

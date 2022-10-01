@@ -48,7 +48,6 @@ static char	**change_oldpwd(char **env, size_t i)
 	}
 	return (set_env_var(env, "OLDPWD=", NULL, i));
 }
-
 char	**update_env_var(t_msh *msh)
 {
 	size_t	i;
@@ -77,6 +76,7 @@ char	**update_pwd(t_msh *msh)
 		{
 			msh->env = change_oldpwd(msh->env, i);
 			change_pwd(msh->env, i);
+			return (msh->env);
 		}
 		i++;
 	}

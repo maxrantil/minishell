@@ -37,19 +37,16 @@ char	**set_env_var(char **env, char *key, char *value, size_t i)
 {
 	char	**new_env;
 	size_t	count;
-	size_t	j;
+	ssize_t	j;
 
 	count = ft_arrlen(env);
-	new_env = (char **)ft_memalloc(count + 2);
-	j = 0;
-	while (j < count)
-	{
+	new_env = (char **)ft_memalloc(sizeof(char *) * count + 1);
+	j = -1;
+	while (env[++j])
 		new_env[j] = ft_strdup(env[j]);
-		j++;
-	}
 	ft_arrfree(env, count);
 	if (!value)
-		new_env[j] = ft_strjoin(key, ft_strchr(new_env[i], '/'));
+		new_env[j] = ft_strjoin(key, ft_strchr(new_env[i], '=') + 1);
 	else
 		new_env[j] = ft_strjoin(key, value);
 	new_env[++j] = NULL;

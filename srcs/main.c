@@ -45,15 +45,16 @@ int	main(void)
 		ft_printf("{yel}${gre}>{nor} ");
 		if (get_next_line(STDIN_FILENO, &msh.cli) == 1)
 		{
-			if (parser(&msh))
+			status = parser(&msh);
+			if (status)
 			{
 				status = exec_args(&msh);
 				msh.env = update_env_var(&msh);
 			}
+			free_mem(&msh);
 		}
 		else
 			ft_putstr_fd("minishell: could not read input\n", STDERR_FILENO);
-		free_mem(&msh);
 	}
 	if (msh.env)
 		ft_arrfree(msh.env, ft_arrlen(msh.env));

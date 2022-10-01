@@ -41,7 +41,7 @@ size_t	env_arrlen(char **arr)
 	while (arr[++i])
 	{
 		/* if (!ft_strncmp(arr[i], "OLDPWD=", 7))
-			continue ; */
+		 	continue ; */
 		len++;
 	}
 	return (len);
@@ -52,31 +52,28 @@ static char	**get_env(void)
 	extern char	**environ;
 	char		**env;
 	int			i;
+	int			j;
 
 	env = NULL;
 	if (*environ)
 	{
 		env = (char **)ft_memalloc(sizeof(char *) * env_arrlen(environ));
+		j = 0;
 		i = -1;
 		while (environ[++i])
 		{
 			if (!ft_strncmp(environ[i], "SHLVL=", 6))
-				env[i] = change_shlvl(environ[i]);
+				env[j] = change_shlvl(environ[i]);
 			/* else if (!ft_strncmp(environ[i], "OLDPWD=", 7))	//will this give me a char** that has one space too much? problem ? if so check for that when you count the len and just -1 if its there.
 				continue ; */
 			else
-				env[i] = ft_strdup(environ[i]);
+				env[j] = ft_strdup(environ[i]);
+			j++;
 		}
 		env[i] = NULL;
 	}
 	return (env);
 }
-
-/* $>dasdads
-$>retur
-fail.
-also
-failed when i just gave wrong argument. */
 
 void	init_msh(t_msh *msh)
 {
