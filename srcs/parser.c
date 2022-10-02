@@ -175,7 +175,8 @@ static char	*get_new_arg(t_msh *msh, char **dollars)
 	size_t	j;
 
 	j = 0;
-	new_arg = ft_strnew(1);
+	new_arg = NULL;
+	new_arg = ft_strnew(1); //thi is somehow a READ error later, i want to return it with NULL if it dosnt find and change.
 	while (dollars[j])
 	{
 		key = ft_strdup(dollars[j]);
@@ -193,10 +194,10 @@ static char	*get_new_arg(t_msh *msh, char **dollars)
 			i++;
 		}
 		ft_strdel(&key);
-		free(dollars[j]);
 		j++;
 	}
-	free(dollars); //ft_strdel
+	ft_arrfree((void **)dollars, ft_arrlen((void *)dollars));
+	ft_memdel((void *)&dollars);
 	return (new_arg);
 }
 
@@ -220,7 +221,8 @@ static void	get_dollar(t_msh *msh, char *dollar, size_t j)
 		msh->args[j] = ft_strdup(new_arg);	
 	}
 	else
-		ft_memset((void *)msh->args[j], '\0', ft_strlen(msh->args[j])); //will this be able to get freed?
+		ft_strdel(&msh->args[j]);
+		// ft_memset((void *)msh->args[j], '\0', ft_strlen(msh->args[j])); //here is a problem after it tries to read in loop in prwvious function.
 	ft_strdel(&new_arg);
 }
 
@@ -248,27 +250,30 @@ static char	**change_variables(t_msh *msh)
 	while (i < arrlen)
 	{
 		j = 0;
-		while (msh->args[i][j])
+		if (msh->args[i])
 		{
-			if (msh->args[i][0] == '~')
+			while (msh->args[i][j])
 			{
-				if (check_tilde(msh->args[i]))
+				if (msh->args[i][0] == '~')
 				{
-					if (get_tilde(msh, &tilde, i)) 
+					if (check_tilde(msh->args[i]))
 					{
-						ft_strdel(&msh->args[i]);
-						msh->args[i] = tilde;
+						if (get_tilde(msh, &tilde, i)) 
+						{
+							ft_strdel(&msh->args[i]);
+							msh->args[i] = tilde;
+						}
 					}
 				}
+				else if (msh->args[i][j] == '$' && (msh->args[i][j + 1] == '_' || ft_isalpha(msh->args[i][j + 1]))) //ft_isascii as second parameter?
+					get_dollar(msh, ft_strchr(msh->args[i], '$'), i);
+				else if (msh->args[i][j] == '$' && msh->args[i][j + 1] == '$') //bonus fun, works alone but not if you append to end of another $variable
+				{
+					ft_strdel(&msh->args[i]);
+					msh->args[i] = ft_itoa(getpid());
+				}
+				j++;
 			}
-			else if (msh->args[i][j] == '$' && (msh->args[i][j + 1] == '_' || ft_isalpha(msh->args[i][j + 1]))) //ft_isascii as second parameter?
-				get_dollar(msh, ft_strchr(msh->args[i], '$'), i);
-			else if (msh->args[i][j] == '$' && msh->args[i][j + 1] == '$') //bonus fun, works alone but not if you append to end of another $variable
-			{
-				ft_strdel(&msh->args[i]);
-				msh->args[i] = ft_itoa(getpid());
-			}
-			j++;
 		}
 		i++;
 	}

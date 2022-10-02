@@ -30,7 +30,7 @@ static void	loop_setenv(t_msh *msh)
 	}
 	msh->env = set_env_var(msh->env, key, \
 	ft_strchr(msh->args[1], '=') + 1, 0);
-	ft_strdel(key);
+	ft_strdel(&key);
 }
 
 int	msh_setenv(t_msh *msh)
