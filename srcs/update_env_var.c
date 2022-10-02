@@ -16,7 +16,7 @@ static char	*change_underscore(t_msh *msh)
 {
 	size_t	last_arg;
 
-	last_arg = ft_arrlen(msh->args) - 1;
+	last_arg = ft_arrlen((void **)msh->args) - 1;
 	if (!ft_strncmp(msh->args[last_arg], "\0", 1) && last_arg > 0)
 		--last_arg;
 	return (ft_strjoin("_=", msh->args[last_arg]));

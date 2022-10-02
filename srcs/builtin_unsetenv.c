@@ -47,7 +47,7 @@ int	msh_unsetenv(t_msh *msh)
 	int	ret;
 
 	ret = 1;
-	if (ft_arrlen(msh->args) == 2)
+	if (ft_arrlen((void **)msh->args) == 2)
 		ret = loop_for_unsetenv(msh);
 	else
 	{

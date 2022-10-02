@@ -30,7 +30,7 @@ int	msh_env(t_msh *msh) // add so you can add temporary env variables
 	size_t	i;
 
 	i = 0;
-	if (ft_arrlen(msh->args) == 1) //needs trimming , test for 'env -i ./minishell' from bash
+	if (ft_arrlen((void **)msh->args) == 1) //needs trimming , test for 'env -i ./minishell' from bash
 	{
 		while (msh->env[i])
 		{

@@ -38,7 +38,7 @@ static void	loop_setenv(t_msh *msh)
 
 int	msh_setenv(t_msh *msh)
 {
-	if (ft_arrlen(msh->args) == 2)
+	if (ft_arrlen((void **)msh->args) == 2)
 	{
 		if (strchr(msh->args[1], '='))
 			loop_setenv(msh);

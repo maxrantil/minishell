@@ -18,7 +18,7 @@ static char	**print_echo(t_msh *msh)
 	size_t	i;
 	size_t	j;
 
-	arrlen = ft_arrlen(msh->args) - 1;
+	arrlen = ft_arrlen((void **)msh->args) - 1;
 	i = 1;
 	while (i <= arrlen)
 	{
