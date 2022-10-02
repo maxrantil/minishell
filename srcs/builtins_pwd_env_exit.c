@@ -32,10 +32,14 @@ int	msh_env(t_msh *msh) // add so you can add temporary env variables
 	i = 0;
 	if (ft_arrlen((void **)msh->args) == 1) //needs trimming , test for 'env -i ./minishell' from bash
 	{
-		while (msh->env[i])
+		ft_printf("1%s\n", msh->env);
+		ft_printf("2%s\n", *msh->env);
+		if (msh->env)
 		{
-			ft_printf("%s\n", msh->env[i]);
-			i++;
+			while (msh->env[i])
+			{
+				ft_printf("%s\n", msh->env[i++]);
+			}
 		}
 	}
 	return (1);

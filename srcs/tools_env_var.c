@@ -45,6 +45,7 @@ char	**set_env_var(char **env, char *key, char *value, size_t i)
 	while (env[++j])
 		new_env[j] = ft_strdup(env[j]);
 	ft_arrfree((void **)env, count);
+	ft_memdel((void *)&env);
 	if (!value)
 		new_env[j++] = ft_strjoin(key, ft_strchr(new_env[i], '=') + 1);
 	else
@@ -72,5 +73,6 @@ char	**unset_env_var(char **env, char *key)
 	}
 	new_env[j] = NULL;
 	ft_arrfree((void **)env, count);
+	ft_memdel((void *)&env);
 	return (new_env);
 }

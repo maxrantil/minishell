@@ -25,7 +25,7 @@ static int	loop_for_unsetenv(t_msh *msh)
 	{
 		if (!ft_strncmp(msh->env[i], key, len))
 		{
-			if (!ft_strncmp(key, "PWD=", 4))
+			if (!ft_strncmp(key, "PWD=", 4)) // delete this
 			{
 				ft_putstr_fd("error, you are not allowed to unset PWD.\n", \
 				STDERR_FILENO);
@@ -33,12 +33,12 @@ static int	loop_for_unsetenv(t_msh *msh)
 				return (2);
 			}
 			msh->env = unset_env_var(msh->env, key);
-			free(key);
+			ft_strdel(&key);
 			return (1);
 		}
 		i++;
 	}
-	free(key);
+	ft_strdel(&key);
 	return (1);
 }
 

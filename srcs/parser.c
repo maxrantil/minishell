@@ -123,8 +123,6 @@ static char	**split_args(t_msh *msh, char **cli, char *delimit)
 			msh->args[i++] = ft_strdup(strsep(&ptr, delimit));
 	}
 	msh->args[i] = NULL;
-	for (int i=0;msh->args[i];i++)
-		ft_printf("args = [%s]\n", msh->args[i]);
 	return (msh->args);
 }
 

@@ -57,8 +57,7 @@ static char	**get_env(char **env)
 	if (*environ)
 	{
 		len = env_arrlen(environ);
-		// ft_printf("len %d\n", len);
-		env = (char **)ft_memalloc(sizeof(char *) * (len + 1));// +1?
+		env = (char **)ft_memalloc(sizeof(char *) * (len)); //what shall i have here? - 1  +1 0?
 		j = 0;
 		i = -1;
 		while (environ[++i])
@@ -69,16 +68,8 @@ static char	**get_env(char **env)
 				continue ;
 			else
 				env[j++] = ft_strdup(environ[i]);
-			// ft_printf("env = %s\n", env[j - 1]);
 		}
-			// ft_printf("0env = %s\n", env[j - 1]);
-			// ft_printf("1env = %s\n", env[j]);
 		env[j] = NULL;
-		// ft_printf("env len : %d\n", ft_arrlen((void **)env));
-		// for (int i=0;env[i];i++)
-			// ft_printf("env[%d]%s\n", i, env[i]);
-			// ft_printf("2env = %s\n", env[j]);
-			// ft_printf("%s\n", environ[i]);
 	}
 	return (env);
 }
@@ -100,13 +91,13 @@ void	free_mem(t_msh *msh)
 {
 	if (msh->args)
 	{
-		ft_printf("HELLO\n");
-		ft_printf("double out %p\n", msh->args);
-		ft_printf("add of out %p\n", &msh->args);
-		ft_arrfree((void *)msh->args, ft_arrlen((void **)msh->args));
+		ft_arrfree((void **)msh->args, ft_arrlen((void **)msh->args));
 		ft_memdel((void *)&msh->args);
 	}
 	if (msh->paths)
+	{
 		ft_arrfree((void **)msh->paths, ft_arrlen((void **)msh->paths));
+		ft_memdel((void *)&msh->paths);
+	}
 	ft_strdel(&msh->cli);
 }

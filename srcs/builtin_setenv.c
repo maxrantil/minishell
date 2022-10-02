@@ -14,12 +14,10 @@
 
 static void	loop_setenv(t_msh *msh)
 {
-	/* char	*key_value; */
 	char	*key;
 	size_t	i;
 
 	i = 0;
-	/* key_value = ft_strtrim_quotes(msh->args[1]); */
 	key = extract_key(msh->args[1]);
 	while (msh->env[i])
 	{
@@ -32,13 +30,12 @@ static void	loop_setenv(t_msh *msh)
 	}
 	msh->env = set_env_var(msh->env, key, \
 	ft_strchr(msh->args[1], '=') + 1, 0);
-	free(key);
-	/* free(key_value); */
+	ft_strdel(key);
 }
 
 int	msh_setenv(t_msh *msh)
 {
-	if (ft_arrlen((void **)msh->args) == 2)
+	if (ft_arrlen((void **)msh->args) == 2) //make it able to set many at the same time instead?
 	{
 		if (strchr(msh->args[1], '='))
 			loop_setenv(msh);
