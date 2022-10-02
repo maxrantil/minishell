@@ -40,37 +40,41 @@ size_t	env_arrlen(char **arr)
 	i = -1;
 	while (arr[++i])
 	{
-		/* if (!ft_strncmp(arr[i], "OLDPWD=", 7))
-		 	continue ; */
+		if (!ft_strncmp(arr[i], "OLDPWD=", 7))
+		 	continue ;
 		len++;
 	}
 	return (len);
 }
 
-static char	**get_env(void)
+static char	**get_env(char **env)
 {
 	extern char	**environ;
-	char		**env;
-	int			i;
-	int			j;
+	ssize_t		len;
+	ssize_t		i;
+	size_t		j;
 
-	env = NULL;
 	if (*environ)
 	{
-		env = (char **)ft_memalloc(sizeof(char *) * env_arrlen(environ));
+		len = env_arrlen( environ);
+		env = (char **)ft_memalloc(sizeof(char *) * (len + 1));// +1?
 		j = 0;
 		i = -1;
 		while (environ[++i])
 		{
 			if (!ft_strncmp(environ[i], "SHLVL=", 6))
-				env[j] = change_shlvl(environ[i]);
-			/* else if (!ft_strncmp(environ[i], "OLDPWD=", 7))	//will this give me a char** that has one space too much? problem ? if so check for that when you count the len and just -1 if its there.
-				continue ; */
+				env[j++] = change_shlvl(environ[i]);
+			else if (!ft_strncmp(environ[i], "OLDPWD=", 7))
+				continue ;
 			else
-				env[j] = ft_strdup(environ[i]);
-			j++;
+				env[j++] = ft_strdup(environ[i]);
+			ft_printf("env = %s\n", env[j - 1]);
 		}
-		env[i] = NULL;
+			// ft_printf("0env = %s\n", env[j - 1]);
+			ft_printf("1env = %s\n", env[j]);
+		env[j] = NULL;
+			ft_printf("2env = %s\n", env[j]);
+			// ft_printf("%s\n", environ[i]);
 	}
 	return (env);
 }
@@ -84,14 +88,15 @@ void	init_msh(t_msh *msh)
 	msh->args = NULL;
 	msh->paths = NULL;
 	msh->cli = NULL;
-	msh->env = get_env();
+	msh->env = NULL;
+	msh->env = get_env(msh->env);
 }
 
 void	free_mem(t_msh *msh)
 {
 	if (msh->args)
-		ft_arrfree(msh->args, ft_arrlen(msh->args));
+		ft_arrfree((void **)&msh->args, ft_arrlen((void **)msh->args));
 	if (msh->paths)
-		ft_arrfree(msh->paths, ft_arrlen(msh->paths));
+		ft_arrfree((void **)&msh->paths, ft_arrlen((void **)msh->paths));
 	ft_strdel(&msh->cli);
 }

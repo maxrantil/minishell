@@ -12,21 +12,26 @@
 
 #include "libft.h"
 
-void	ft_arrfree(char **arr, size_t len)
+void	ft_arrfree(void **arr, size_t len)
 {
-	size_t	i;
+	// size_t	i;
 
 	if (!arr || !len)
 		return ;
-	i = 0;
-	while (i < len)
+	// i = 0;
+	while (len--)
 	{
-		if (arr[i] != NULL)
-		{
-			free(arr[i]);
-			arr[i] = NULL;
-		}
-		i++;
+		// if (arr[len] != NULL)
+		// {
+			ft_memdel(arr[len]);
+			// free(arr[len]);
+			// arr[len] = NULL;
+			// ft_strdel(&arr[len]);
+		// }
+		// i++;
 	}
-	ft_strdel(arr);
+	// ft_strdel(arr);
+	ft_memdel(*arr);
+	// free(arr);
+	// arr = NULL;
 }

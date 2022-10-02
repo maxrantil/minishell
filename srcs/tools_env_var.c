@@ -39,17 +39,17 @@ char	**set_env_var(char **env, char *key, char *value, size_t i)
 	size_t	count;
 	ssize_t	j;
 
-	count = ft_arrlen(env);
-	new_env = (char **)ft_memalloc(sizeof(char *) * count + 1);
+	count = ft_arrlen((void **)env);
+	new_env = (char **)ft_memalloc(sizeof(char *) * (count + 1)); //+ 2? no dont think so
 	j = -1;
 	while (env[++j])
 		new_env[j] = ft_strdup(env[j]);
-	ft_arrfree(env, count);
+	ft_arrfree((void **)env, count);
 	if (!value)
-		new_env[j] = ft_strjoin(key, ft_strchr(new_env[i], '=') + 1);
+		new_env[j++] = ft_strjoin(key, ft_strchr(new_env[i], '=') + 1);
 	else
-		new_env[j] = ft_strjoin(key, value);
-	new_env[++j] = NULL;
+		new_env[j++] = ft_strjoin(key, value);
+	new_env[j] = NULL;
 	return (new_env);
 }
 
@@ -60,17 +60,17 @@ char	**unset_env_var(char **env, char *key)
 	size_t	i;
 	size_t	j;
 
-	count = ft_arrlen(env);
-	new_env = (char **)ft_memalloc(count);
+	count = ft_arrlen((void **)env);
+	new_env = (char **)ft_memalloc(sizeof(char *) * (count - 1)); //check this -1
 	i = 0;
 	j = 0;
-	while (i < count)
+	while (i < count)//char it be =?
 	{
 		if (ft_strncmp(env[i], key, ft_strlen(key)))
 			new_env[j++] = ft_strdup(env[i]);
 		i++;
 	}
 	new_env[j] = NULL;
-	ft_arrfree(env, count);
+	ft_arrfree((void **)env, count);
 	return (new_env);
 }

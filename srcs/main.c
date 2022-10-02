@@ -56,7 +56,7 @@ int	main(void)
 		else
 			ft_putstr_fd("minishell: could not read input\n", STDERR_FILENO);
 	}
-	if (msh.env)
-		ft_arrfree(msh.env, ft_arrlen(msh.env));
+	/* if (msh.env)
+		ft_arrfree((void **)&msh.env, ft_arrlen((void **)msh.env)); */
 	return (0);
 }

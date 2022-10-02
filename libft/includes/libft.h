@@ -107,7 +107,7 @@ int		ft_imax(int a, int b);
 void	ft_swap(int *a, int *b);
 size_t	ft_strcspn(const char *s1, const char *s2);
 char	*ft_strsep(char **stringp, const char *delim);
-size_t	ft_arrlen(char **arr);
-void	ft_arrfree(char **arr, size_t len);
+size_t	ft_arrlen(void **arr);
+void	ft_arrfree(void **arr, size_t len);
 
 #endif

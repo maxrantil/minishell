@@ -12,7 +12,7 @@
 
 #include "msh.h"
 
-static size_t	count_paths(char *str)
+static size_t	count_colon(char *str)
 {
 	size_t	count;
 
@@ -37,7 +37,7 @@ static int	check_paths(t_msh *msh)
 	{
 		if (!ft_strncmp(msh->env[i], "PATH=", 5))
 		{
-			msh->paths = (char **)ft_memalloc(sizeof(char *) * count_paths(msh->env[i]));
+			msh->paths = (char **)ft_memalloc(sizeof(char *) * count_colon(msh->env[i]));
 			dup_paths = ft_strdup(msh->env[i]);
 			path = ft_strchr(dup_paths, '=') + 1;
 			i = 0;
