@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 17:37:30 by mrantil           #+#    #+#             */
-/*   Updated: 2022/09/28 13:53:27 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/10/03 11:05:23 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ char	*get_env_value(char **env, char *var)
 	return (NULL);
 }
 
-char	**set_env_var(char **env, char *key, char *value, size_t i)
+char	**set_env_var(char **env, char *key, char *value)
 {
 	char	**new_env;
 	size_t	count;
@@ -46,9 +46,9 @@ char	**set_env_var(char **env, char *key, char *value, size_t i)
 		new_env[j] = ft_strdup(env[j]);
 	ft_arrfree((void **)env, count);
 	ft_memdel((void *)&env);
-	if (!value)
+	/* if (!value)
 		new_env[j++] = ft_strjoin(key, ft_strchr(new_env[i], '=') + 1);
-	else
+	else */
 		new_env[j++] = ft_strjoin(key, value);
 	new_env[j] = NULL;
 	return (new_env);

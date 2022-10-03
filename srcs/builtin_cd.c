@@ -6,21 +6,17 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 15:16:41 by mrantil           #+#    #+#             */
-/*   Updated: 2022/09/28 15:49:08 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/10/03 11:29:33 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "msh.h"
 
-/* static void	exec_tilde(t_msh *msh)
+static void	exec_tilde(char *arg)
 {
-	char	*tilde;
-
-	get_tilde(msh, &tilde, 1); //change so it will work even if unset HOME is done
-	if (chdir(tilde) != 0)
+	if (chdir(arg) != 0)
 		ft_putstr_fd("minishell: cd: HOME not set\n", STDERR_FILENO);
-	ft_strdel(&tilde);
-} */
+}
 
 static void	exec_dash(char **env)
 {
@@ -44,12 +40,15 @@ static void	exec_home(char **env)
 
 int	msh_cd(t_msh *msh)
 {
+	char	cwd[MAX_PATHLEN];
+	
+	getcwd(cwd, sizeof(cwd));
 	if (!msh->args[1])
 		exec_home(msh->env);
 	else if (!ft_strcmp(msh->args[1], "-"))
 		exec_dash(msh->env);
-	/* else if (!ft_strcmp(msh->args[1], "~"))
-		exec_tilde(msh->env); */
+	else if (!ft_strcmp(msh->args[1], "~"))
+		exec_tilde(msh->args[1]);
 	else
 	{
 		if (chdir(msh->args[1]) != 0)
@@ -58,6 +57,6 @@ int	msh_cd(t_msh *msh)
 			ft_putstr_fd(": No such file or directory\n", STDERR_FILENO);
 		}
 	}
-	msh->env = update_pwd(msh);
+	msh->env = update_pwd(msh, cwd);
 	return (1);
 }

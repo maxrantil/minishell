@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/17 15:09:44 by mrantil           #+#    #+#             */
-/*   Updated: 2022/09/30 17:21:01 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/10/03 10:43:34 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,20 @@ size_t	env_arrlen(char **arr)
 	return (len);
 }
 
+static char **hard_coded_env(char **env)
+{
+	size_t	i;
+
+	i = 0;
+	env = (char **)ft_memalloc(sizeof(char *) * 5);
+	env[i++] = ft_strdup("PATH=/usr/gnu/bin:/usr/local/bin:/bin:/usr/bin:.");
+	env[i++] = ft_strdup("PWD=/Users/mrantil/hive/minishell");
+	env[i++] = ft_strdup("SHLVL=1");
+	env[i++] = ft_strdup("_=/usr/bin/env");
+	env[i] = NULL;
+	return (env);
+}
+
 static char	**get_env(char **env)
 {
 	extern char	**environ;
@@ -57,7 +71,7 @@ static char	**get_env(char **env)
 	if (*environ)
 	{
 		len = env_arrlen(environ);
-		env = (char **)ft_memalloc(sizeof(char *) * (len)); //what shall i have here? - 1  +1 0?
+		env = (char **)ft_memalloc(sizeof(char *) * len); //what shall i have here? - 1  +1 0?
 		j = 0;
 		i = -1;
 		while (environ[++i])
@@ -71,6 +85,8 @@ static char	**get_env(char **env)
 		}
 		env[j] = NULL;
 	}
+	else
+		env = hard_coded_env(env);
 	return (env);
 }
 

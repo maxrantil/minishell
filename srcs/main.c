@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 15:09:44 by mrantil           #+#    #+#             */
-/*   Updated: 2022/09/30 12:36:38 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/10/03 09:15:03 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,6 @@ int	main(void)
 		ft_printf("{yel}${gre}>{nor} ");
 		if (get_next_line(STDIN_FILENO, &msh.cl) == 1)
 		{
-			if (*msh.cl)
-				ft_printf("cl [%s]\n", msh.cl);
 			status = parser(&msh);
 			if (status > 0)
 			{

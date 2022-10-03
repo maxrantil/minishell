@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 10:52:53 by mrantil           #+#    #+#             */
-/*   Updated: 2022/09/30 13:19:54 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/10/03 09:50:06 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,8 +85,9 @@ int	msh_launch(t_msh *msh)
 	if (pid == 0)
 	{
 		execve(msh->args[0], msh->args, msh->env);
-		check_paths(msh);
-		execve(verify_arg(msh), msh->args, msh->env); //how to free this after?
+		if (check_paths(msh))
+			msh->args[0] = verify_arg(msh);
+		execve(msh->args[0], msh->args, msh->env); //how to free this after?
 		ft_putstr_fd("minishell: ", STDERR_FILENO);
 		ft_putstr_fd(msh->args[0], STDERR_FILENO);
 		ft_putstr_fd(": ", STDERR_FILENO);

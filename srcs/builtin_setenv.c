@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 17:22:46 by mrantil           #+#    #+#             */
-/*   Updated: 2022/09/30 09:43:13 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/10/03 11:05:46 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static void	loop_setenv(t_msh *msh)
 		i++;
 	}
 	msh->env = set_env_var(msh->env, key, \
-	ft_strchr(msh->args[1], '=') + 1, 0);
+	ft_strchr(msh->args[1], '=') + 1);
 	ft_strdel(&key);
 }
 

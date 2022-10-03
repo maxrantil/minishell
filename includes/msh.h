@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 11:44:45 by mrantil           #+#    #+#             */
-/*   Updated: 2022/09/30 09:41:04 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/10/03 11:13:26 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ typedef struct s_msh
 	char	**args;
 	char	**env;
 	char	**paths;
-	char	*cli;
+	char	*cl;
 }			t_msh;
 
 /*
@@ -64,8 +64,8 @@ int		msh_launch(t_msh *msh);
 /* char	**update_pwd(char **env); */
 char	*get_env_value(char **env, char *var);
 char	**update_env_var(t_msh *msh);
-char	**update_pwd(t_msh *msh);
-char	**set_env_var(char **env, char *key, char *value, size_t i);
+char	**update_pwd(t_msh *msh, char *oldcwd);
+char	**set_env_var(char **env, char *key, char *value);
 char	**unset_env_var(char **env, char *key);
 
 /* Tools */
