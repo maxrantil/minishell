@@ -14,3 +14,6 @@ echo max' '
 printf "max\n"
 
 ls       -"l"a
+
+$> echo hej"max"wazzap
+zsh: segmentation fault  ./minishell
