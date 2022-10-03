@@ -82,7 +82,7 @@ void	init_msh(t_msh *msh)
 	ft_printf("{blu}******************************************{nor}\n\n");
 	msh->args = NULL;
 	msh->paths = NULL;
-	msh->cli = NULL;
+	msh->cl = NULL;
 	msh->env = NULL;
 	msh->env = get_env(msh->env);
 }
@@ -99,5 +99,5 @@ void	free_mem(t_msh *msh)
 		ft_arrfree((void **)msh->paths, ft_arrlen((void **)msh->paths));
 		ft_memdel((void *)&msh->paths);
 	}
-	ft_strdel(&msh->cli);
+	ft_strdel(&msh->cl);
 }

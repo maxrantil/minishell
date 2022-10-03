@@ -35,23 +35,23 @@ static size_t    count_quotes(char *str)
     return (found);
 }
 
-static void	trim_cli(char **cli)
+static void	trim_cl(char **cl)
 {
 	char	*trimmed;
 
-	trimmed = ft_strtrim(*cli);
-	ft_strdel(cli);
-	*cli = trimmed;
+	trimmed = ft_strtrim(*cl);
+	ft_strdel(cl);
+	*cl = trimmed;
 }
 
-static char *skip_whitespaces(char *cli)
+static char *skip_whitespaces(char *cl)
 {
-	if (cli)
+	if (cl)
 	{
-		while (*cli && ft_isspace(cli))
-			cli++;
+		while (*cl && ft_isspace(cl))
+			cl++;
 	}
-	return (cli);
+	return (cl);
 }
 
 static int	count_arguments(char *str)
@@ -91,20 +91,20 @@ static int	count_arguments(char *str)
     return (args);
 }
 
-static char	**split_args(t_msh *msh, char **cli, char *delimit)
+static char	**split_args(t_msh *msh, char **cl, char *delimit)
 {
 	char	*ptr;
 	size_t	i;
 	size_t	count;
 
-	count = count_arguments(*cli);
+	count = count_arguments(*cl);
 	msh->args = (char **)ft_memalloc(sizeof(char *) * count);
 	if (!msh->args)
 	{
 		ft_putstr_fd("error: malloc args\n", STDERR_FILENO);
 		exit(EXIT_FAILURE);
 	}
-	ptr = *cli;
+	ptr = *cl;
 	i = 0;
 	while (i < count)
 	{
@@ -282,17 +282,17 @@ static char	**change_variables(t_msh *msh)
 
 int	parser(t_msh *msh)
 {
-	trim_cli(&msh->cli);
-	if (*msh->cli)
+	trim_cl(&msh->cl);
+	if (*msh->cl)
 	{
-		if (!count_quotes(msh->cli))
+		if (!count_quotes(msh->cl))
 		{
 			ft_putstr_fd("error, double quotes don't match.\n", STDERR_FILENO);
 			return (0);
 		}
-		msh->args = split_args(msh, &msh->cli, " \t"); 
+		msh->args = split_args(msh, &msh->cl, " \t"); 
 		msh->args = change_variables(msh);
 		return (1);
 	}
-	return (0);
+	return (-1);
 }
