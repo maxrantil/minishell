@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 13:29:40 by mrantil           #+#    #+#             */
-/*   Updated: 2022/10/03 12:04:08 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/10/03 13:25:01 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,12 @@ static char *skip_whitespaces(char *cl)
 {
 	if (cl)
 	{
-		while (*cl && ft_isspace(cl))
+		while (*cl && (*cl == ' ' || *cl == '\t'))
+		{
+			ft_printf("cl %s\n", cl);
+			ft_printf("*cl %d\n", *cl);
 			cl++;
+		}
 	}
 	return (cl);
 }
