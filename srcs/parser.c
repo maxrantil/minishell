@@ -95,14 +95,33 @@ static int	count_arguments(char *str)
     return (args);
 }
 
+static char *remove_char(char *arg, char c)
+{
+	char	**split;
+	char	*ret;
+	size_t	i;
+	size_t	len;
+
+	len = ft_strlen(arg);
+	ret = ft_strnew(len);
+	split = ft_strsplit(arg, c);
+	i = 0;
+	while (split[i])
+		ret = ft_strupdate(ret, split[i++]);
+	ft_arrfree((void **)split, ft_arrlen((void *)split));
+	ft_memdel((void *)&split);
+	return (ret);
+}
+
 static char	**split_args(t_msh *msh, char **cl, char *delimit)
 {
 	char	*ptr;
+	char	*temp;
 	size_t	i;
 	size_t	count;
 
 	count = count_arguments(*cl);
-	msh->args = (char **)ft_memalloc(sizeof(char *) * count);
+	msh->args = (char **)ft_memalloc(sizeof(char *) * (count + 1));
 	if (!msh->args)
 	{
 		ft_putstr_fd("error: malloc args\n", STDERR_FILENO);
@@ -110,25 +129,31 @@ static char	**split_args(t_msh *msh, char **cl, char *delimit)
 	}
 	ptr = *cl;
 	i = 0;
-	// char *ptr_check;
 	while (i < count)
 	{
-		// ptr_check = ptr;
-		ptr = skip_whitespaces(ptr);
-		// if (ptr_check == ptr)
-			// ft_printf("SAME ADDRESS[%s]\n", ptr);
-		if (*ptr == '"')
-		{
-			ptr++;
-			msh->args[i++] = ft_strdup(strsep(&ptr, "\""));
-		} 
-		else if (*ptr == '\'')
-		{
-			ptr++;
-			msh->args[i++] = ft_strdup(strsep(&ptr, "\'"));
-		}
-		else
-			msh->args[i++] = ft_strdup(strsep(&ptr, delimit));
+			ptr = skip_whitespaces(ptr);
+			if (*ptr == '"')
+			{
+				ptr++;
+				msh->args[i] = ft_strdup(strsep(&ptr, "\""));
+			} 
+			else if (*ptr == '\'')
+			{
+				ptr++;
+				msh->args[i] = ft_strdup(strsep(&ptr, "'"));
+			}
+			else
+			{
+				msh->args[i] = ft_strdup(strsep(&ptr, delimit));
+				if (ft_strchr(msh->args[i], '"')) //add single quotes also
+				{
+
+					temp = remove_char(msh->args[i], '"');
+					ft_strdel(&msh->args[i]);
+					msh->args[i] = temp;
+				}
+			}
+			i++;
 	}
 	msh->args[i] = NULL;
 	return (msh->args);
