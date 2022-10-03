@@ -221,8 +221,8 @@ static void	get_dollar(t_msh *msh, char *dollar, size_t j)
 		msh->args[j] = ft_strdup(new_arg);	
 	}
 	else
-		ft_strdel(&msh->args[j]);
-		// ft_memset((void *)msh->args[j], '\0', ft_strlen(msh->args[j])); //here is a problem after it tries to read in loop in prwvious function.
+		ft_memset((void *)msh->args[j], '\0', ft_strlen(msh->args[j])); //here is a problem after it tries to read in loop in prwvious function.
+		//ft_strdel(&msh->args[j]);
 	ft_strdel(&new_arg);
 }
 
