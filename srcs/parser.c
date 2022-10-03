@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 13:29:40 by mrantil           #+#    #+#             */
-/*   Updated: 2022/09/30 17:58:16 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/10/03 12:04:08 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,11 @@ static void	trim_cl(char **cl)
 
 static char *skip_whitespaces(char *cl)
 {
-	if (cl)
-	{
+	/* if (cl)
+	{ */
 		while (*cl && ft_isspace(cl))
 			cl++;
-	}
+	/* } */
 	return (cl);
 }
 
@@ -106,9 +106,13 @@ static char	**split_args(t_msh *msh, char **cl, char *delimit)
 	}
 	ptr = *cl;
 	i = 0;
+	char *ptr_check;
 	while (i < count)
 	{
+		ptr_check = ptr;
 		ptr = skip_whitespaces(ptr);
+		if (ptr_check == ptr)
+			ft_printf("SAME ADDRESS[%s]\n", ptr);
 		if (*ptr == '"')
 		{
 			ptr++;
