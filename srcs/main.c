@@ -59,7 +59,7 @@ int	main(void) //too many lines
 	if (msh.env)
 	{
 		ft_arrfree((void **)msh.env, ft_arrlen((void **)msh.env));
-		ft_memdel((void *)&msh.env);
+		// ft_memdel((void *)&msh.env);
 	}
 	return (0);
 }

@@ -12,12 +12,11 @@
 
 #include "libft.h"
 
-#include <stdio.h>
 void	ft_arrfree(void **arr, size_t len)
 {
 	if (!arr || !len)
 		return ;
 	while (len--)
 		ft_memdel(&arr[len]);
-	ft_memdel(arr);
+	ft_memdel(&(*arr));
 }
