@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 15:16:41 by mrantil           #+#    #+#             */
-/*   Updated: 2022/10/03 11:29:33 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/10/04 17:17:20 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static void	exec_home(char **env)
 int	msh_cd(t_msh *msh)
 {
 	char	cwd[MAX_PATHLEN];
-	
+
 	getcwd(cwd, sizeof(cwd));
 	if (ft_arrlen((void **)msh->args) <= 2)
 	{

@@ -6,7 +6,7 @@
 #    By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/17 18:22:31 by mrantil           #+#    #+#              #
-#    Updated: 2022/09/30 16:49:41 by mrantil          ###   ########.fr        #
+#    Updated: 2022/10/04 17:21:40 by mrantil          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -64,9 +64,10 @@ FILES 		= 	builtin_cd \
 				builtin_unsetenv \
 				builtin_setenv \
 				builtins_pwd_env_exit \
-				init_and_free \
+				init \
 				main \
 				msh_launch \
+				parser_changedollar \
 				parser_changevar \
 				parser_splitargs \
 				parser \

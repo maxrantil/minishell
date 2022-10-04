@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 17:37:30 by mrantil           #+#    #+#             */
-/*   Updated: 2022/10/03 11:05:23 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/10/04 17:34:07 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,16 +40,13 @@ char	**set_env_var(char **env, char *key, char *value)
 	ssize_t	j;
 
 	count = ft_arrlen((void **)env);
-	new_env = (char **)ft_memalloc(sizeof(char *) * (count + 1)); //+ 2? no dont think so
+	new_env = (char **)ft_memalloc(sizeof(char *) * (count + 1));
 	j = -1;
 	while (env[++j])
 		new_env[j] = ft_strdup(env[j]);
 	ft_arrfree((void **)env, count);
 	ft_memdel((void *)&env);
-	/* if (!value)
-		new_env[j++] = ft_strjoin(key, ft_strchr(new_env[i], '=') + 1);
-	else */
-		new_env[j++] = ft_strjoin(key, value);
+	new_env[j++] = ft_strjoin(key, value);
 	new_env[j] = NULL;
 	return (new_env);
 }
@@ -62,10 +59,10 @@ char	**unset_env_var(char **env, char *key)
 	size_t	j;
 
 	count = ft_arrlen((void **)env);
-	new_env = (char **)ft_memalloc(sizeof(char *) * (count - 1)); //check this -1
+	new_env = (char **)ft_memalloc(sizeof(char *) * (count - 1));
 	i = 0;
 	j = 0;
-	while (i < count)//char it be =?
+	while (i < count)
 	{
 		if (ft_strncmp(env[i], key, ft_strlen(key)))
 			new_env[j++] = ft_strdup(env[i]);

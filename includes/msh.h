@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 11:44:45 by mrantil           #+#    #+#             */
-/*   Updated: 2022/10/04 15:07:12 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/10/04 17:21:14 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,11 +53,9 @@ int		msh_unsetenv(t_msh *msh);
 int		msh_exit(t_msh *msh);
 
 /* Init and free */
-void	free_mem(t_msh *msh);
 void	init_msh(t_msh *msh);
 
 /* Parser */
-
 void	split_args(t_msh *msh, char **cl);
 void	change_variables(t_msh *msh);
 
@@ -71,10 +69,12 @@ char	**update_env_var(t_msh *msh);
 char	**update_pwd(t_msh *msh, char *oldcwd);
 char	**set_env_var(char **env, char *key, char *value);
 char	**unset_env_var(char **env, char *key);
+void	get_dollar(t_msh *msh, char *dollar, size_t i);
 
 /* Tools */
 void	print_error(int i);
 char	*extract_key(char *key_value);
+void	free_mem(t_msh *msh);
 
 typedef int			(*t_fptr)(t_msh *msh);
 

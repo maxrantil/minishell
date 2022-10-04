@@ -27,3 +27,8 @@ whyyyyy????
 
 
 malloc protect all allocs
+
+$> echo "dsad"~"dsad"
+dsad/Users/mrantildsad
+bash-3.2$ echo "sadsad"~"dsada"
+sadsad~dsada

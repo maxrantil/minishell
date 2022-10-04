@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_and_free.c                                    :+:      :+:    :+:   */
+/*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/17 15:09:44 by mrantil           #+#    #+#             */
-/*   Updated: 2022/10/03 10:43:34 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/10/04 17:23:50 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static char	*change_shlvl(char *shlvl)
 	return (ret);
 }
 
-size_t	env_arrlen(char **arr)
+static size_t	env_arrlen(char **arr)
 {
 	size_t	len;
 	size_t	i;
@@ -41,20 +41,21 @@ size_t	env_arrlen(char **arr)
 	while (arr[++i])
 	{
 		if (!ft_strncmp(arr[i], "OLDPWD=", 7))
-		 	continue ;
+			continue ;
 		len++;
 	}
 	return (len);
 }
 
-static char **hard_coded_env(char **env)
+static char	**hard_coded_env(char **env)
 {
+	char	cwd[MAX_PATHLEN];
 	size_t	i;
 
 	i = 0;
 	env = (char **)ft_memalloc(sizeof(char *) * 5);
 	env[i++] = ft_strdup("PATH=/usr/gnu/bin:/usr/local/bin:/bin:/usr/bin:.");
-	env[i++] = ft_strdup("PWD=/Users/mrantil/hive/minishell");
+	env[i++] = ft_strdup(getcwd(cwd, sizeof(cwd)));
 	env[i++] = ft_strdup("SHLVL=1");
 	env[i++] = ft_strdup("_=/usr/bin/env");
 	env[i] = NULL;
@@ -71,7 +72,7 @@ static char	**get_env(char **env)
 	if (*environ)
 	{
 		len = env_arrlen(environ);
-		env = (char **)ft_memalloc(sizeof(char *) * len); //what shall i have here? - 1  +1 0?
+		env = (char **)ft_memalloc(sizeof(char *) * len);
 		j = 0;
 		i = -1;
 		while (environ[++i])
@@ -101,19 +102,4 @@ void	init_msh(t_msh *msh)
 	msh->cl = NULL;
 	msh->env = NULL;
 	msh->env = get_env(msh->env);
-}
-
-void	free_mem(t_msh *msh)
-{
-	if (msh->args)
-	{
-		ft_arrfree((void **)msh->args, ft_arrlen((void **)msh->args));
-		ft_memdel((void *)&msh->args);
-	}
-	if (msh->paths)
-	{
-		ft_arrfree((void **)msh->paths, ft_arrlen((void **)msh->paths));
-		ft_memdel((void *)&msh->paths);
-	}
-	ft_strdel(&msh->cl);
 }

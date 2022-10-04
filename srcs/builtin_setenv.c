@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 17:22:46 by mrantil           #+#    #+#             */
-/*   Updated: 2022/10/03 11:05:46 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/10/04 17:17:38 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static void	loop_setenv(t_msh *msh)
 
 int	msh_setenv(t_msh *msh)
 {
-	if (ft_arrlen((void **)msh->args) == 2) //make it able to set many at the same time instead?
+	if (ft_arrlen((void **)msh->args) == 2)
 	{
 		if (strchr(msh->args[1], '='))
 			loop_setenv(msh);

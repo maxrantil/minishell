@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 10:52:53 by mrantil           #+#    #+#             */
-/*   Updated: 2022/10/03 09:50:06 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/10/04 17:31:46 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,8 @@ static int	check_paths(t_msh *msh)
 	{
 		if (!ft_strncmp(msh->env[i], "PATH=", 5))
 		{
-			msh->paths = (char **)ft_memalloc(sizeof(char *) * count_colon(msh->env[i]));
+			msh->paths = \
+			(char **)ft_memalloc(sizeof(char *) * count_colon(msh->env[i]));
 			dup_paths = ft_strdup(msh->env[i]);
 			path = ft_strchr(dup_paths, '=') + 1;
 			i = 0;
@@ -75,21 +76,22 @@ static char	*verify_arg(t_msh *msh)
 	return (NULL);
 }
 
-/* child process pid = 0 */
 int	msh_launch(t_msh *msh)
 {
 	pid_t	pid;
 	int		status;
+	char	*hold;
 
 	pid = fork();
 	if (pid == 0)
 	{
 		execve(msh->args[0], msh->args, msh->env);
+		hold = msh->args[0];
 		if (check_paths(msh))
 			msh->args[0] = verify_arg(msh);
-		execve(msh->args[0], msh->args, msh->env); //how to free this after?
+		execve(msh->args[0], msh->args, msh->env);
 		ft_putstr_fd("minishell: ", STDERR_FILENO);
-		ft_putstr_fd(msh->args[0], STDERR_FILENO);
+		ft_putstr_fd(hold, STDERR_FILENO);
 		ft_putstr_fd(": ", STDERR_FILENO);
 		ft_putstr_fd("command not found\n", STDERR_FILENO);
 		free_mem(msh);

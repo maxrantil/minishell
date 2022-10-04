@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 09:51:16 by mrantil           #+#    #+#             */
-/*   Updated: 2022/10/04 15:07:02 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/10/04 17:24:34 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,19 +38,17 @@ char	*extract_key(char *key_value)
 	return (key);
 }
 
-/* char	*ft_strtrim_quotes(char const *s)
+void	free_mem(t_msh *msh)
 {
-	char		*st;
-	size_t		sl;
-
-	if (!s)
-		return (NULL);
-	while (*s == '\"')
-		s++;
-	sl = ft_strlen(s);
-	if (*s)
-		while (s[sl - 1] == '\"')
-			sl--;
-	st = ft_strsub(s, 0, sl);
-	return (st);
-} */
+	if (msh->args)
+	{
+		ft_arrfree((void **)msh->args, ft_arrlen((void **)msh->args));
+		ft_memdel((void *)&msh->args);
+	}
+	if (msh->paths)
+	{
+		ft_arrfree((void **)msh->paths, ft_arrlen((void **)msh->paths));
+		ft_memdel((void *)&msh->paths);
+	}
+	ft_strdel(&msh->cl);
+}

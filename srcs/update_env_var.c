@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 18:28:00 by mrantil           #+#    #+#             */
-/*   Updated: 2022/10/03 11:26:00 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/10/04 17:33:33 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,14 +43,13 @@ static char	**change_pwd(char **env, char *cwd)
 {
 	size_t	i;
 
-
 	i = 0;
 	while (env[i])
 	{
 		if (!ft_strncmp(env[i], "PWD=", 4))
 		{
 			ft_strdel(&env[i]);
-			env[i] = ft_strjoin("PWD=", cwd); //use strupdate here? make thise two one funtion?
+			env[i] = ft_strjoin("PWD=", cwd);
 			return (env);
 		}
 		i++;
@@ -68,7 +67,7 @@ static char	**change_oldpwd(char **env, char *oldcwd)
 		if (!ft_strncmp(env[i], "OLDPWD=", 7))
 		{
 			ft_strdel(&env[i]);
-			env[i] = ft_strjoin("OLDPWD=", oldcwd); //use strupdate here? make thise two one funtion?
+			env[i] = ft_strjoin("OLDPWD=", oldcwd);
 			return (env);
 		}
 		i++;
@@ -80,7 +79,7 @@ char	**update_pwd(t_msh *msh, char *oldcwd)
 {
 	char	cwd[MAX_PATHLEN];
 
-	msh->env = change_oldpwd(msh->env, oldcwd);
+	msh->env = change_oldpwd(msh->env, oldcwd); //make thses one function for both?
 	getcwd(cwd, sizeof(cwd));
 	msh->env = change_pwd(msh->env, cwd);
 	return (msh->env);

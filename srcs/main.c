@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 15:09:44 by mrantil           #+#    #+#             */
-/*   Updated: 2022/10/03 09:15:03 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/10/04 17:34:56 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static int	exec_args(t_msh *msh)
 {
 	size_t	i;
 
-	if (!msh->args[0] || msh->args[0][0] == '\0') //same thing?
+	if (!msh->args[0] || msh->args[0][0] == '\0')
 		return (1);
 	i = 0;
 	while (i < num_builtins())
@@ -33,7 +33,7 @@ static int	exec_args(t_msh *msh)
 	return (msh_launch(msh));
 }
 
-int	main(void)
+int	main(void) //too many lines
 {
 	t_msh	msh;
 	int		status;
