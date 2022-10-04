@@ -48,7 +48,8 @@ void	free_mem(t_msh *msh)
 	if (msh->paths)
 	{
 		ft_arrfree((void **)msh->paths, ft_arrlen((void **)msh->paths));
-		ft_memdel((void *)&msh->paths);
+		// ft_memdel((void *)&msh->paths);
 	}
 	ft_strdel(&msh->cl);
+	ft_strdel(&msh->hold);
 }

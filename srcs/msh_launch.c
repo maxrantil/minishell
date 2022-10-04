@@ -68,11 +68,12 @@ static char	*verify_arg(t_msh *msh)
 			ft_strdel(&msh->args[0]);
 			msh->args[0] = ft_strdup(verify);
 			ft_strdel(&verify);
-			return (msh->args[0]);
+			return (verify);
 		}
 		ft_strdel(&verify);
 		i++;
 	}
+	ft_strdel(&msh->args[0]);
 	return (NULL);
 }
 
@@ -80,18 +81,17 @@ int	msh_launch(t_msh *msh)
 {
 	pid_t	pid;
 	int		status;
-	char	*hold;
 
 	pid = fork();
 	if (pid == 0)
 	{
 		execve(msh->args[0], msh->args, msh->env);
-		hold = msh->args[0];
+		msh->hold = ft_strdup(msh->args[0]);
 		if (check_paths(msh))
 			msh->args[0] = verify_arg(msh);
 		execve(msh->args[0], msh->args, msh->env);
 		ft_putstr_fd("minishell: ", STDERR_FILENO);
-		ft_putstr_fd(hold, STDERR_FILENO);
+		ft_putstr_fd(msh->hold, STDERR_FILENO);
 		ft_putstr_fd(": ", STDERR_FILENO);
 		ft_putstr_fd("command not found\n", STDERR_FILENO);
 		free_mem(msh);

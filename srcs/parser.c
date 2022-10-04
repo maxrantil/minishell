@@ -12,21 +12,19 @@
 
 #include "msh.h"
 
-static size_t	count_quotes(char *str)
+static size_t	count_quotes(char *p)
 {
-	char	*p;
 	int		found;
 	int		quote;
 
 	found = 1;
-	p = str;
 	while (*p)
 	{
 		if (*p == '\'' || *p == '"')
 		{
 			found = 0;
 			quote = *p++;
-			while (*p != quote && *p)
+			while (*p && *p != quote)
 				p++;
 			if (*p == quote)
 				found = 1;

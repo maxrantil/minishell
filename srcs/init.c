@@ -100,6 +100,7 @@ void	init_msh(t_msh *msh)
 	msh->args = NULL;
 	msh->paths = NULL;
 	msh->cl = NULL;
+	msh->hold = NULL;
 	msh->env = NULL;
 	msh->env = get_env(msh->env);
 }

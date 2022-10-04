@@ -32,3 +32,5 @@ $> echo "dsad"~"dsad"
 dsad/Users/mrantildsad
 bash-3.2$ echo "sadsad"~"dsada"
 sadsad~dsada
+
+check why valgrind errors occur with error commands

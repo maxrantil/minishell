@@ -21,7 +21,7 @@ static int	exec_args(t_msh *msh)
 {
 	size_t	i;
 
-	if (!msh->args[0] || msh->args[0][0] == '\0')
+	if (!msh->args[0])
 		return (1);
 	i = 0;
 	while (i < num_builtins())
@@ -33,7 +33,7 @@ static int	exec_args(t_msh *msh)
 	return (msh_launch(msh));
 }
 
-int	main(void) //too many lines
+int	main(void)
 {
 	t_msh	msh;
 	int		status;
@@ -59,7 +59,7 @@ int	main(void) //too many lines
 	if (msh.env)
 	{
 		ft_arrfree((void **)msh.env, ft_arrlen((void **)msh.env));
-		// ft_memdel((void *)&msh.env);
+		ft_memdel((void *)&msh.env);
 	}
 	return (0);
 }

@@ -39,6 +39,7 @@ typedef struct s_msh
 	char	**env;
 	char	**paths;
 	char	*cl;
+	char	*hold;
 }			t_msh;
 
 /*

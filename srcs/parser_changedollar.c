@@ -62,7 +62,6 @@ static char	*get_new_arg(t_msh *msh, char **dollars)
 		ft_strdel(&key);
 	}
 	ft_arrfree((void **)dollars, ft_arrlen((void *)dollars));
-	ft_memdel((void *)&dollars);
 	return (new_arg);
 }
 

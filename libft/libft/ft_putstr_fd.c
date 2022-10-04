@@ -16,5 +16,5 @@ void	ft_putstr_fd(char const *s, int fd)
 {
 	if (s == NULL)
 		return ;
-	(void)(write(fd, s, ft_strlen(s)) + 1);
+	(void)(write(fd, s, ft_strlen(s)));
 }
