@@ -6,13 +6,13 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 13:29:40 by mrantil           #+#    #+#             */
-/*   Updated: 2022/10/04 12:35:15 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/10/04 14:39:34 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "msh.h"
 
-static size_t    count_quotes(char *str)
+static size_t	count_quotes(char *str)
 {
 	char	*p;
 	int		found;
@@ -55,7 +55,7 @@ int	parser(t_msh *msh)
 			ft_putstr_fd("error, double quotes don't match.\n", STDERR_FILENO);
 			return (-1);
 		}
-		split_args(msh, &msh->cl); 
+		split_args(msh, &msh->cl);
 		change_variables(msh);
 		return (1);
 	}

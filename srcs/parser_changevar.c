@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 12:33:11 by mrantil           #+#    #+#             */
-/*   Updated: 2022/10/04 12:37:06 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/10/04 14:48:12 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ static void	get_dollar(t_msh *msh, char *dollar, size_t i)
 	else if (new_arg)
 	{
 		ft_strdel(&msh->args[i]);
-		msh->args[i] = ft_strdup(new_arg);	
+		msh->args[i] = ft_strdup(new_arg);
 	}
 	else
 		ft_memset((void *)msh->args[i], '\0', ft_strlen(msh->args[i]));
@@ -124,9 +124,33 @@ static	size_t	check_tilde(char *str)
 	return (0);
 }
 
-void	change_variables(t_msh *msh)
+static void	loop_variables(t_msh *msh, size_t i, size_t j)
 {
 	char	*tilde;
+
+	if (msh->args[i][0] == '~')
+	{
+		if (check_tilde(msh->args[i]))
+		{
+			if (get_tilde(msh, &tilde, i))
+			{
+				ft_strdel(&msh->args[i]);
+				msh->args[i] = tilde;
+			}
+		}
+	}
+	else if (msh->args[i][j] == '$' && (msh->args[i][j + 1] == '_' \
+	|| ft_isalpha(msh->args[i][j + 1])))
+		get_dollar(msh, ft_strchr(msh->args[i], '$'), i);
+	else if (msh->args[i][j] == '$' && msh->args[i][j + 1] == '$')
+	{
+		ft_strdel(&msh->args[i]);
+		msh->args[i] = ft_itoa(getpid());
+	}
+}
+
+void	change_variables(t_msh *msh)
+{
 	size_t	arrlen;
 	size_t	i;
 	size_t	j;
@@ -140,24 +164,7 @@ void	change_variables(t_msh *msh)
 		{
 			while (msh->args[i][j] != '\0')
 			{
-				if (msh->args[i][0] == '~')
-				{
-					if (check_tilde(msh->args[i]))
-					{
-						if (get_tilde(msh, &tilde, i)) 
-						{
-							ft_strdel(&msh->args[i]);
-							msh->args[i] = tilde;
-						}
-					}
-				}
-				else if (msh->args[i][j] == '$' && (msh->args[i][j + 1] == '_' || ft_isalpha(msh->args[i][j + 1]))) //ft_isascii as second parameter? echo $PATH~yo should show ~yo after
-					get_dollar(msh, ft_strchr(msh->args[i], '$'), i);
-				else if (msh->args[i][j] == '$' && msh->args[i][j + 1] == '$') //bonus fun, works alone but not if you append to end of another $variable
-				{
-					ft_strdel(&msh->args[i]);
-					msh->args[i] = ft_itoa(getpid());
-				}
+				loop_variables(msh, i, j);
 				j++;
 			}
 		}

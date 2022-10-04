@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 11:44:45 by mrantil           #+#    #+#             */
-/*   Updated: 2022/10/03 11:13:26 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/10/04 15:07:12 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ char	**set_env_var(char **env, char *key, char *value);
 char	**unset_env_var(char **env, char *key);
 
 /* Tools */
+void	print_error(int i);
 char	*extract_key(char *key_value);
 
 typedef int			(*t_fptr)(t_msh *msh);
