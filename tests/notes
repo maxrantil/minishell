@@ -1,0 +1,8 @@
+21sh for split arguments:
+
+if (strchr("<>()|", *p))
+{
+	msh->args[i] = ft_strsub(p, 0, p + 1);
+	p++;
+	continue;
+}

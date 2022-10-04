@@ -43,20 +43,25 @@ int	msh_cd(t_msh *msh)
 	char	cwd[MAX_PATHLEN];
 	
 	getcwd(cwd, sizeof(cwd));
-	if (!msh->args[1])
-		exec_home(msh->env);
-	else if (!ft_strcmp(msh->args[1], "-"))
-		exec_dash(msh->env);
-	else if (!ft_strcmp(msh->args[1], "~"))
-		exec_tilde(msh->args[1]);
-	else
+	if (ft_arrlen((void **)msh->args) <= 2)
 	{
-		if (chdir(msh->args[1]) != 0)
+		if (!msh->args[1])
+			exec_home(msh->env);
+		else if (!ft_strcmp(msh->args[1], "-"))
+			exec_dash(msh->env);
+		else if (!ft_strcmp(msh->args[1], "~"))
+			exec_tilde(msh->args[1]);
+		else
 		{
-			ft_printf("minishell: cd: %s", msh->args[1]);
-			ft_putstr_fd(": No such file or directory\n", STDERR_FILENO);
+			if (chdir(msh->args[1]) != 0)
+			{
+				ft_printf("minishell: cd: %s", msh->args[1]);
+				ft_putstr_fd(": No such file or directory\n", STDERR_FILENO);
+			}
 		}
+		msh->env = update_pwd(msh, cwd);
 	}
-	msh->env = update_pwd(msh, cwd);
+	else
+		ft_putstr_fd("minishell: cd: too many arguments\n", STDERR_FILENO);
 	return (1);
 }

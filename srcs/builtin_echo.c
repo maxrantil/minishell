@@ -12,29 +12,26 @@
 
 #include "msh.h"
 
-static char	**print_echo(t_msh *msh)
+static void	print_echo(t_msh *msh)
 {
 	size_t	arrlen;
 	size_t	i;
 	size_t	j;
 
-	arrlen = ft_arrlen((void **)msh->args) - 1;
+	arrlen = ft_arrlen((void **)msh->args);
 	i = 1;
-	while (i <= arrlen)
+	while (i < arrlen)
 	{
 		j = 0;
 		while (msh->args[i][j] != '\0')
 			write(1, &msh->args[i][j++], 1);
-		if (i != arrlen)
-			ft_putchar(' ');
 		i++;
 	}
-	return (msh->args);
 }
 
 int	msh_echo(t_msh *msh)
 {
-	msh->args = print_echo(msh);
+	print_echo(msh);
 	ft_putchar('\n');
 	return (1);
 }

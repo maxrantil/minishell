@@ -67,6 +67,8 @@ FILES 		= 	builtin_cd \
 				init_and_free \
 				main \
 				msh_launch \
+				parser_changevar \
+				parser_splitargs \
 				parser \
 				tools_env_var \
 				tools \
