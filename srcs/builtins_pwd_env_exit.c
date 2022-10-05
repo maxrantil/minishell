@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 13:33:14 by mrantil           #+#    #+#             */
-/*   Updated: 2022/10/05 11:45:01 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/10/05 13:00:40 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,14 @@ int	msh_env(t_msh *msh) // add so you can add temporary env variables
 	/* struct stat	statbuf; */
 	size_t	i;
 	size_t	arrlen;
+	int		status;
 
 	i = 0;
+	status = 0;
 	arrlen = ft_arrlen((void **)msh->args);
 	if (arrlen == 2)// && ft_strchr(msh->args[1], '=')) //this has the setenv error message
 	{
-		msh_setenv(msh);
+		status = msh_setenv(msh);
 		msh->temp_env = ft_strdup(msh->args[1]);
 	}
 	/* else if (arrlen <= 2 && !ft_strchr(msh->args[2], '=')) //this has the setenv error message
@@ -46,7 +48,7 @@ int	msh_env(t_msh *msh) // add so you can add temporary env variables
 		ft_putstr_fd(msh->args[2], STDERR_FILENO);
 		ft_putstr_fd(": No such file or directory\n", STDERR_FILENO);
 	} */
-	if (arrlen <= 2)
+	if (arrlen <= 2 && status != 2)
 	{
 		if (*msh->env)
 		{
