@@ -40,25 +40,22 @@ char	*extract_key(char *key_value)
 	return (key);
 }
 
-void	free_mem(t_msh *msh)
+void	free_mem(t_msh *msh, ssize_t code)
 {
-	if (msh->temp_env)
+	if (code == 1)
 	{
-		/* printf("HELLO %s\n", msh->args[1]); */
-		msh_unsetenv(msh);
-		ft_strdel(&msh->temp_env);
-		/* printf("HELLO\n"); */
+		if (msh->temp_env)
+		{
+			msh_unsetenv(msh);
+			ft_strdel(&msh->temp_env);
+		}
+		if (msh->args)
+			ft_arrfree((void ***)&msh->args, ft_arrlen((void **)msh->args));
+		if (msh->paths)
+			ft_arrfree((void ***)&msh->paths, ft_arrlen((void **)msh->paths));
+		ft_strdel(&msh->cl);
+		ft_strdel(&msh->hold);
 	}
-	if (msh->args)
-	{
-		ft_arrfree((void **)msh->args, ft_arrlen((void **)msh->args));
-		ft_memdel((void *)&msh->args);
-	}
-	if (msh->paths)
-	{
-		ft_arrfree((void **)msh->paths, ft_arrlen((void **)msh->paths));
-		// ft_memdel((void *)&msh->paths);
-	}
-	ft_strdel(&msh->cl);
-	ft_strdel(&msh->hold);
+	if (code == 2 && msh->env)
+		ft_arrfree((void ***)&msh->env, ft_arrlen((void **)msh->env));
 }

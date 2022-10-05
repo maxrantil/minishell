@@ -48,7 +48,7 @@ CFLAGS		+=	-Wpedantic
 CFLAGS		+=	-O3
 
 LEAK_CHECK	=	-g
-LEAK_CHECK	+=	-fsanitize=address
+#LEAK_CHECK	+=	-fsanitize=address
 
 SOURCES 	= 	srcs
 OBJECTS 	= 	objs

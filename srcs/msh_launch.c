@@ -94,7 +94,7 @@ int	msh_launch(t_msh *msh)
 		ft_putstr_fd(msh->hold, STDERR_FILENO);
 		ft_putstr_fd(": ", STDERR_FILENO);
 		ft_putstr_fd("command not found\n", STDERR_FILENO);
-		free_mem(msh);
+		free_mem(msh, 1);
 		exit(EXIT_FAILURE);
 	}
 	else if (pid < 0)

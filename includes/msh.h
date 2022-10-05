@@ -76,7 +76,7 @@ void	get_dollar(t_msh *msh, char *dollar, size_t i);
 /* Tools */
 void	print_error(int i);
 char	*extract_key(char *key_value);
-void	free_mem(t_msh *msh);
+void	free_mem(t_msh *msh, ssize_t code);
 
 typedef int			(*t_fptr)(t_msh *msh);
 

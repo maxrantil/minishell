@@ -51,15 +51,11 @@ int	main(void)
 				status = exec_args(&msh);
 				msh.env = update_env_var(&msh);
 			}
-			free_mem(&msh);
+			free_mem(&msh, 1);
 		}
 		else
 			ft_putstr_fd("minishell: could not read input\n", STDERR_FILENO);
 	}
-	if (msh.env)
-	{
-		ft_arrfree((void **)msh.env, ft_arrlen((void **)msh.env));
-		ft_memdel((void *)&msh.env);
-	}
+	free_mem(&msh, 2);
 	return (0);
 }
