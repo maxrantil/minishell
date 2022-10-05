@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 11:44:45 by mrantil           #+#    #+#             */
-/*   Updated: 2022/10/04 17:21:14 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/10/05 11:08:36 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ typedef struct s_msh
 	char	*cl;
 	char	*hold;
 	char	*temp_env;
-	ssize_t	temp_env_flag;
 }			t_msh;
 
 /*

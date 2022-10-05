@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 15:09:44 by mrantil           #+#    #+#             */
-/*   Updated: 2022/10/04 17:34:56 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/10/05 11:15:48 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,6 @@ static int	exec_args(t_msh *msh)
 	return (msh_launch(msh));
 }
 
-static void	unset_temp_env(t_msh *msh)
-{
-	unset_env_var(msh->temp_env);
-	ft_strdel(&msh->temp_env);
-}
-
 int	main(void)
 {
 	t_msh	msh;
@@ -51,8 +45,6 @@ int	main(void)
 		ft_printf("{yel}${gre}>{nor} ");
 		if (get_next_line(STDIN_FILENO, &msh.cl) == 1)
 		{
-			if (msh.temp_env_flag) 
-				unset_temp_env(&msh);
 			status = parser(&msh);
 			if (status > 0)
 			{

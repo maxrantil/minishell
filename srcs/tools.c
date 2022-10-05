@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 09:51:16 by mrantil           #+#    #+#             */
-/*   Updated: 2022/10/04 17:24:34 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/10/05 11:41:51 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,13 @@ char	*extract_key(char *key_value)
 
 void	free_mem(t_msh *msh)
 {
+	if (msh->temp_env)
+	{
+		/* printf("HELLO %s\n", msh->args[1]); */
+		msh_unsetenv(msh);
+		ft_strdel(&msh->temp_env);
+		/* printf("HELLO\n"); */
+	}
 	if (msh->args)
 	{
 		ft_arrfree((void **)msh->args, ft_arrlen((void **)msh->args));
