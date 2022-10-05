@@ -103,4 +103,6 @@ void	init_msh(t_msh *msh)
 	msh->hold = NULL;
 	msh->env = NULL;
 	msh->env = get_env(msh->env);
+	msh->temp_env = NULL;
+	msh->temp_env_flag = 0;
 }

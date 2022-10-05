@@ -28,20 +28,28 @@ int	msh_pwd(t_msh *msh)
 int	msh_env(t_msh *msh) // add so you can add temporary env variables
 {
 	size_t	i;
+	size_t	arrlen;
 
 	i = 0;
-	if (ft_arrlen((void **)msh->args) == 1)
+	arrlen = ft_arrlen((void **)msh->args);
+	if (arrlen == 2) //this has the setenv error message
+	{
+		msh->temp_env_flag = 1;
+		msh_setenv(msh);
+		msh->temp_env = ft_strdup(msh->args[1]);
+	}
+	if (arrlen <= 2)
 	{
 		if (*msh->env)
 		{
 			while (msh->env[i])
-			{
 				ft_printf("%s\n", msh->env[i++]);
-			}
 		}
 		else
 			ft_printf("minishell: env: environment is empty\n");
 	}
+	else if (arrlen > 2) 
+		print_error(2); //control so this message is right
 	return (1);
 }
 

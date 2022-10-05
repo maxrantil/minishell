@@ -40,6 +40,8 @@ typedef struct s_msh
 	char	**paths;
 	char	*cl;
 	char	*hold;
+	char	*temp_env;
+	ssize_t	temp_env_flag;
 }			t_msh;
 
 /*

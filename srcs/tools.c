@@ -16,7 +16,9 @@ void	print_error(int i)
 {
 	if (i == 1)
 		ft_putstr_fd("error, invalid argument\n", STDERR_FILENO);
-	exit(1);
+	else if (i == 2)
+		ft_putstr_fd("usage: 'env key=value'\n", STDERR_FILENO);
+	// exit(1);
 }
 
 char	*extract_key(char *key_value)
