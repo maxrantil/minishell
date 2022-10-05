@@ -67,6 +67,7 @@ FILES 		= 	builtin_cd \
 				init \
 				main \
 				msh_launch \
+				parser_changetilde \
 				parser_changedollar \
 				parser_changevar \
 				parser_splitargs \

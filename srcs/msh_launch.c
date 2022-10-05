@@ -68,7 +68,7 @@ static char	*verify_arg(t_msh *msh)
 			ft_strdel(&msh->args[0]);
 			msh->args[0] = ft_strdup(verify);
 			ft_strdel(&verify);
-			return (verify);
+			return (msh->args[0]);
 		}
 		ft_strdel(&verify);
 		i++;

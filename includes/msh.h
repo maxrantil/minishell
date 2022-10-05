@@ -24,6 +24,8 @@
 # include <stdio.h>
 # include <string.h>
 # include <unistd.h>
+/* struct dirent */
+# include <dirent.h>
 /* for lstat */
 # include <sys/stat.h>
 //for linux
@@ -72,6 +74,7 @@ char	**update_pwd(t_msh *msh, char *oldcwd);
 char	**set_env_var(char **env, char *key, char *value);
 char	**unset_env_var(char **env, char *key);
 void	get_dollar(t_msh *msh, char *dollar, size_t i);
+void	tilde(t_msh *msh, size_t i);
 
 /* Tools */
 void	print_error(int i);
