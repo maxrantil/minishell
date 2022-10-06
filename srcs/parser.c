@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 13:29:40 by mrantil           #+#    #+#             */
-/*   Updated: 2022/10/04 14:39:34 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/10/06 15:00:17 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,35 +68,56 @@ int	find_argument_len(char *str)
 	i = 0;
 	while (str[i] && !(ft_isspace(&str[i])))
 	{
-		if (str[i] == '\'' || str[i] == '\"')
+		if (str[i] == '\'' || str[i] == '"')
 			i += find_matching_quote(&str[i], str[i]);
 		i++;
 	}
 	return (i);
 }
 
+//TEsst START HERE
 char	**get_arguments(char *str, int argc)
 {
-	size_t	i;
-	int		j;
+	/* size_t	i; */
+	/* int		j; */
 	int		arg;
+	/* int		quote; */
 	char	**array;
+	char	*begin;
 
 	array = (char **)ft_memalloc(sizeof(char *) * (argc + 1));
 	if (!array)
 		print_error(3);
-	i = 0;
 	arg = 0;
-	while (str[i])
+	/* i = 0; */
+	while (*str)
 	{
-		if (!ft_isspace(&str[i]))
+		// if (!ft_isspace(str))
+		if (!ft_isspace(str))
 		{
-			j = i;
-			i = find_argument_len(&str[i]);
-			array[arg++] = ft_strsub(str, (unsigned int)j, i);
-			i += j - 1;
+			/* if (*str == '"' || *str == '\'')
+			{
+				quote = *str++;
+				begin = str;
+				while (*str && *str != quote)
+					str++;
+				array[arg++] = ft_strsub(begin, 0, str - begin);
+				str++;
+			}
+			else */
+			{
+				begin = str;
+				while (*str && !ft_isspace((const char *)str))
+					str++;
+				array[arg++] = ft_strsub(begin, 0, str - begin);
+			}
+			/* j = i; */
+			/* i = find_argument_len(&str[i]);
+			array[arg++] = ft_strsub(str, j, i);
+			i += j - 1; */
+			str++;
 		}
-		i++;
+		str++;
 	}
 	array[argc] = NULL;
 	return (array);
@@ -128,7 +149,7 @@ static char	*skip_whitespaces(char *ptr)
 	return (ptr);
 }
 
-int	count_arguments(char *str)
+static size_t	count_arguments(char *str)
 {
 	size_t	count;
 
@@ -156,18 +177,17 @@ int	count_arguments(char *str)
 
 void	strip_quotes(char ***args, int argc)
 {
-	int	i;
-	int	a;
-	int	quote1;
-	int	quote2;
-	int	len;
+	ssize_t	i;
+	ssize_t	a;
+	int		quote1;
+	int		quote2;
+	size_t	len;
 
 	a = -1;
 	while (++a < argc)
 	{
 		i = -1;
-		len = (int)ft_strlen((*args)[a]);
-		// ft_printf("---(%s)len(%d)\n", (*args)[a], len);
+		len = ft_strlen((*args)[a]);
 		while ((*args)[a][++i])
 		{
 			if ((*args)[a][i] == '\'' || (*args)[a][i] == '"')
@@ -175,21 +195,8 @@ void	strip_quotes(char ***args, int argc)
 				quote1 = i;
 				quote2 = find_matching_quote(&(*args)[a][i], (*args)[a][i]);
 				quote2 += quote1;
-
-				// ft_printf("beg (%s)(%d - %d)\n", (*args)[a], quote1, quote2);
-				ft_memmove((void *)&(*args)[a][i], (void *)&(*args)[a][i + 1],
-					len - quote1);
-				// ft_printf("mid (%s)(%d)(%d)\n", (*args)[a], quote1, quote2);
-
-				// if ((*args)[a][quote2 - 1] == '\0')
-				// {
-				// 	*args[a][quote2 - 2] = '\0';
-				// }
-				// else
-					ft_memmove((void *)&(*args)[a][quote2 - 1],
-						(void *)&(*args)[a][quote2], len - quote2);
-				// ft_printf("end (%s)(i=%d)\n", (*args)[a], i);
-
+				ft_memmove((void *)&(*args)[a][i], (void *)&(*args)[a][i + 1],len - quote1);
+				ft_memmove((void *)&(*args)[a][quote2 - 1], (void *)&(*args)[a][quote2], len - quote2);
 				i = quote2 - 2; // ?
 			}
 		}
