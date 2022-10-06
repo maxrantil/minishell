@@ -16,27 +16,8 @@ printf "max\n"
 
 
 
-error double quote shall now quit
-
-can i eare the first char in cl after i write?
-
-$> echo "1""1"
-arg count 2
-1
-whyyyyy????
 
 
 malloc protect all allocs
-
-$> echo "dsad"~"dsad"
-dsad/Users/mrantildsad
-bash-3.2$ echo "sadsad"~"dsada"
-sadsad~dsada
-
-check why valgrind errors occur with error commands
-
-
-
-
 
 make all resturns correct! 0 for sucess 1 for fail.

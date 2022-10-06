@@ -43,16 +43,6 @@ static void	trim_cl(char **cl)
 	*cl = trimmed;
 }
 
-int	find_matching_quote(char *str, char quote)
-{
-	int	i;
-
-	i = 1;
-	while (str[i] && str[i] != quote)
-		i++;
-	return (i);
-}
-
 static char	*find_matching_quote2(char *str, char quote)
 {
 	str++;
@@ -61,22 +51,7 @@ static char	*find_matching_quote2(char *str, char quote)
 	return (str);
 }
 
-int	find_argument_len(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i] && !(ft_isspace(&str[i])))
-	{
-		if (str[i] == '\'' || str[i] == '"')
-			i += find_matching_quote(&str[i], str[i]);
-		i++;
-	}
-	return (i);
-}
-
-//TEsst START HERE
-char	**get_arguments(char *str, int argc)
+static char	**get_arguments(char *str, int argc)
 {
 	int		arg;
 	char	**array;
@@ -102,7 +77,7 @@ char	**get_arguments(char *str, int argc)
 	return (array);
 }
 
-int	skip_whitespace(char *str)
+/* int	skip_whitespace(char *str)
 {
 	int	i;
 
@@ -119,7 +94,7 @@ int	skip_whitespace(char *str)
 		}
 	}
 	return (0);
-}
+} */
 
 static char	*skip_whitespaces(char *ptr)
 {
@@ -154,38 +129,45 @@ static size_t	count_arguments(char *str)
 	return (count);
 }
 
-void	strip_quotes(char ***args, int argc)
+static int	find_matching_quote(char *str, char quote)
+{
+	int	i;
+
+	i = 1;
+	while (str[i] && str[i] != quote)
+		i++;
+	return (i);
+}
+
+static void	strip_quotes(char **args)
 {
 	ssize_t	i;
-	ssize_t	a;
 	int		quote1;
 	int		quote2;
 	size_t	len;
 
-	a = -1;
-	while (++a < argc)
+	while (*args)
 	{
 		i = -1;
-		len = ft_strlen((*args)[a]);
-		while ((*args)[a][++i])
+		len = ft_strlen(*args);
+		while ((*args)[++i])
 		{
-			if ((*args)[a][i] == '\'' || (*args)[a][i] == '"')
+			if ((*args)[i] == '\'' || (*args)[i] == '"')
 			{
 				quote1 = i;
-				quote2 = find_matching_quote(&(*args)[a][i], (*args)[a][i]);
+				quote2 = find_matching_quote(&(*args)[i], (*args)[i]);
 				quote2 += quote1;
-				ft_memmove((void *)&(*args)[a][i], (void *)&(*args)[a][i + 1],len - quote1);
-				ft_memmove((void *)&(*args)[a][quote2 - 1], (void *)&(*args)[a][quote2], len - quote2);
-				i = quote2 - 2; // ?
+				ft_memmove((void *)&(*args)[i], (void *)&(*args)[i + 1],  len - quote1);
+				ft_memmove((void *)&(*args)[quote2 - 1], (void *)&(*args)[quote2], len - quote2);
+				i = quote2 - 2;
 			}
 		}
+		args++;
 	}
 }
 
 int	parser(t_msh *msh)
 {
-	int	argc;
-	
 	trim_cl(&msh->cl);
 	if (*msh->cl)
 	{
@@ -194,10 +176,8 @@ int	parser(t_msh *msh)
 			ft_putstr_fd("error, double quotes don't match.\n", STDERR_FILENO);
 			return (-1);
 		}
-		argc = count_arguments(msh->cl);
-		msh->args = get_arguments(msh->cl, argc);
-		strip_quotes(&msh->args, argc);
-		// split_args(msh, &msh->cl);
+		msh->args = get_arguments(msh->cl, count_arguments(msh->cl));
+		strip_quotes(msh->args);
 		change_variables(msh);
 		return (1);
 	}
