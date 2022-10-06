@@ -35,9 +35,8 @@ sadsad~dsada
 
 check why valgrind errors occur with error commands
 
-leaks when executing error command? $> sadasdasd for example?
 
 
-$> cd -
-/Users/mrantil/hive/evaluations/mike_pre_minish
-print line!
+
+
+make all resturns correct! 0 for sucess 1 for fail.

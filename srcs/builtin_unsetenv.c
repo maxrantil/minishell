@@ -12,14 +12,14 @@
 
 #include "msh.h"
 
-static int	loop_for_unsetenv(t_msh *msh)
+static int	loop_for_unsetenv(t_msh *msh, char *arg)
 {
 	char	*key;
 	size_t	i;
 	size_t	len;
 
 	i = 0;
-	key = extract_key(msh->args[1]);
+	key = extract_key(arg);
 	len = ft_strlen(key);
 	while (msh->env[i])
 	{
@@ -36,15 +36,16 @@ static int	loop_for_unsetenv(t_msh *msh)
 
 int	msh_unsetenv(t_msh *msh)
 {
-	if (msh->args[1])
-		loop_for_unsetenv(msh);
-	else
+	size_t	i;
+
+	i = 1;
+	while (msh->args[i])
 	{
-		/* ft_putstr_fd("error, you can only unset one variable at a time.\n", \
-		STDERR_FILENO); */
-		ft_putstr_fd("usage: 'unsetenv key=value', or 'unsetenv key'\n", \
-		STDERR_FILENO);
-		return (2);
+		loop_for_unsetenv(msh, msh->args[i]);
+		i++;
 	}
+	i = 0;
+	while (msh->temp_env[i])
+		loop_for_unsetenv(msh, msh->temp_env[i++]);
 	return (1);
 }

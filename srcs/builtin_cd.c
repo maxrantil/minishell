@@ -20,11 +20,17 @@ static void	exec_tilde(char *arg)
 
 static void	exec_dash(char **env)
 {
+	char	cwd[MAX_PATHLEN];
 	char	*oldpwd;
 
 	oldpwd = get_env_value(env, "OLDPWD=");
 	if (chdir(oldpwd) != 0)
 		ft_putstr_fd("minishell: cd: OLDPWD not set\n", STDERR_FILENO);
+	else
+	{
+		getcwd(cwd, sizeof(cwd));
+		ft_printf("%s\n", cwd);
+	}
 	ft_strdel(&oldpwd);
 }
 

@@ -100,6 +100,6 @@ int	msh_launch(t_msh *msh)
 	else if (pid < 0)
 		ft_putstr_fd("error: pid failed\n", STDERR_FILENO);
 	else
-		waitpid(pid, &status, WUNTRACED);
+		waitpid(pid, &status, WUNTRACED); //how is the correct way to use this?
 	return (1);
 }
