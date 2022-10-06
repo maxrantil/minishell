@@ -26,6 +26,7 @@ static void	print_echo(t_msh *msh)
 		while (msh->args[i][j] != '\0')
 			write(1, &msh->args[i][j++], 1);
 		i++;
+		ft_putchar(' ');
 	}
 }
 

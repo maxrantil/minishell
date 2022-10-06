@@ -34,3 +34,5 @@ bash-3.2$ echo "sadsad"~"dsada"
 sadsad~dsada
 
 check why valgrind errors occur with error commands
+
+leaks when executing error command? $> sadasdasd for example?
