@@ -33,7 +33,7 @@ char	*extract_key(char *key_value)
 
 	i = 0;
 	key = ft_strnew(ft_strlen(key_value));
-	if (strchr(key_value, '='))
+	if (ft_strchr(key_value, '='))
 	{
 		while (key_value[i] != '=')
 			i++;

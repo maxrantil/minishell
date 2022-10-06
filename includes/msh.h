@@ -50,7 +50,7 @@ typedef struct s_msh
 */
 int		msh_cd(t_msh *msh);
 int		msh_echo(t_msh *msh);
-int		msh_pwd(t_msh *msh);
+/* int		msh_pwd(t_msh *msh); */
 int		msh_env(t_msh *msh);
 int		msh_setenv(t_msh *msh);
 int		msh_unsetenv(t_msh *msh);
@@ -66,6 +66,10 @@ void	change_variables(t_msh *msh);
 /* From main */
 int		parser(t_msh *msh);
 int		msh_launch(t_msh *msh);
+
+/* Launcher */
+int		check_paths(t_msh *msh);
+char	*verify_arg(t_msh *msh);
 
 /* Change envirionment variables */
 char	*get_env_value(char **env, char *var);
@@ -86,7 +90,7 @@ typedef int			(*t_fptr)(t_msh *msh);
 static const char	*g_builtin_str[] = {
 	"cd",
 	"echo",
-	"pwd",
+	/* "pwd", */
 	"env",
 	"setenv",
 	"unsetenv",
@@ -96,7 +100,7 @@ static const char	*g_builtin_str[] = {
 static const t_fptr	g_builtin_func[] = {
 	&msh_cd,
 	&msh_echo,
-	&msh_pwd,
+	/* &msh_pwd, */
 	&msh_env,
 	&msh_setenv,
 	&msh_unsetenv,

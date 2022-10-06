@@ -36,18 +36,15 @@ static int	loop_for_unsetenv(t_msh *msh)
 
 int	msh_unsetenv(t_msh *msh)
 {
-	int	ret;
-
-	ret = 1;
-	if (ft_arrlen((void **)msh->args) == 2)
-		ret = loop_for_unsetenv(msh);
+	if (msh->args[1])
+		loop_for_unsetenv(msh);
 	else
 	{
-		ft_putstr_fd("error, you can only unset one variable at a time.\n", \
-		STDERR_FILENO);
+		/* ft_putstr_fd("error, you can only unset one variable at a time.\n", \
+		STDERR_FILENO); */
 		ft_putstr_fd("usage: 'unsetenv key=value', or 'unsetenv key'\n", \
 		STDERR_FILENO);
 		return (2);
 	}
-	return (ret);
+	return (1);
 }

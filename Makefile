@@ -63,7 +63,7 @@ FILES 		= 	builtin_cd \
 				builtin_echo \
 				builtin_unsetenv \
 				builtin_setenv \
-				builtins_pwd_env_exit \
+				builtins_env_exit \
 				init \
 				main \
 				msh_launch \

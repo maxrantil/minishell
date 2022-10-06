@@ -12,22 +12,24 @@
 
 #include "msh.h"
 
-int	msh_pwd(t_msh *msh)
+static char	**switch_args(char **args, size_t len, size_t i)
 {
-	char	cwd[MAX_PATHLEN];
+	char	**new_args;
+	size_t	j;
 
-	if (msh->args)
-	{
-		getcwd(cwd, sizeof(cwd));
-		ft_printf("%s\n", cwd);
-		return (1);
-	}
-	return (0);
+	new_args = (char **)ft_memalloc(sizeof(char *) * len);
+	if (!new_args)
+		print_error(3);
+	j = 0;
+	while (args[i])
+		new_args[j++] = ft_strdup(args[i++]);
+	new_args[j] = NULL;
+	ft_arrfree((void ***)&args, len);
+	return (new_args);
 }
 
-int	msh_env(t_msh *msh) // add so you can add temporary env variables
+int	msh_env(t_msh *msh)
 {
-	/* struct stat	statbuf; */
 	size_t	i;
 	size_t	arrlen;
 	int		status;
@@ -35,20 +37,12 @@ int	msh_env(t_msh *msh) // add so you can add temporary env variables
 	i = 0;
 	status = 0;
 	arrlen = ft_arrlen((void **)msh->args);
-	if (arrlen == 2)// && ft_strchr(msh->args[1], '=')) //this has the setenv error message
+	if (arrlen == 2 && ft_strchr(msh->args[1], '=')) //this has the setenv error message
 	{
 		status = msh_setenv(msh);
 		msh->temp_env = ft_strdup(msh->args[1]);
 	}
-	/* else if (arrlen <= 2 && !ft_strchr(msh->args[2], '=')) //this has the setenv error message
-	{
-		if (lstat(msh->args[2], &statbuf))
-			execve(msh->args[2], msh->args, msh->env);
-		ft_putstr_fd("minishell: ",STDERR_FILENO);
-		ft_putstr_fd(msh->args[2], STDERR_FILENO);
-		ft_putstr_fd(": No such file or directory\n", STDERR_FILENO);
-	} */
-	if (arrlen <= 2 && status != 2)
+	if (arrlen <= 2 && status == 0)
 	{
 		if (*msh->env)
 		{
@@ -57,14 +51,17 @@ int	msh_env(t_msh *msh) // add so you can add temporary env variables
 		}
 		else
 			ft_printf("minishell: env: environment is empty\n");
+		return (1);
 	}
-	/* else if (arrlen > 2) //errormessage is not correct, 
+	else if (!ft_strchr(msh->args[1], '=') && arrlen > 1)
+		msh->args = switch_args(msh->args, arrlen, 1);
+	else if (arrlen > 2)
 	{
-		ft_putstr_fd("minishell: ",STDERR_FILENO);
-		ft_putstr_fd(msh->args[1], STDERR_FILENO);
-		ft_putstr_fd(": No such file or directory\n", STDERR_FILENO);
-		print_error(2); //control so this message is right
-	} */
+		status = msh_setenv(msh);
+		msh->temp_env = ft_strdup(msh->args[1]);
+		msh->args = switch_args(msh->args, arrlen - 1, 2);
+	}
+	msh_launch(msh);
 	return (1);
 }
 

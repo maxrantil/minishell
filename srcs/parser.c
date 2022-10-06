@@ -78,10 +78,7 @@ int	find_argument_len(char *str)
 //TEsst START HERE
 char	**get_arguments(char *str, int argc)
 {
-	/* size_t	i; */
-	/* int		j; */
 	int		arg;
-	/* int		quote; */
 	char	**array;
 	char	*begin;
 
@@ -89,35 +86,17 @@ char	**get_arguments(char *str, int argc)
 	if (!array)
 		print_error(3);
 	arg = 0;
-	/* i = 0; */
 	while (*str)
 	{
-		// if (!ft_isspace(str))
 		if (!ft_isspace(str))
 		{
-			/* if (*str == '"' || *str == '\'')
-			{
-				quote = *str++;
-				begin = str;
-				while (*str && *str != quote)
-					str++;
-				array[arg++] = ft_strsub(begin, 0, str - begin);
+			begin = str;
+			while (*str && !ft_isspace((const char *)str))
 				str++;
-			}
-			else */
-			{
-				begin = str;
-				while (*str && !ft_isspace((const char *)str))
-					str++;
-				array[arg++] = ft_strsub(begin, 0, str - begin);
-			}
-			/* j = i; */
-			/* i = find_argument_len(&str[i]);
-			array[arg++] = ft_strsub(str, j, i);
-			i += j - 1; */
-			str++;
+			array[arg++] = ft_strsub(begin, 0, str - begin);
 		}
-		str++;
+		if (*str)
+			str++;
 	}
 	array[argc] = NULL;
 	return (array);

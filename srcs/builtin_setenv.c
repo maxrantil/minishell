@@ -35,20 +35,12 @@ static void	loop_setenv(t_msh *msh)
 
 int	msh_setenv(t_msh *msh)
 {
-	if (ft_arrlen((void **)msh->args) == 2)
-	{
-		if (strchr(msh->args[1], '='))
-			loop_setenv(msh);
-		else
-		{
-			ft_putstr_fd("usage: setenv key=value\n", STDERR_FILENO);
-			return (2);
-		}
-	}
+	if (strchr(msh->args[1], '='))
+		loop_setenv(msh);
 	else
 	{
-		ft_putstr_fd("error, you can only set one variable at a time.\n", \
-		STDERR_FILENO);
+		/* ft_putstr_fd("error, you can only set one variable at a time.\n", \
+		STDERR_FILENO); */
 		ft_putstr_fd("usage: 'setenv key=value'\n", STDERR_FILENO);
 		return (2);
 	}

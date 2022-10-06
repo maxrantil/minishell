@@ -26,7 +26,7 @@ static size_t	count_colon(char *str)
 	return (count);
 }
 
-static int	check_paths(t_msh *msh)
+int	check_paths(t_msh *msh)
 {
 	char	*path;
 	char	*dup_paths;
@@ -52,7 +52,7 @@ static int	check_paths(t_msh *msh)
 	return (0);
 }
 
-static char	*verify_arg(t_msh *msh)
+char	*verify_arg(t_msh *msh)
 {
 	struct stat	statbuf;
 	char		*verify;
