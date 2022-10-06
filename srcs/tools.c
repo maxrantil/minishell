@@ -18,6 +18,11 @@ void	print_error(int i)
 		ft_putstr_fd("error, invalid argument\n", STDERR_FILENO);
 	else if (i == 2)
 		ft_putstr_fd("usage: 'env key=value'\n", STDERR_FILENO);
+	else if (i == 3)
+	{
+		ft_putstr_fd("error, malloc error\n", STDERR_FILENO);
+		exit(1);
+	}
 	// exit(1);
 }
 

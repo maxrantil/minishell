@@ -48,14 +48,17 @@ int	find_matching_quote(char *str, char quote)
 	int	i;
 
 	i = 1;
-	// ft_printf("		---(%c)", quote);
 	while (str[i] && str[i] != quote)
-	{
-		// ft_printf("(%s) ", &str[i]);
 		i++;
-	}
-		// ft_printf("\n");
 	return (i);
+}
+
+static char	*find_matching_quote2(char *str, char quote)
+{
+	str++;
+	while (*str && *str != quote)
+		str++;
+	return (str);
 }
 
 int	find_argument_len(char *str)
@@ -74,27 +77,26 @@ int	find_argument_len(char *str)
 
 char	**get_arguments(char *str, int argc)
 {
-	int		i;
+	size_t	i;
 	int		j;
 	int		arg;
 	char	**array;
 
 	array = (char **)ft_memalloc(sizeof(char *) * (argc + 1));
 	if (!array)
-		exit(3);
-	i = -1;
+		print_error(3);
+	i = 0;
 	arg = 0;
-	while (str[++i])
+	while (str[i])
 	{
-		// ft_printf("(%d)->", i);
 		if (!ft_isspace(&str[i]))
 		{
 			j = i;
 			i = find_argument_len(&str[i]);
-			array[arg++] = ft_strsub(str, (unsigned int)j, (size_t)i);
-			i += j;
+			array[arg++] = ft_strsub(str, (unsigned int)j, i);
+			i += j - 1;
 		}
-		// ft_printf("(%d)\n", i);
+		i++;
 	}
 	array[argc] = NULL;
 	return (array);
@@ -119,41 +121,37 @@ int	skip_whitespace(char *str)
 	return (0);
 }
 
-int	ms_count_arguments(char *str)
+static char	*skip_whitespaces(char *ptr)
 {
-	int		ret;
-	int		i;
+	while (ft_isspace((const char *)ptr) && *ptr)
+		ptr++;
+	return (ptr);
+}
 
-	ret = 0;
-	i = -1;
-	while (str[++i])
+int	count_arguments(char *str)
+{
+	size_t	count;
+
+	count = 0;
+	while (*str)
 	{
-		// ft_printf("s(%d)", i);
-		if (!ft_isspace(&str[i]))
+		if (!ft_isspace(str))
 		{
-			// ft_printf("	is(%d) ", i);
-			while (!ft_isspace(&str[i]) && str[i])
+			while (!ft_isspace(str) && *str)
 			{
-				if (str[i] == '\'' || str[i] == '\"')
-					i += find_matching_quote(&str[i], str[i]);
-				i++;
+				if (*str == '\'' || *str == '"')
+					str = find_matching_quote2(str, *str);
+				str++;
 			}
-			ret++;
-			// ft_printf("	ie(%d) ", i);
-			if (str[i] == '\0')
+			count++;
+			if (*str == '\0')
 				break ;
 		}
 		else
-		{
-			// ft_printf("	es(%d) ", i);
-			i += skip_whitespace(&str[i]);
-			// ft_printf("	ee(%d) ", i);
-		}
-		// ft_printf("e(%d)\n", i);
+			str = skip_whitespaces(str);
+		str++;
 	}
-	return (ret);
-	// 	      7  10     17		  27='\0'
-	// "hello "  "asddsa"  asd asd
+	return (count);
 }
 
 void	strip_quotes(char ***args, int argc)
@@ -202,7 +200,6 @@ int	parser(t_msh *msh)
 {
 	int	argc;
 	
-	// argc = 0;
 	trim_cl(&msh->cl);
 	if (*msh->cl)
 	{
@@ -211,7 +208,7 @@ int	parser(t_msh *msh)
 			ft_putstr_fd("error, double quotes don't match.\n", STDERR_FILENO);
 			return (-1);
 		}
-		argc = ms_count_arguments(msh->cl);
+		argc = count_arguments(msh->cl);
 		msh->args = get_arguments(msh->cl, argc);
 		strip_quotes(&msh->args, argc);
 		// split_args(msh, &msh->cl);
