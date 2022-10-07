@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 15:30:36 by mrantil           #+#    #+#             */
-/*   Updated: 2022/10/07 18:50:01 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/10/07 20:04:04 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,6 @@ char	**get_arguments(char *str, int argc)
 	size_t	arg;
 
 	array = (char **)ft_memalloc(sizeof(char *) * (argc + 1));
-	if (!array)
-		print_error(NULL, 3);
 	i = -1;
 	arg = 0;
 	while (str[++i])

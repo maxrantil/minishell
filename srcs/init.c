@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/17 15:09:44 by mrantil           #+#    #+#             */
-/*   Updated: 2022/10/07 19:27:57 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/10/07 20:07:31 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,8 @@ static char	*change_shlvl(char *shlvl)
 	else
 		lvl = 1;
 	str_lvl = ft_itoa(lvl);
-	ret = ft_strnew(9);
-	ft_strcpy(ret, "SHLVL=");
-	ft_strcat(ret, str_lvl);
-	ft_strdel(&str_lvl);
+	ret = ft_strdup("SHLVL=");
+	ret = ft_strupdate(ret, str_lvl);
 	return (ret);
 }
 
@@ -62,19 +60,15 @@ static char	**hard_coded_env(char **env)
 	return (env);
 }
 
-static char	**get_env(char **env)
+static char	**get_env(char **env, size_t j, size_t i)
 {
 	extern char	**environ;
 	ssize_t		len;
-	ssize_t		i;
-	size_t		j;
 
 	if (*environ)
 	{
 		len = env_arrlen(environ);
 		env = (char **)ft_memalloc(sizeof(char *) * len);
-		j = 0;
-		i = -1;
 		while (environ[++i])
 		{
 			if (!ft_strncmp(environ[i], "SHLVL=", 6))
@@ -93,6 +87,9 @@ static char	**get_env(char **env)
 
 void	init_msh(t_msh *msh)
 {
+	ssize_t		i;
+	size_t		j;
+
 	ft_printf("\n{blu}******************************************\n");
 	ft_printf("\
 	\t{yel}M{gre}I{red}N{blu}I{mag}S{blu}H{red}E{gre}L{yel}L{cya}\n");
@@ -101,6 +98,8 @@ void	init_msh(t_msh *msh)
 	msh->paths = NULL;
 	msh->cl = NULL;
 	msh->env = NULL;
-	msh->env = get_env(msh->env);
+	j = 0;
+	i = -1;
+	msh->env = get_env(msh->env, j, i);
 	msh->temp_env = NULL;
 }

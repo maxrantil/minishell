@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 16:24:28 by mrantil           #+#    #+#             */
-/*   Updated: 2022/07/13 09:27:47 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/10/07 20:00:06 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,10 @@ void	*ft_memalloc(size_t size)
 
 	mem = malloc(sizeof(mem) * size);
 	if (!mem)
-		return (NULL);
+	{
+		ft_putstr_fd("error, malloc error\n", STDERR_FILENO);
+		exit(1);
+	}
 	ft_bzero(mem, size);
 	return (mem);
 }

@@ -6,7 +6,7 @@
 #    By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/17 18:22:31 by mrantil           #+#    #+#              #
-#    Updated: 2022/10/07 15:36:23 by mrantil          ###   ########.fr        #
+#    Updated: 2022/10/07 19:51:56 by mrantil          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,8 +41,8 @@ MAKEFLAGS	+= --no-print-directory
 
 NAME		=	minishell
 CC			=	gcc
-CFLAGS 		= 	-Wall -Wextra 
-#-Werror
+CFLAGS 		= 	-Wall -Wextra
+CFLAGS		+= 	-Werror
 CFLAGS		+=	-Wunreachable-code -Wtype-limits 
 CFLAGS		+=	-Wpedantic
 CFLAGS		+=	-O3
@@ -75,6 +75,7 @@ FILES 		= 	builtin_cd \
 				parser_strip_quotes \
 				parser \
 				tools_env_var \
+				tools_error \
 				tools \
 				update_env_var \
 

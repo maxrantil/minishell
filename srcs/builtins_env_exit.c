@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 13:33:14 by mrantil           #+#    #+#             */
-/*   Updated: 2022/10/07 19:19:59 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/10/07 20:03:44 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,6 @@ static char	**switch_args(char **args, size_t len, size_t i)
 
 	new_args = \
 	(char **)ft_memalloc(sizeof(char *) * (ft_arrlen((void **)&args[i]) + 1));
-	if (!new_args)
-		print_error(NULL, 3);
 	j = 0;
 	while (args[i])
 		new_args[j++] = ft_strdup(args[i++]);
@@ -40,8 +38,6 @@ static char	**set_tempenv(t_msh *msh, size_t i)
 	while (msh->args[x] && ft_strchr(msh->args[x++], '='))
 		len++;
 	temp_env = (char **)ft_memalloc(sizeof(char *) * (len + 1));
-	if (!temp_env)
-		print_error(NULL,3);
 	x = 0;
 	while (x < len)
 		temp_env[x++] = ft_strdup(msh->args[i++]);

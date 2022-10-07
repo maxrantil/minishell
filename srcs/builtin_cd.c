@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 15:16:41 by mrantil           #+#    #+#             */
-/*   Updated: 2022/10/04 17:17:20 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/10/07 19:43:11 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,10 +60,7 @@ int	msh_cd(t_msh *msh)
 		else
 		{
 			if (chdir(msh->args[1]) != 0)
-			{
-				ft_printf("minishell: cd: %s", msh->args[1]);
-				ft_putstr_fd(": No such file or directory\n", STDERR_FILENO);
-			}
+				print_error(msh->args[1], 5);
 		}
 		msh->env = update_pwd(msh, cwd);
 	}
