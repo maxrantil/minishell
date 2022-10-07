@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 11:44:45 by mrantil           #+#    #+#             */
-/*   Updated: 2022/10/07 15:32:30 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/10/07 16:03:12 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ char	**set_env_var(char **env, char *key, char *value);
 char	**unset_env_var(char **env, char *key);
 void	get_dollar(t_msh *msh, char *dollar, size_t i);
 void	tilde(t_msh *msh, size_t i);
+void	loop_setenv(t_msh *msh, char *arg);
 
 /* Tools */
 void	print_error(int i);

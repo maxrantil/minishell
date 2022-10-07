@@ -6,13 +6,13 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 17:22:46 by mrantil           #+#    #+#             */
-/*   Updated: 2022/10/05 11:39:49 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/10/07 16:45:46 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "msh.h"
 
-static void	loop_setenv(t_msh *msh, char *arg)
+void	loop_setenv(t_msh *msh, char *arg)
 {
 	char	*key;
 	size_t	i;
@@ -42,13 +42,7 @@ int	msh_setenv(t_msh *msh)
 	{
 		if (strchr(msh->args[i], '='))
 			loop_setenv(msh, msh->args[i]);
-		else if (i < 2)
-		{
-			ft_putstr_fd("usage: 'setenv key=value'\n", STDERR_FILENO);
-			return (2);
-		}
 		i++;
-
 	}
 	return (1);
 }
