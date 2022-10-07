@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 15:18:22 by mrantil           #+#    #+#             */
-/*   Updated: 2022/10/07 15:32:02 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/10/07 17:25:47 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,13 @@ void	strip_quotes(char **args)
 				quote1 = i;
 				quote2 = find_matching_quote(&(*args)[i], (*args)[i]);
 				quote2 += quote1;
-				ft_memmove((void *)&(*args)[i], (void *)&(*args)[i + 1],  len - quote1);
-				ft_memmove((void *)&(*args)[quote2 - 1], (void *)&(*args)[quote2], len - quote2);
+				ft_memmove((void *)&(*args)[i], \
+				(void *)&(*args)[i + 1], len - quote1);
+				ft_memmove((void *)&(*args)[quote2 - 1], \
+				(void *)&(*args)[quote2], len - quote2);
 				i = quote2 - 2;
 			}
 		}
-		if (*args)
 		args++;
 	}
 }

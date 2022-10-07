@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 17:22:46 by mrantil           #+#    #+#             */
-/*   Updated: 2022/10/07 16:45:46 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/10/07 17:15:11 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,18 @@ void	loop_setenv(t_msh *msh, char *arg)
 int	msh_setenv(t_msh *msh)
 {
 	size_t	i;
+	size_t	check;
 
 	i = 1;
+	check = 0;
 	while (msh->args[i])
 	{
 		if (strchr(msh->args[i], '='))
+		{
 			loop_setenv(msh, msh->args[i]);
+			check++;
+		}
 		i++;
 	}
-	return (1);
+	return (check);
 }

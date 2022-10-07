@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 13:33:14 by mrantil           #+#    #+#             */
-/*   Updated: 2022/10/07 16:52:23 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/10/07 17:16:49 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,9 @@ static int	env_heart(t_msh *msh, size_t arrlen)
 {
 	size_t	i;
 
-	msh_setenv(msh);
 	i = 1;
-	msh->temp_env = set_tempenv(msh, i);
+	if (msh_setenv(msh))
+		msh->temp_env = set_tempenv(msh, i);
 	while (msh->args[i] && ft_strchr(msh->args[i], '='))
 		i++;
 	if (i < arrlen)

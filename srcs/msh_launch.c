@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 10:52:53 by mrantil           #+#    #+#             */
-/*   Updated: 2022/10/07 14:07:43 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/10/07 17:23:19 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ static int	check_paths(t_msh *msh)
 	{
 		if (!ft_strncmp(msh->env[i], "PATH=", 5))
 		{
-			msh->paths = \
-			(char **)ft_memalloc(sizeof(char *) * (count_colon(msh->env[i]) + 1));
+			msh->paths = (char **)ft_memalloc(sizeof(char *) * \
+			(count_colon(msh->env[i]) + 1));
 			dup_paths = ft_strdup(msh->env[i]);
 			path = ft_strchr(dup_paths, '=') + 1;
 			i = 0;
@@ -98,6 +98,6 @@ int	msh_launch(t_msh *msh)
 	else if (pid < 0)
 		ft_putstr_fd("error: pid failed\n", STDERR_FILENO);
 	else
-		waitpid(pid, &status, WUNTRACED); //how is the correct way to use this?
+		waitpid(pid, &status, 0);
 	return (1);
 }

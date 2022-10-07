@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 12:33:11 by mrantil           #+#    #+#             */
-/*   Updated: 2022/10/07 14:07:18 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/10/07 17:23:51 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static int	get_user(t_msh *msh, char **tilde, size_t i)
 	dp = opendir("/Users");
 	if (!dp)
 	{
-		print_error(1); //make correct code here later
+		print_error(1);
 		return (0);
 	}
 	while (1)

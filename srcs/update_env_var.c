@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 18:28:00 by mrantil           #+#    #+#             */
-/*   Updated: 2022/10/04 17:33:33 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/10/07 17:26:20 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ char	**update_pwd(t_msh *msh, char *oldcwd)
 {
 	char	cwd[MAX_PATHLEN];
 
-	msh->env = change_oldpwd(msh->env, oldcwd); //make thses one function for both?
+	msh->env = change_oldpwd(msh->env, oldcwd);
 	getcwd(cwd, sizeof(cwd));
 	msh->env = change_pwd(msh->env, cwd);
 	return (msh->env);

@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 13:29:40 by mrantil           #+#    #+#             */
-/*   Updated: 2022/10/07 15:23:47 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/10/07 17:23:30 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ int	parser(t_msh *msh)
 			ft_putstr_fd("error, double quotes don't match.\n", STDERR_FILENO);
 			return (-1);
 		}
-		
 		msh->args = get_arguments(msh->cl, count_arguments(msh->cl));
 		strip_quotes(msh->args);
 		change_variables(msh);

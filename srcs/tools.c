@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 09:51:16 by mrantil           #+#    #+#             */
-/*   Updated: 2022/10/07 15:32:23 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/10/07 17:16:56 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ void	print_error(int i)
 		ft_putstr_fd("error, malloc error\n", STDERR_FILENO);
 		exit(1);
 	}
-	// exit(1);
 }
 
 char	*extract_key(char *key_value)
@@ -52,7 +51,8 @@ void	free_mem(t_msh *msh, ssize_t code)
 		if (msh->temp_env)
 		{
 			msh_unsetenv(msh);
-			ft_arrfree((void ***)&msh->temp_env, ft_arrlen((void **)msh->temp_env));
+			ft_arrfree(\
+			(void ***)&msh->temp_env, ft_arrlen((void **)msh->temp_env));
 		}
 		if (msh->args)
 			ft_arrfree((void ***)&msh->args, ft_arrlen((void **)msh->args));
