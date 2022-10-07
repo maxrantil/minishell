@@ -40,12 +40,10 @@ int	msh_unsetenv(t_msh *msh)
 
 	i = 1;
 	while (msh->args[i])
-	{
-		loop_for_unsetenv(msh, msh->args[i]);
-		i++;
-	}
+		loop_for_unsetenv(msh, msh->args[i++]);
 	i = 0;
-	while (msh->temp_env[i])
-		loop_for_unsetenv(msh, msh->temp_env[i++]);
+	if (msh->temp_env)
+		while (msh->temp_env[i])
+			loop_for_unsetenv(msh, msh->temp_env[i++]);
 	return (1);
 }

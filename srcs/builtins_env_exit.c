@@ -75,14 +75,15 @@ int	msh_env(t_msh *msh)
 			ft_printf("minishell: env: environment is empty\n");
 		return (1);
 	}
-	else if (!ft_strchr(msh->args[1], '=') && arrlen > 1)
-		msh->args = switch_args(msh->args, arrlen, 1);
 	else if (arrlen > 2)
 	{
-		status = msh_setenv(msh);
-		i = 0;
+		msh_setenv(msh);
+		i = 1;
 		msh->temp_env = set_tempenv(msh, i);
-		msh->args = switch_args(msh->args, arrlen - 1, 2);
+		// i = 1;
+		while (ft_strchr(msh->args[i], '='))
+			i++;
+		msh->args = switch_args(msh->args, arrlen - 1, i);
 	}
 	msh_launch(msh);
 	return (1);

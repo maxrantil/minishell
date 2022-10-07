@@ -26,7 +26,7 @@ static size_t	count_colon(char *str)
 	return (count);
 }
 
-int	check_paths(t_msh *msh)
+static int	check_paths(t_msh *msh)
 {
 	char	*path;
 	char	*dup_paths;
@@ -38,12 +38,13 @@ int	check_paths(t_msh *msh)
 		if (!ft_strncmp(msh->env[i], "PATH=", 5))
 		{
 			msh->paths = \
-			(char **)ft_memalloc(sizeof(char *) * count_colon(msh->env[i]));
+			(char **)ft_memalloc(sizeof(char *) * (count_colon(msh->env[i]) + 1));
 			dup_paths = ft_strdup(msh->env[i]);
 			path = ft_strchr(dup_paths, '=') + 1;
 			i = 0;
 			while (path)
 				msh->paths[i++] = ft_strdup(ft_strsep(&path, ":"));
+			msh->paths[i] = NULL;
 			ft_strdel(&dup_paths);
 			return (1);
 		}
@@ -52,7 +53,7 @@ int	check_paths(t_msh *msh)
 	return (0);
 }
 
-char	*verify_arg(t_msh *msh)
+static char	*verify_arg(t_msh *msh)
 {
 	struct stat	statbuf;
 	char		*verify;

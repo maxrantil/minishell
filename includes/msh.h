@@ -68,8 +68,8 @@ int		parser(t_msh *msh);
 int		msh_launch(t_msh *msh);
 
 /* Launcher */
-int		check_paths(t_msh *msh);
-char	*verify_arg(t_msh *msh);
+/* int		check_paths(t_msh *msh);
+char	*verify_arg(t_msh *msh); */
 
 /* Change envirionment variables */
 char	*get_env_value(char **env, char *var);
