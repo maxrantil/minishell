@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtins_pwd_env_exit.c                            :+:      :+:    :+:   */
+/*   builtins_env_exit.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 13:33:14 by mrantil           #+#    #+#             */
-/*   Updated: 2022/10/05 13:00:40 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/10/07 14:41:32 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,6 @@ int	msh_env(t_msh *msh)
 		msh_setenv(msh);
 		i = 1;
 		msh->temp_env = set_tempenv(msh, i);
-		// i = 1;
 		while (ft_strchr(msh->args[i], '='))
 			i++;
 		msh->args = switch_args(msh->args, arrlen - 1, i);

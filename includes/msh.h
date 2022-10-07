@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 11:44:45 by mrantil           #+#    #+#             */
-/*   Updated: 2022/10/05 11:08:36 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/10/07 15:32:30 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ typedef struct s_msh
 	char	**env;
 	char	**paths;
 	char	*cl;
-	char	*hold;
 	char	**temp_env;
 }			t_msh;
 
@@ -60,7 +59,9 @@ int		msh_exit(t_msh *msh);
 void	init_msh(t_msh *msh);
 
 /* Parser */
-void	split_args(t_msh *msh, char **cl);
+size_t	count_arguments(char *str);
+char	**get_arguments(char *str, int argc);
+void	strip_quotes(char **args);
 void	change_variables(t_msh *msh);
 
 /* From main */
@@ -84,6 +85,7 @@ void	tilde(t_msh *msh, size_t i);
 void	print_error(int i);
 char	*extract_key(char *key_value);
 void	free_mem(t_msh *msh, ssize_t code);
+int		find_matching_quote(char *str, char quote);
 
 typedef int			(*t_fptr)(t_msh *msh);
 

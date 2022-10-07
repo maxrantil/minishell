@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 09:51:16 by mrantil           #+#    #+#             */
-/*   Updated: 2022/10/05 11:41:51 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/10/07 15:32:23 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,17 @@ void	free_mem(t_msh *msh, ssize_t code)
 		if (msh->paths)
 			ft_arrfree((void ***)&msh->paths, ft_arrlen((void **)msh->paths));
 		ft_strdel(&msh->cl);
-		ft_strdel(&msh->hold);
 	}
 	if (code == 2 && msh->env)
 		ft_arrfree((void ***)&msh->env, ft_arrlen((void **)msh->env));
+}
+
+int	find_matching_quote(char *str, char quote)
+{
+	int	i;
+
+	i = 1;
+	while (str[i] && str[i] != quote)
+		i++;
+	return (i);
 }

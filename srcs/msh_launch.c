@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 10:52:53 by mrantil           #+#    #+#             */
-/*   Updated: 2022/10/04 17:31:46 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/10/07 14:07:43 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,15 +67,13 @@ static char	*verify_arg(t_msh *msh)
 		if (!lstat(verify, &statbuf))
 		{
 			ft_strdel(&msh->args[0]);
-			msh->args[0] = ft_strdup(verify);
-			ft_strdel(&verify);
+			msh->args[0] = verify;
 			return (msh->args[0]);
 		}
 		ft_strdel(&verify);
 		i++;
 	}
-	ft_strdel(&msh->args[0]);
-	return (NULL);
+	return (msh->args[0]);
 }
 
 int	msh_launch(t_msh *msh)
@@ -87,12 +85,11 @@ int	msh_launch(t_msh *msh)
 	if (pid == 0)
 	{
 		execve(msh->args[0], msh->args, msh->env);
-		msh->hold = ft_strdup(msh->args[0]);
 		if (check_paths(msh))
 			msh->args[0] = verify_arg(msh);
 		execve(msh->args[0], msh->args, msh->env);
 		ft_putstr_fd("minishell: ", STDERR_FILENO);
-		ft_putstr_fd(msh->hold, STDERR_FILENO);
+		ft_putstr_fd(msh->args[0], STDERR_FILENO);
 		ft_putstr_fd(": ", STDERR_FILENO);
 		ft_putstr_fd("command not found\n", STDERR_FILENO);
 		free_mem(msh, 1);

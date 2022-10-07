@@ -6,7 +6,7 @@
 #    By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/17 18:22:31 by mrantil           #+#    #+#              #
-#    Updated: 2022/10/05 11:43:49 by mrantil          ###   ########.fr        #
+#    Updated: 2022/10/07 15:34:00 by mrantil          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -67,10 +67,12 @@ FILES 		= 	builtin_cd \
 				init \
 				main \
 				msh_launch \
-				parser_changetilde \
 				parser_changedollar \
+				parser_changetilde \
 				parser_changevar \
-				parser_splitargs \
+				parser_count_arguments \
+				parser_get_arguments \
+				parser_strip_quotes \
 				parser \
 				tools_env_var \
 				tools \
