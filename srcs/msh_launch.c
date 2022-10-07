@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 10:52:53 by mrantil           #+#    #+#             */
-/*   Updated: 2022/10/07 17:23:19 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/10/07 19:14:35 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,9 @@ static char	*verify_arg(t_msh *msh)
 	size_t		i;
 
 	i = 0;
-	while (msh->paths[i])
+	while (msh->paths[i] \
+	&& !ft_strequ(msh->args[0], ".") \
+	&& !ft_strequ(msh->args[0], ".."))
 	{
 		verify = ft_strjoin(msh->paths[i], "/");
 		verify = ft_strupdate(verify, msh->args[0]);
@@ -88,10 +90,7 @@ int	msh_launch(t_msh *msh)
 		if (check_paths(msh))
 			msh->args[0] = verify_arg(msh);
 		execve(msh->args[0], msh->args, msh->env);
-		ft_putstr_fd("minishell: ", STDERR_FILENO);
-		ft_putstr_fd(msh->args[0], STDERR_FILENO);
-		ft_putstr_fd(": ", STDERR_FILENO);
-		ft_putstr_fd("command not found\n", STDERR_FILENO);
+		print_error(msh->args[0], 4);
 		free_mem(msh, 1);
 		exit(EXIT_FAILURE);
 	}

@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 11:44:45 by mrantil           #+#    #+#             */
-/*   Updated: 2022/10/07 16:03:12 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/10/07 19:04:36 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ void	tilde(t_msh *msh, size_t i);
 void	loop_setenv(t_msh *msh, char *arg);
 
 /* Tools */
-void	print_error(int i);
+void	print_error(char *arg, int i);
 char	*extract_key(char *key_value);
 void	free_mem(t_msh *msh, ssize_t code);
 int		find_matching_quote(char *str, char quote);

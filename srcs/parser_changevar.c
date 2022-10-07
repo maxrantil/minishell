@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 12:33:11 by mrantil           #+#    #+#             */
-/*   Updated: 2022/10/07 15:15:23 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/10/07 19:16:13 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	change_variables(t_msh *msh)
 	size_t	j;
 
 	arrlen = ft_arrlen((void **)msh->args);
-	i = 1;
+	i = 0;
 	while (i < arrlen)
 	{
 		j = 0;

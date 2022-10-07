@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/17 15:09:44 by mrantil           #+#    #+#             */
-/*   Updated: 2022/10/07 14:07:59 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/10/07 19:27:57 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static char	**hard_coded_env(char **env)
 	i = 0;
 	env = (char **)ft_memalloc(sizeof(char *) * 5);
 	env[i++] = ft_strdup("PATH=/usr/gnu/bin:/usr/local/bin:/bin:/usr/bin:.");
-	env[i++] = ft_strdup(getcwd(cwd, sizeof(cwd)));
+	env[i++] = ft_strjoin("PWD=", getcwd(cwd, sizeof(cwd)));
 	env[i++] = ft_strdup("SHLVL=1");
 	env[i++] = ft_strdup("_=/usr/bin/env");
 	env[i] = NULL;
