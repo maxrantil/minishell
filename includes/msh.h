@@ -28,9 +28,10 @@
 # include <dirent.h>
 /* for lstat */
 # include <sys/stat.h>
-//for linux
-/* # include <sys/wait.h>
-# include <sys/types.h> */
+#ifdef __linux__
+# include <sys/wait.h>
+# include <sys/types.h>
+#endif
 
 # define MSH_TOK_BUFSIZE 64
 # define MAX_PATHLEN 1024

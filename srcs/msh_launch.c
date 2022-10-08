@@ -87,7 +87,7 @@ int	msh_launch(t_msh *msh)
 	if (pid == 0)
 	{
 		execve(msh->args[0], msh->args, msh->env);
-		if (check_paths(msh))
+		if (msh->args[0][0] != '.' && check_paths(msh))
 			msh->args[0] = verify_arg(msh);
 		execve(msh->args[0], msh->args, msh->env);
 		print_error(msh->args[0], 4);
