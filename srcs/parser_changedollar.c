@@ -41,7 +41,7 @@ static char	*get_new_arg(t_msh *msh, char **dollars)
 {
 	char	*key;
 	char	*new_arg;
-	size_t	i;
+	ssize_t	i;
 	ssize_t	j;
 
 	j = -1;
@@ -49,15 +49,14 @@ static char	*get_new_arg(t_msh *msh, char **dollars)
 	while (dollars[++j])
 	{
 		key = ft_strjoin(dollars[j], "=");
-		i = 0;
-		while (msh->env[i])
+		i = -1;
+		while (msh->env[i++])
 		{
 			if (!ft_strncmp(msh->env[i], key, ft_strlen(key)))
 			{
 				change_new_arg(msh, &new_arg, i);
 				break ;
 			}
-			i++;
 		}
 		ft_strdel(&key);
 	}

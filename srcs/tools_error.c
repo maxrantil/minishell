@@ -18,6 +18,10 @@ static void	print_status(int status)
 		ft_putstr_fd(": No such file or directory\n", STDERR_FILENO);
 	if (status == -2)
 		ft_putstr_fd(": Permission denied\n", STDERR_FILENO);
+	if (status == 0)
+		ft_putstr_fd(": Is a directory\n", STDERR_FILENO);
+
+	
 }
 
 static int	check_address(char *addr)
@@ -40,7 +44,7 @@ static void	print_usage(char *arg, int status)
 	}
 	ft_putstr_fd("minishell: ", STDERR_FILENO);
 	ft_putstr_fd(arg, STDERR_FILENO);
-	if (!status)
+	if (!ft_strchr(arg, '/'))
 		ft_putstr_fd(": command not found\n", STDERR_FILENO);
 	else
 		print_status(status);
