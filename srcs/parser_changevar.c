@@ -17,7 +17,7 @@ static void	find_variables(t_msh *msh, size_t i, size_t j)
 	if (msh->args[i][0] == '~')
 		tilde(msh, i);
 	else if (msh->args[i][j] == '$' && (msh->args[i][j + 1] == '_' \
-	|| ft_isalpha(msh->args[i][j + 1])))
+	|| ft_isalnum(msh->args[i][j + 1])))
 		get_dollar(msh, ft_strchr(msh->args[i], '$'), i);
 	else if (msh->args[i][j] == '$' && msh->args[i][j + 1] == '$')
 	{
