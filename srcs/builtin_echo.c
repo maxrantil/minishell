@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/27 14:34:59 by mrantil           #+#    #+#             */
-/*   Updated: 2022/09/28 17:16:00 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/10/11 11:41:16 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,9 @@ static void	print_echo(t_msh *msh)
 		j = 0;
 		while (msh->args[i][j] != '\0')
 			write(1, &msh->args[i][j++], 1);
+		if (msh->args[i][0] != '\0')
+			ft_putchar(' ');
 		i++;
-		ft_putchar(' ');
 	}
 }
 
