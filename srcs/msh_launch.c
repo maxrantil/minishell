@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 10:52:53 by mrantil           #+#    #+#             */
-/*   Updated: 2022/10/07 20:03:59 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/10/12 16:52:25 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,8 @@ static char	*verify_arg(t_msh *msh)
 	i = 0;
 	while (msh->paths[i] \
 	&& !ft_strequ(msh->args[0], ".") \
-	&& !ft_strequ(msh->args[0], ".."))
+	&& !ft_strequ(msh->args[0], "..") \
+	&& msh->args[0][0] != '\0')
 	{
 		verify = ft_strjoin(msh->paths[i], "/");
 		verify = ft_strupdate(verify, msh->args[0]);

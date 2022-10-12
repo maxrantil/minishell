@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/17 15:09:44 by mrantil           #+#    #+#             */
-/*   Updated: 2022/10/12 12:32:41 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/10/12 15:53:58 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,8 @@ void	init_msh(t_msh *msh)
 	ssize_t		i;
 	size_t		j;
 
+	ft_putstr("\033[2J");
+	ft_putstr("\033[H");
 	ft_printf("\n{blu}******************************************\n");
 	ft_printf("\
 	\t{yel}M{gre}I{red}N{blu}I{mag}S{blu}H{red}E{gre}L{yel}L{cya}\n");

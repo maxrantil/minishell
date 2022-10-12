@@ -6,7 +6,7 @@
 #    By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/17 18:22:31 by mrantil           #+#    #+#              #
-#    Updated: 2022/10/12 12:34:21 by mrantil          ###   ########.fr        #
+#    Updated: 2022/10/12 16:20:46 by mrantil          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,8 +47,8 @@ CFLAGS		+= 	-Werror
 #CFLAGS		+=	-Wpedantic
 CFLAGS		+=	-O3
 
-#LEAK_CHECK	=	-g
-#LEAK_CHECK	+=	-fsanitize=address
+LEAK_CHECK	=	-g
+LEAK_CHECK	+=	-fsanitize=address
 
 SOURCES 	= 	srcs
 OBJECTS 	= 	objs

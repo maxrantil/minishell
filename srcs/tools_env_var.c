@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 17:37:30 by mrantil           #+#    #+#             */
-/*   Updated: 2022/10/04 17:34:07 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/10/12 16:01:24 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ char	**unset_env_var(char **env, char *key)
 	size_t	j;
 
 	count = ft_arrlen((void **)env);
-	new_env = (char **)ft_memalloc(sizeof(char *) * (count - 1));
+	new_env = (char **)ft_memalloc(sizeof(char *) * count);
 	i = 0;
 	j = 0;
 	while (i < count)

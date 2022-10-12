@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 19:45:05 by mrantil           #+#    #+#             */
-/*   Updated: 2022/10/12 10:23:04 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/10/12 16:32:22 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,13 @@ static void	print_usage(char *arg, int status)
 		print_status(status);
 }
 
+static void	print_setenv_error(char *arg)
+{
+	ft_putstr_fd("minishell: setenv: `", STDERR_FILENO);
+	ft_putstr_fd(arg, STDERR_FILENO);
+	ft_putstr_fd("': not a valid identifier\n", STDERR_FILENO);
+}
+
 void	print_error(char *arg, int i)
 {
 	int	status;
@@ -69,4 +76,6 @@ void	print_error(char *arg, int i)
 		ft_printf("minishell: cd: %s", arg);
 		print_status(status);
 	}
+	else if (i == 6)
+		print_setenv_error(arg);
 }

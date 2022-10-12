@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 13:33:14 by mrantil           #+#    #+#             */
-/*   Updated: 2022/10/07 20:03:44 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/10/12 16:46:15 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,15 @@ static char	**switch_args(char **args, size_t len, size_t i)
 	size_t	j;
 
 	new_args = \
-	(char **)ft_memalloc(sizeof(char *) * (ft_arrlen((void **)&args[i]) + 1));
+	(char **)ft_memalloc(sizeof(char *) * (len - i + 1));
 	j = 0;
+		/* printf("LEN: %ld\n", len - i + 1);
+		printf("ARGS: %s\n", args[i]); */
 	while (args[i])
 		new_args[j++] = ft_strdup(args[i++]);
 	new_args[j] = NULL;
+	/* for (int x = 0; new_args[x]; x++)
+		printf("NEW ARGS: %s\n", new_args[x]); */
 	ft_arrfree((void ***)&args, len);
 	return (new_args);
 }
@@ -50,8 +54,14 @@ static int	env_heart(t_msh *msh, size_t arrlen)
 	size_t	i;
 
 	i = 1;
-	if (msh_setenv(msh) == 2)
-		msh->temp_env = set_tempenv(msh, i);
+	while (msh->args[i])
+	{
+		if (ft_strchr(msh->args[i], '='))
+			if  (loop_setenv(msh, msh->args[i]))
+				msh->temp_env = set_tempenv(msh, i);
+		i++;
+	}
+	i = 1;
 	while (msh->args[i] && ft_strchr(msh->args[i], '='))
 		i++;
 	if (i < arrlen)

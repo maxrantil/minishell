@@ -6,13 +6,13 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 17:22:46 by mrantil           #+#    #+#             */
-/*   Updated: 2022/10/07 19:19:35 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/10/12 16:48:21 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "msh.h"
 
-void	loop_setenv(t_msh *msh, char *arg)
+int	loop_setenv(t_msh *msh, char *arg)
 {
 	char	*key;
 	size_t	i;
@@ -31,25 +31,23 @@ void	loop_setenv(t_msh *msh, char *arg)
 	msh->env = set_env_var(msh->env, key, \
 	ft_strchr(arg, '=') + 1);
 	ft_strdel(&key);
+	if (!msh->env[i])
+		return (0);
+	return (1);
 }
 
 int	msh_setenv(t_msh *msh)
 {
 	size_t	i;
-	size_t	check;
 
 	i = 1;
-	check = 0;
 	while (msh->args[i])
 	{
-		if (strchr(msh->args[i], '='))
-		{
+		if (strchr(msh->args[i], '=') && (ft_isalpha(msh->args[i][0]) || msh->args[i][0] == '_'))
 			loop_setenv(msh, msh->args[i]);
-			check++;
-		}
+		else
+			print_error(msh->args[i], 6);		
 		i++;
 	}
-	if (check)
-		return (2);
 	return (1);
 }
