@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 12:33:11 by mrantil           #+#    #+#             */
-/*   Updated: 2022/10/07 18:49:27 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/10/12 17:10:38 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ static size_t	check_tilde(char *str)
 	i = 1;
 	if (!str[i])
 		return (1);
-	if ((str[i] == '+' || str[i] == '-') && !str[i + 1])
+	if (str[i] == '+' || str[i] == '-' || str[i] == '/')
 		return (1);
 	if (ft_isalpha(str[i]))
 		return (2);
