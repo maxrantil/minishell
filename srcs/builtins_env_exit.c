@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 13:33:14 by mrantil           #+#    #+#             */
-/*   Updated: 2022/10/12 16:46:15 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/10/12 20:36:09 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,9 @@ static char	**switch_args(char **args, size_t len, size_t i)
 	new_args = \
 	(char **)ft_memalloc(sizeof(char *) * (len - i + 1));
 	j = 0;
-		/* printf("LEN: %ld\n", len - i + 1);
-		printf("ARGS: %s\n", args[i]); */
 	while (args[i])
 		new_args[j++] = ft_strdup(args[i++]);
 	new_args[j] = NULL;
-	/* for (int x = 0; new_args[x]; x++)
-		printf("NEW ARGS: %s\n", new_args[x]); */
 	ft_arrfree((void ***)&args, len);
 	return (new_args);
 }
@@ -43,6 +39,7 @@ static char	**set_tempenv(t_msh *msh, size_t i)
 		len++;
 	temp_env = (char **)ft_memalloc(sizeof(char *) * (len + 1));
 	x = 0;
+	i = 1;
 	while (x < len)
 		temp_env[x++] = ft_strdup(msh->args[i++]);
 	temp_env[x] = NULL;
@@ -57,7 +54,7 @@ static int	env_heart(t_msh *msh, size_t arrlen)
 	while (msh->args[i])
 	{
 		if (ft_strchr(msh->args[i], '='))
-			if  (loop_setenv(msh, msh->args[i]))
+			if (loop_setenv(msh, msh->args[i]))
 				msh->temp_env = set_tempenv(msh, i);
 		i++;
 	}

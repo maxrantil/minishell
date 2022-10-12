@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 09:51:16 by mrantil           #+#    #+#             */
-/*   Updated: 2022/10/07 19:45:31 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/10/12 20:33:48 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,9 @@ void	free_mem(t_msh *msh, ssize_t code)
 		if (msh->temp_env)
 		{
 			msh_unsetenv(msh);
-			ft_arrfree(\
-			(void ***)&msh->temp_env, ft_arrlen((void **)msh->temp_env));
+			ft_arrfree((void ***)&msh->temp_env, ft_arrlen((void **)msh->temp_env));
+			free(msh->temp_env);
+			msh->temp_env = NULL;
 		}
 		if (msh->args)
 			ft_arrfree((void ***)&msh->args, ft_arrlen((void **)msh->args));
