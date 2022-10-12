@@ -20,16 +20,15 @@
 # include <dirent.h>
 # include <sys/stat.h>
 
-# define MSH_TOK_BUFSIZE 64
 # define MAX_PATHLEN 1024
 
 typedef struct s_msh
 {
 	char	**args;
 	char	**env;
+	char	**temp_env;
 	char	**paths;
 	char	*cl;
-	char	**temp_env;
 }			t_msh;
 
 /*
@@ -63,7 +62,7 @@ char	**set_env_var(char **env, char *key, char *value);
 char	**unset_env_var(char **env, char *key);
 void	get_dollar(t_msh *msh, char *dollar, size_t i);
 void	tilde(t_msh *msh, size_t i);
-int		loop_setenv(t_msh *msh, char *arg);
+void	loop_setenv(t_msh *msh, char *arg);
 
 /* Tools */
 /* int		check_address(char *addr); */

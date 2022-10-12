@@ -12,58 +12,54 @@
 
 #include "msh.h"
 
-static char	**switch_args(char **args, size_t len, size_t i)
+static char	**switch_args(char **args, size_t arglen, size_t i)
 {
 	char	**new_args;
 	size_t	j;
 
 	new_args = \
-	(char **)ft_memalloc(sizeof(char *) * (len - i + 1));
+	(char **)ft_memalloc(sizeof(char *) * (arglen - i + 1));
 	j = 0;
 	while (args[i])
 		new_args[j++] = ft_strdup(args[i++]);
 	new_args[j] = NULL;
-	ft_arrfree((void ***)&args, len);
+	ft_arrfree((void ***)&args, arglen);
 	return (new_args);
 }
 
-static char	**set_tempenv(t_msh *msh, size_t i)
+static char	**set_tempenv(t_msh *msh)
 {
 	char	**temp_env;
+	size_t	i;
 	size_t	len;
-	size_t	x;
 
+	temp_env = NULL;
 	len = 0;
-	x = 1;
-	while (msh->args[x] && ft_strchr(msh->args[x++], '='))
-		len++;
-	temp_env = (char **)ft_memalloc(sizeof(char *) * (len + 1));
-	x = 0;
 	i = 1;
-	while (x < len)
-		temp_env[x++] = ft_strdup(msh->args[i++]);
-	temp_env[x] = NULL;
+	while (msh->args[i] && ft_strchr(msh->args[i++], '='))
+		len++;
+	if (len)
+	{
+		temp_env = (char **)ft_memalloc(sizeof(char *) * (len + 1));
+		i = 0;
+		while (i++ < len)
+			temp_env[i - 1] = ft_strdup(msh->args[i]);
+		temp_env[i - 1] = NULL;
+	}
 	return (temp_env);
 }	
 
-static int	env_heart(t_msh *msh, size_t arrlen)
+static int	env_heart(t_msh *msh, size_t arglen)
 {
 	size_t	i;
 
-	i = 1;
-	while (msh->args[i])
+	i = 0;
+	while (msh->args[++i] && ft_strchr(msh->args[i], '='))
+		loop_setenv(msh, msh->args[i]);
+	msh->temp_env = set_tempenv(msh);
+	if (i < arglen)
 	{
-		if (ft_strchr(msh->args[i], '='))
-			if (loop_setenv(msh, msh->args[i]))
-				msh->temp_env = set_tempenv(msh, i);
-		i++;
-	}
-	i = 1;
-	while (msh->args[i] && ft_strchr(msh->args[i], '='))
-		i++;
-	if (i < arrlen)
-	{
-		msh->args = switch_args(msh->args, arrlen, i);
+		msh->args = switch_args(msh->args, arglen, i);
 		msh_launch(msh);
 		return (1);
 	}
@@ -73,12 +69,12 @@ static int	env_heart(t_msh *msh, size_t arrlen)
 int	msh_env(t_msh *msh)
 {
 	size_t	i;
-	size_t	arrlen;
+	size_t	arglen;
 
-	arrlen = ft_arrlen((void **)msh->args);
-	if (arrlen > 1)
+	arglen = ft_arrlen((void **)msh->args);
+	if (arglen > 1)
 	{
-		if (env_heart(msh, arrlen))
+		if (env_heart(msh, arglen))
 			return (1);
 	}
 	if (*msh->env)

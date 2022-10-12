@@ -12,7 +12,7 @@
 
 #include "msh.h"
 
-int	loop_setenv(t_msh *msh, char *arg)
+void	loop_setenv(t_msh *msh, char *arg)
 {
 	char	*key;
 	size_t	i;
@@ -31,9 +31,6 @@ int	loop_setenv(t_msh *msh, char *arg)
 	msh->env = set_env_var(msh->env, key, \
 	ft_strchr(arg, '=') + 1);
 	ft_strdel(&key);
-	if (!msh->env[i])
-		return (0);
-	return (1);
 }
 
 int	msh_setenv(t_msh *msh)
