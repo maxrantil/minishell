@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/17 15:09:44 by mrantil           #+#    #+#             */
-/*   Updated: 2022/10/07 20:07:31 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/10/12 12:32:41 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ static char	*change_shlvl(char *shlvl)
 	str_lvl = ft_itoa(lvl);
 	ret = ft_strdup("SHLVL=");
 	ret = ft_strupdate(ret, str_lvl);
+	ft_strdel(&str_lvl);
 	return (ret);
 }
 
@@ -68,7 +69,7 @@ static char	**get_env(char **env, size_t j, size_t i)
 	if (*environ)
 	{
 		len = env_arrlen(environ);
-		env = (char **)ft_memalloc(sizeof(char *) * len);
+		env = (char **)ft_memalloc(sizeof(char *) * (len + 1));
 		while (environ[++i])
 		{
 			if (!ft_strncmp(environ[i], "SHLVL=", 6))
