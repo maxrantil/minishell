@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 11:44:45 by mrantil           #+#    #+#             */
-/*   Updated: 2022/10/07 19:43:22 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/10/12 10:25:32 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,24 +14,11 @@
 # define MSH_H
 
 # include "libft.h"
-/* need printf? */
 # include "ft_printf.h"
 # include "get_next_line.h"
-/* need vectors? */
-# include "vec.h"
-
-# include <stdlib.h>
 # include <stdio.h>
-# include <string.h>
-# include <unistd.h>
-/* struct dirent */
 # include <dirent.h>
-/* for lstat */
 # include <sys/stat.h>
-#ifdef __linux__
-# include <sys/wait.h>
-# include <sys/types.h>
-#endif
 
 # define MSH_TOK_BUFSIZE 64
 # define MAX_PATHLEN 1024
@@ -50,7 +37,6 @@ typedef struct s_msh
 */
 int		msh_cd(t_msh *msh);
 int		msh_echo(t_msh *msh);
-/* int		msh_pwd(t_msh *msh); */
 int		msh_env(t_msh *msh);
 int		msh_setenv(t_msh *msh);
 int		msh_unsetenv(t_msh *msh);
@@ -68,10 +54,6 @@ void	change_variables(t_msh *msh);
 /* From main */
 int		parser(t_msh *msh);
 int		msh_launch(t_msh *msh);
-
-/* Launcher */
-/* int		check_paths(t_msh *msh);
-char	*verify_arg(t_msh *msh); */
 
 /* Change envirionment variables */
 char	*get_env_value(char **env, char *var);
@@ -95,7 +77,6 @@ typedef int			(*t_fptr)(t_msh *msh);
 static const char	*g_builtin_str[] = {
 	"cd",
 	"echo",
-	/* "pwd", */
 	"env",
 	"setenv",
 	"unsetenv",
@@ -105,7 +86,6 @@ static const char	*g_builtin_str[] = {
 static const t_fptr	g_builtin_func[] = {
 	&msh_cd,
 	&msh_echo,
-	/* &msh_pwd, */
 	&msh_env,
 	&msh_setenv,
 	&msh_unsetenv,
