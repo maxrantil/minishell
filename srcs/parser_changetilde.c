@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 12:33:11 by mrantil           #+#    #+#             */
-/*   Updated: 2022/10/12 17:10:38 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/10/13 16:03:51 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,6 @@ static int	get_user(t_msh *msh, char **tilde, size_t i)
 	size_t			len;
 
 	dp = opendir("/Users");
-	if (!dp)
-	{
-		print_error(NULL, 1);
-		return (0);
-	}
 	while (1)
 	{
 		dirp = readdir(dp);
@@ -34,9 +29,11 @@ static int	get_user(t_msh *msh, char **tilde, size_t i)
 		{
 			*tilde = ft_strdup("/Users/");
 			*tilde = ft_strupdate(*tilde, msh->args[i] + 1);
+			closedir(dp);
 			return (1);
 		}
 	}
+	closedir(dp);
 	return (0);
 }
 
