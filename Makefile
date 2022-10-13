@@ -6,7 +6,7 @@
 #    By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/17 18:22:31 by mrantil           #+#    #+#              #
-#    Updated: 2022/10/12 20:30:16 by mrantil          ###   ########.fr        #
+#    Updated: 2022/10/13 16:19:32 by mrantil          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,7 +42,7 @@ MAKEFLAGS	+= --no-print-directory
 NAME		=	minishell
 CC			=	gcc
 CFLAGS 		= 	-Wall -Wextra
-#CFLAGS		+= 	-Werror
+CFLAGS		+= 	-Werror
 #CFLAGS		+=	-Wunreachable-code -Wtype-limits 
 #CFLAGS		+=	-Wpedantic
 CFLAGS		+=	-O3
