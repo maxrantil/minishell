@@ -27,17 +27,13 @@ static char	**switch_args(char **args, size_t arglen, size_t i)
 	return (new_args);
 }
 
-static char	**set_tempenv(t_msh *msh)
+static char	**set_tempenv(t_msh *msh, size_t len)
 {
 	char	**temp_env;
 	size_t	i;
-	size_t	len;
 
 	temp_env = NULL;
-	len = 0;
 	i = 1;
-	while (msh->args[i] && ft_strchr(msh->args[i++], '='))
-		len++;
 	if (len)
 	{
 		temp_env = (char **)ft_memalloc(sizeof(char *) * (len + 1));
@@ -56,7 +52,7 @@ static int	env_heart(t_msh *msh, size_t arglen)
 	i = 0;
 	while (msh->args[++i] && ft_strchr(msh->args[i], '='))
 		loop_setenv(msh, msh->args[i]);
-	msh->temp_env = set_tempenv(msh);
+	msh->temp_env = set_tempenv(msh, i - 1);
 	if (i < arglen)
 	{
 		msh->args = switch_args(msh->args, arglen, i);
