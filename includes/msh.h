@@ -16,7 +16,6 @@
 # include "libft.h"
 # include "ft_printf.h"
 # include "get_next_line.h"
-# include <stdio.h>
 # include <dirent.h>
 # include <sys/stat.h>
 
@@ -31,9 +30,8 @@ typedef struct s_msh
 	char	*cl;
 }			t_msh;
 
-/*
-**	Function Declarations for builtin shell commands:
-*/
+
+/* Function Declarations for builtin */
 int		msh_cd(t_msh *msh);
 int		msh_echo(t_msh *msh);
 int		msh_env(t_msh *msh);

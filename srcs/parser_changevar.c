@@ -12,38 +12,42 @@
 
 #include "msh.h"
 
-static void	find_variables(t_msh *msh, size_t i, size_t j)
+static size_t	find_variables(t_msh *msh, size_t i, size_t j)
 {
-	if (msh->args[i][0] == '~')
+	if (msh->args[i][j] == '~' && j == 0)
+	{
 		tilde(msh, i);
-	else if (msh->args[i][j] == '$' && (msh->args[i][j + 1] == '_' \
+	}
+	if (msh->args[i][j] == '$' \
+	&& (msh->args[i][j + 1] == '_' \
 	|| ft_isalnum(msh->args[i][j + 1])))
+	{
 		get_dollar(msh, ft_strchr(msh->args[i], '$'), i);
-	else if (msh->args[i][j] == '$' && msh->args[i][j + 1] == '$')
+		return (1);
+	}
+	else if (msh->args[i][j] == '$' \
+	&& msh->args[i][j + 1] == '$')
 	{
 		ft_strdel(&msh->args[i]);
 		msh->args[i] = ft_itoa(getpid());
 	}
+	return (0);
 }
 
 void	change_variables(t_msh *msh)
 {
-	size_t	arrlen;
 	size_t	i;
 	size_t	j;
 
-	arrlen = ft_arrlen((void **)msh->args);
 	i = 0;
-	while (i < arrlen)
+	while (msh->args[i])
 	{
 		j = 0;
-		if (msh->args[i])
+		while (msh->args[i][j])
 		{
-			while (msh->args[i][j] != '\0')
-			{
-				find_variables(msh, i, j);
-				j++;
-			}
+			if (find_variables(msh, i, j))
+				break ;
+			j++;
 		}
 		i++;
 	}
