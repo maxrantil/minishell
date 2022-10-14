@@ -97,6 +97,7 @@ void	get_dollar(t_msh *msh, char *dollar, size_t i)
 	begin_arg = save_begin(msh, i);
 	dollars = ft_strsplit(dollar, '$');
 	new_arg = get_new_arg(msh, dollars);
+	ft_arrfree((void ***)&dollars, ft_arrlen((void **)dollars));
 	ft_strdel(&msh->args[i]);
 	if (begin_arg && new_arg)
 		msh->args[i] = ft_strupdate(begin_arg, new_arg);
@@ -104,6 +105,5 @@ void	get_dollar(t_msh *msh, char *dollar, size_t i)
 		msh->args[i] = ft_strdup(new_arg);
 	else if (begin_arg)
 		msh->args[i] = begin_arg;
-	ft_arrfree((void ***)&dollars, ft_arrlen((void **)dollars));
 	ft_strdel(&new_arg);
 }

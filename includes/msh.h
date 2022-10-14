@@ -30,7 +30,6 @@ typedef struct s_msh
 	char	*cl;
 }			t_msh;
 
-
 /* Function Declarations for builtin */
 int		msh_cd(t_msh *msh);
 int		msh_echo(t_msh *msh);
@@ -63,7 +62,6 @@ void	tilde(t_msh *msh, size_t i);
 void	loop_setenv(t_msh *msh, char *arg);
 
 /* Tools */
-/* int		check_address(char *addr); */
 void	print_error(char *arg, int i);
 char	*extract_key(char *key_value);
 void	free_mem(t_msh *msh, ssize_t code);

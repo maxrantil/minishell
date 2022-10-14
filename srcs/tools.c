@@ -38,16 +38,8 @@ void	free_mem(t_msh *msh, ssize_t code)
 		if (msh->temp_env)
 		{
 			msh_unsetenv(msh);
-			ft_arrfree((void ***)&msh->temp_env, ft_arrlen((void **)msh->temp_env));
-			/* int i = -1;
-			while (msh->temp_env[++i])
-			{
-				free(msh->temp_env[i]);
-				msh->temp_env[i] = NULL;
-				printf("helloo\n");
-			} */
-			/* free(msh->temp_env);
-			msh->temp_env = NULL; */
+			ft_arrfree(/
+			(void ***)&msh->temp_env, ft_arrlen((void **)msh->temp_env));
 		}
 		if (msh->args)
 			ft_arrfree((void ***)&msh->args, ft_arrlen((void **)msh->args));

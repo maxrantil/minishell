@@ -19,11 +19,6 @@ static int	get_user(t_msh *msh, char **tilde, size_t i)
 	size_t			len;
 
 	dp = opendir("/Users");
-	if (!dp)
-	{
-		print_error(NULL, 1);
-		return (0);
-	}
 	while (1)
 	{
 		dirp = readdir(dp);
@@ -34,9 +29,11 @@ static int	get_user(t_msh *msh, char **tilde, size_t i)
 		{
 			*tilde = ft_strdup("/Users/");
 			*tilde = ft_strupdate(*tilde, msh->args[i] + 1);
+			closedir(dp);
 			return (1);
 		}
 	}
+	closedir(dp);
 	return (0);
 }
 
