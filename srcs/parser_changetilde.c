@@ -19,6 +19,8 @@ static int	get_user(t_msh *msh, char **tilde, size_t i)
 	size_t			len;
 
 	dp = opendir("/Users");
+	if (!dp)
+		return (0);
 	while (1)
 	{
 		dirp = readdir(dp);
