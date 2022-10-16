@@ -18,6 +18,11 @@
 # include "get_next_line.h"
 # include <dirent.h>
 # include <sys/stat.h>
+# include <fcntl.h>
+
+# if __linux__
+#  include <sys/wait.h>
+# endif
 
 # define MAX_PATHLEN 1024
 
@@ -66,6 +71,9 @@ void	print_error(char *arg, int i);
 char	*extract_key(char *key_value);
 void	free_mem(t_msh *msh, ssize_t code);
 int		find_matching_quote(char *str, char quote);
+
+/* Hisotry */
+void	history(t_msh *msh, int status);
 
 typedef int			(*t_fptr)(t_msh *msh);
 

@@ -64,6 +64,7 @@ FILES 		= 	builtin_cd \
 				builtin_unsetenv \
 				builtin_setenv \
 				builtins_env_exit \
+				history \
 				init \
 				main \
 				msh_launch \

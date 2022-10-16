@@ -21,7 +21,7 @@ static int	exec_args(t_msh *msh)
 {
 	size_t	i;
 
-	if (!msh->args[0])
+	if (!msh->args || !msh->args[0])
 		return (1);
 	i = 0;
 	while (i < num_builtins())
@@ -45,11 +45,13 @@ int	main(void)
 		ft_printf("{yel}${gre}>{nor} ");
 		if (get_next_line(STDIN_FILENO, &msh.cl) == 1)
 		{
+			history(&msh, 1);
 			status = parser(&msh);
 			if (status > 0)
 			{
 				status = exec_args(&msh);
 				msh.env = update_env_var(&msh);
+				history(&msh, 2);
 			}
 			free_mem(&msh, 1);
 		}
