@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 09:38:04 by mrantil           #+#    #+#             */
-/*   Updated: 2022/10/17 09:38:57 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/10/17 13:58:42 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@
 **	O_CREAT If pathname does not exist, create it as a regular file.
 **	O_RDWR access modes: read/write
 **	O_APPEND The  file  is  opened  in append mode.
-**	S_IRWXU  00700 user (file owner) has read, write, and execute permissionS_IRUSR  00400 user has read permission	
+**	S_IRWXU  00700 user (file owner) has read, write, 
+**	and execute permissionS_IRUSR  00400 user has read permission	
 */
 
 static void	write_to_history(t_msh *msh)
@@ -77,6 +78,14 @@ static void	print_history_of_choice(size_t line_numbers, size_t line)
 	ft_putendl(buf);
 	ft_strdel(&buf);
 	close(fd);
+}
+
+void char	**get_history(t_msh *msh)
+{
+	size_t len;
+
+	len = history_count();
+	msh->history = (char **)ft_memalloc(sizeof(char *) * (len + 1));
 }
 
 void	history(t_msh *msh, int status)

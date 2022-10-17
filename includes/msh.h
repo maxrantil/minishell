@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 11:44:45 by mrantil           #+#    #+#             */
-/*   Updated: 2022/10/12 16:45:41 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/10/17 13:55:29 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,12 @@
 
 typedef struct s_msh
 {
+	char	*cl;
 	char	**args;
 	char	**env;
 	char	**temp_env;
 	char	**paths;
-	char	*cl;
+	char	**history;
 }			t_msh;
 
 /* Function Declarations for builtin */
