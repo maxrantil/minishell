@@ -46,8 +46,13 @@ void	free_mem(t_msh *msh, ssize_t code)
 			ft_arrfree((void ***)&msh->paths, ft_arrlen((void **)msh->paths));
 		ft_strdel(&msh->cl);
 	}
-	if (code == 2 && msh->env)
-		ft_arrfree((void ***)&msh->env, ft_arrlen((void **)msh->env));
+	if (code == 2)
+	{
+		if (msh->env)
+			ft_arrfree((void ***)&msh->env, ft_arrlen((void **)msh->env));
+		write_history_to_file(msh);
+		vec_free(&msh->v_history);
+	}
 }
 
 int	find_matching_quote(char *str, char quote)

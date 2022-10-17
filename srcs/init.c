@@ -105,6 +105,7 @@ void	init_msh(t_msh *msh)
 	i = -1;
 	msh->env = get_env(msh->env, j, i);
 	msh->temp_env = NULL;
-	msh->history = NULL;
-	msh->history = get_history(msh);
+	vec_new(&msh->v_history, 0, sizeof(char) * 256);
+	get_history(msh);
+	msh->history_indx = 0;
 }

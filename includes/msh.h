@@ -16,6 +16,7 @@
 # include "libft.h"
 # include "ft_printf.h"
 # include "get_next_line.h"
+# include "vec.h"
 # include <dirent.h>
 # include <sys/stat.h>
 # include <fcntl.h>
@@ -33,7 +34,8 @@ typedef struct s_msh
 	char	**env;
 	char	**temp_env;
 	char	**paths;
-	char	**history;
+	t_vec	v_history;
+	size_t	history_indx;
 }			t_msh;
 
 /* Function Declarations for builtin */
@@ -46,7 +48,7 @@ int		msh_exit(t_msh *msh);
 
 /* Init and free */
 void	init_msh(t_msh *msh);
-char	**get_history(t_msh *msh);
+void	get_history(t_msh *msh);
 
 /* Parser */
 size_t	count_arguments(char *str);
