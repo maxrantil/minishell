@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 11:44:45 by mrantil           #+#    #+#             */
-/*   Updated: 2022/10/17 13:55:29 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/10/17 15:12:57 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ int		msh_exit(t_msh *msh);
 
 /* Init and free */
 void	init_msh(t_msh *msh);
+char	**get_history(t_msh *msh);
 
 /* Parser */
 size_t	count_arguments(char *str);

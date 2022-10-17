@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/17 15:09:44 by mrantil           #+#    #+#             */
-/*   Updated: 2022/10/17 13:55:11 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/10/17 15:12:46 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,5 +105,6 @@ void	init_msh(t_msh *msh)
 	i = -1;
 	msh->env = get_env(msh->env, j, i);
 	msh->temp_env = NULL;
-	msh->history = get_history();
+	msh->history = NULL;
+	msh->history = get_history(msh);
 }

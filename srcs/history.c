@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 09:38:04 by mrantil           #+#    #+#             */
-/*   Updated: 2022/10/17 13:58:42 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/10/17 15:16:05 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,12 +80,28 @@ static void	print_history_of_choice(size_t line_numbers, size_t line)
 	close(fd);
 }
 
-void char	**get_history(t_msh *msh)
+char	**get_history(t_msh *msh)
 {
-	size_t len;
+	char	*buf;
+	size_t	len;
+	size_t	i;
+	int		fd;
 
 	len = history_count();
-	msh->history = (char **)ft_memalloc(sizeof(char *) * (len + 1));
+	if (len)
+	{
+		msh->history = (char **)ft_memalloc(sizeof(char *) * (len + 1));
+		fd = open(".msh_history", O_CREAT | O_RDWR | O_APPEND, S_IRWXU);
+		i = 0;
+		while (get_next_line(fd, &buf) > 0)
+		{
+			msh->history[i++] = ft_strdup(buf);
+			ft_strdel(&buf);
+		}
+		msh->history[i] = NULL;
+		close(fd);
+	}
+	return (msh->history);
 }
 
 void	history(t_msh *msh, int status)
