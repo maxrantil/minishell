@@ -4,7 +4,7 @@ static 	void	write_to_history(t_msh *msh)
 {
 	int		fd;
 
-	fd = open(".msh_history", O_CREAT | O_RDWR | O_APPEND, S_IRWXU);
+	fd = open(".msh_history", O_CREAT | O_WRONLY | O_APPEND, S_IRWXU);
 	if (fd > 0)
 		ft_putendl_fd(msh->cl, fd);
 	close(fd);
@@ -15,12 +15,13 @@ static void	print_history()
 	char	*buf;
 	int		fd;
 
-	fd = open(".msh_history", O_CREAT | O_RDWR | O_APPEND, S_IRWXU);
+	fd = open(".msh_history", O_RDONLY);
 	while (get_next_line(fd, &buf) > 0)
 	{
 		ft_putendl(buf);
 		ft_strdel(&buf);
 	}
+	close(fd);
 }
 
 static size_t	history_count()
@@ -29,7 +30,7 @@ static size_t	history_count()
 	size_t	line_numbers;
 	int		fd;
 
-	fd = open(".msh_history", O_CREAT | O_RDWR | O_APPEND, S_IRWXU);
+	fd = open(".msh_history", O_RDONLY);
 	line_numbers = 0;
 	while (get_next_line(fd, &buf) > 0)
 	{
@@ -45,7 +46,7 @@ static void	print_history_of_choice(size_t line_numbers, size_t line)
 	char	*buf;
 	int		fd;
 
-	fd = open(".msh_history", O_CREAT | O_RDWR | O_APPEND, S_IRWXU);
+	fd = open(".msh_history", O_RDONLY);
 	line = line_numbers - line;
 	while (get_next_line(fd, &buf) > 0)
 	{
@@ -60,7 +61,6 @@ static void	print_history_of_choice(size_t line_numbers, size_t line)
 	close(fd);
 }
 
-//here we should have raw mode but now i test with '^' 
 /*
 **	O_CREAT If pathname does not exist, create it as a regular file.
 **	O_RDWR access modes: read/write
