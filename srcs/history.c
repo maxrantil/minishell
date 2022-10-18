@@ -14,10 +14,12 @@
 
 void	write_history_to_file(t_msh *msh)
 {
+	char	*file;
 	size_t	cpy;
 	int		fd;
 
-	fd = open(".msh_history", O_WRONLY);
+	file = ft_strjoin(getenv("HOME"), "/.msh_history");
+	fd = open(file, O_WRONLY);
 	cpy = 0;
 	if (msh->v_history.len > 1024)
 		cpy = msh->v_history.len % 1024;
@@ -27,6 +29,7 @@ void	write_history_to_file(t_msh *msh)
 		cpy++;
 	}
 	close(fd);
+	ft_strdel(&file);
 }
 
 /*
@@ -40,35 +43,33 @@ void	write_history_to_file(t_msh *msh)
 void	get_history(t_msh *msh)
 {
 	char	*buf;
+	char	*file;
 	int		fd;
 
-	fd = open(".msh_history", O_CREAT | O_RDONLY | O_APPEND, S_IRWXU);
+	file = ft_strjoin(getenv("HOME"), "/.msh_history");
+	fd = open(file, O_CREAT | O_RDONLY | O_APPEND, S_IRWXU);
 	while (get_next_line(fd, &buf) > 0)
 	{
 		vec_push(&msh->v_history, buf);
 		ft_strdel(&buf);
 	}
 	close(fd);
+	ft_strdel(&file);
 }
 
 void	history(t_msh *msh, int status)
 {
-	char	*free_itoa;
-	char	*output;
 	size_t	num_incr;
 
 	if (status == 1 && msh->cl[0] == 'h' && msh->cl[1] == 'i' && msh->cl[2] == 's' && msh->cl[3] == 't' && msh->cl[4] == 'o' && msh->cl[5] == 'r' && msh->cl[6] == 'y')
 	{
 		num_incr = 0;
-		while (++num_incr <= msh->v_history.len)
+		while (num_incr <= msh->v_history.len)
 		{
-			free_itoa = ft_itoa(num_incr);
-			write(1, free_itoa, ft_strlen(free_itoa));
-			ft_strdel(&free_itoa);
+			ft_putnbr(num_incr + 1);
 			write(1, "  ", 2);
-			output = vec_get(&msh->v_history, num_incr);
-			write(1, output, ft_strlen(output));
-			write(1, "\n", 1);
+			ft_putendl((char *)vec_get(&msh->v_history, num_incr));
+			num_incr++;
 
 		}
 	}
