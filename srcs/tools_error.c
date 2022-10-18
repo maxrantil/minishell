@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 19:45:05 by mrantil           #+#    #+#             */
-/*   Updated: 2022/10/12 16:32:22 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/10/18 12:40:27 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static void	print_status(int status)
 	if (status == -2)
 		ft_putstr_fd(": Permission denied\n", STDERR_FILENO);
 	if (status == 0)
-		ft_putstr_fd(": Is a directory\n", STDERR_FILENO);
+		ft_putstr_fd(": Is a directory\n", STDERR_FILENO); //print is a file is its a file
 }
 
 static int	check_address(char *addr)

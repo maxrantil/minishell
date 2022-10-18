@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 09:51:16 by mrantil           #+#    #+#             */
-/*   Updated: 2022/10/12 20:33:48 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/10/18 10:46:34 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ void	free_mem(t_msh *msh, ssize_t code)
 			ft_arrfree((void ***)&msh->args, ft_arrlen((void **)msh->args));
 		if (msh->paths)
 			ft_arrfree((void ***)&msh->paths, ft_arrlen((void **)msh->paths));
+		vec_push(&msh->v_history, msh->cl);
 		ft_strdel(&msh->cl);
 	}
 	if (code == 2)

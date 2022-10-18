@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 11:44:45 by mrantil           #+#    #+#             */
-/*   Updated: 2022/10/17 15:12:57 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/10/18 10:44:04 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,10 @@
 # include <dirent.h>
 # include <sys/stat.h>
 # include <fcntl.h>
+/* for getting home directory */
+# include <sys/types.h>
+# include <pwd.h>
+# include <uuid/uuid.h>
 
 # if __linux__
 #  include <sys/wait.h>
@@ -35,7 +39,6 @@ typedef struct s_msh
 	char	**temp_env;
 	char	**paths;
 	t_vec	v_history;
-	size_t	history_indx;
 }			t_msh;
 
 /* Function Declarations for builtin */
@@ -45,6 +48,7 @@ int		msh_env(t_msh *msh);
 int		msh_setenv(t_msh *msh);
 int		msh_unsetenv(t_msh *msh);
 int		msh_exit(t_msh *msh);
+int		msh_history(t_msh *msh);
 
 /* Init and free */
 void	init_msh(t_msh *msh);
@@ -75,9 +79,7 @@ void	print_error(char *arg, int i);
 char	*extract_key(char *key_value);
 void	free_mem(t_msh *msh, ssize_t code);
 int		find_matching_quote(char *str, char quote);
-
-/* Hisotry */
-void	history(t_msh *msh, int status);
+void	write_history_to_file(t_msh *msh);
 
 typedef int			(*t_fptr)(t_msh *msh);
 
@@ -87,7 +89,8 @@ static const char	*g_builtin_str[] = {
 	"env",
 	"setenv",
 	"unsetenv",
-	"exit"
+	"exit",
+	"history"
 };
 
 static const t_fptr	g_builtin_func[] = {
@@ -96,7 +99,8 @@ static const t_fptr	g_builtin_func[] = {
 	&msh_env,
 	&msh_setenv,
 	&msh_unsetenv,
-	&msh_exit
+	&msh_exit,
+	&msh_history
 };
 
 #endif
