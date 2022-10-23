@@ -91,7 +91,7 @@ void	init_msh(t_msh *msh)
 	ssize_t		i;
 	size_t		j;
 
-	ft_putstr("\033[2J");
+ft_putstr("\033[2J");
 	ft_putstr("\033[H");
 	ft_printf("\n{blu}******************************************\n");
 	ft_printf("\
@@ -105,4 +105,5 @@ void	init_msh(t_msh *msh)
 	i = -1;
 	msh->env = get_env(msh->env, j, i);
 	msh->temp_env = NULL;
+
 }

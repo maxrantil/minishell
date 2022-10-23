@@ -18,8 +18,15 @@
 # include "get_next_line.h"
 # include <dirent.h>
 # include <sys/stat.h>
+# if __linux__
+# include <sys/types.h>
+# include <sys/wait.h>
+# endif
 
 # define MAX_PATHLEN 1024
+# define MAX_NAME 256
+# define HASH_SIZE 10
+
 
 typedef struct s_msh
 {
@@ -29,6 +36,12 @@ typedef struct s_msh
 	char	**paths;
 	char	*cl;
 }			t_msh;
+
+typedef struct s_builtin {
+	char				program[MAX_NAME];
+	int					(*function)(t_msh *msh);
+	struct s_builtin	*next;
+}						t_builtin;
 
 /* Function Declarations for builtin */
 int		msh_cd(t_msh *msh);
@@ -66,25 +79,5 @@ void	print_error(char *arg, int i);
 char	*extract_key(char *key_value);
 void	free_mem(t_msh *msh, ssize_t code);
 int		find_matching_quote(char *str, char quote);
-
-typedef int			(*t_fptr)(t_msh *msh);
-
-static const char	*g_builtin_str[] = {
-	"cd",
-	"echo",
-	"env",
-	"setenv",
-	"unsetenv",
-	"exit"
-};
-
-static const t_fptr	g_builtin_func[] = {
-	&msh_cd,
-	&msh_echo,
-	&msh_env,
-	&msh_setenv,
-	&msh_unsetenv,
-	&msh_exit
-};
 
 #endif

@@ -12,34 +12,77 @@
 
 #include "msh.h"
 
-static size_t	num_builtins(void)
-{
-	return (sizeof(g_builtin_str) / sizeof(char *));
-}
 
-static int	exec_args(t_msh *msh)
+static int	exec_args(t_msh *msh, t_builtin **ht)
 {
-	size_t	i;
+
+	int i;
 
 	if (!msh->args[0])
 		return (1);
 	i = 0;
-	while (i < num_builtins())
+	while (i < HASH_SIZE)
 	{
-		if (!ft_strcmp(msh->args[0], g_builtin_str[i]))
-			return (g_builtin_func[i](msh));
+		if (ft_strcmp(ht[i]->program, msh->args[0]) == 0)
+		{
+			return (ht[i]->function(msh));
+		}
 		i++;
 	}
 	return (msh_launch(msh));
 }
 
+unsigned int hash_function(char *program)
+{
+	unsigned int	hash;
+	int 			c;
+
+	hash = 0;
+	while ((c = *program++))
+		hash = c + (hash << 6) + (hash << 16) - hash;
+	return (hash % HASH_SIZE);
+}
+
+int	hash_table_insert(t_builtin **ht, t_builtin *p)
+{
+	int index;
+	
+	if (!p)
+		return (0);
+	index = hash_function(p->program);
+	p->next = ht[index];
+	ht[index] = p;
+	return (1);
+}
+
+void	init_hash_table(t_builtin **ht)
+{
+	int i;
+
+	i =	0;
+	while (i < HASH_SIZE)
+		ht[i++] = NULL;
+}
+
 int	main(void)
 {
-	t_msh	msh;
-	int		status;
+	t_msh		msh;
+	t_builtin	*ht[HASH_SIZE];
+	int			status;
 
 	init_msh(&msh);
-	status = 1;
+	init_hash_table(ht);
+	t_builtin cd = {.program="cd", .function=&msh_cd};
+	t_builtin env = {.program="env", .function=&msh_env};
+	t_builtin echo = {.program="echo", .function=&msh_echo};
+	t_builtin setenv = {.program="setenv", .function=&msh_setenv};
+	t_builtin unsetenv = {.program="unsetenv", .function=&msh_unsetenv};
+	if (hash_table_insert(ht, &cd)
+	&& hash_table_insert(ht, &env)
+	&& hash_table_insert(ht, &echo)
+	&& hash_table_insert(ht, &setenv)
+	&& hash_table_insert(ht, &unsetenv))
+		status = 1;
 	while (status)
 	{
 		ft_printf("{yel}${gre}>{nor} ");
@@ -48,7 +91,7 @@ int	main(void)
 			status = parser(&msh);
 			if (status > 0)
 			{
-				status = exec_args(&msh);
+				status = exec_args(&msh, ht);
 				msh.env = update_env_var(&msh);
 			}
 			free_mem(&msh, 1);
