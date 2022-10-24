@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 19:04:31 by mrantil           #+#    #+#             */
-/*   Updated: 2022/08/24 19:06:57 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/10/18 14:33:34 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	vec_new(t_vec *dst, size_t init_len, size_t elem_size)
 		dst->memory = malloc(dst->alloc_size);
 		if (!dst->memory)
 		{
-			perror("vec_new, malloc error");
+			ft_putendl_fd("error, malloc vec_new()", 2);
 			exit(1);
 		}
 	}

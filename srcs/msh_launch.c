@@ -84,14 +84,20 @@ int	msh_launch(t_msh *msh)
 {
 	pid_t	pid;
 	int		status;
+	char	*ptr;
 
 	pid = fork();
 	if (pid == 0)
 	{
-		execve(msh->args[0], msh->args, msh->env);
-		if (msh->args[0][0] != '.' && check_paths(msh))
+		if (msh->args[0][0] == '.')
+			execve(msh->args[0], msh->args, msh->env);
+		if (check_paths(msh))
+		{
+			ptr = msh->args[0];
 			msh->args[0] = verify_arg(msh);
-		execve(msh->args[0], msh->args, msh->env);
+			if (ft_strcmp(msh->args[0], ptr))
+				execve(msh->args[0], msh->args, msh->env);
+		}
 		print_error(msh->args[0], 4);
 		free_mem(msh, NULL, 1);
 		exit(EXIT_FAILURE);

@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 15:16:41 by mrantil           #+#    #+#             */
-/*   Updated: 2022/10/07 19:43:11 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/10/19 13:01:08 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,10 @@ int	msh_cd(t_msh *msh)
 		else
 		{
 			if (chdir(msh->args[1]) != 0)
+			{
 				print_error(msh->args[1], 5);
+				return (1);
+			}
 		}
 		msh->env = update_pwd(msh, cwd);
 	}
