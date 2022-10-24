@@ -1,0 +1,36 @@
+void	ht_print(t_builtin **ht)
+{
+	t_builtin	*tmp;
+	int i;
+
+	i = 0;
+	while (i < HASH_SIZE)
+	{
+		if (!ht[i])
+			ft_printf("ht[%d] = NULL", i);
+		else
+		{
+			ft_printf("ht[%d] = ", i);
+			tmp = ht[i];
+			while (tmp)
+			{
+				ft_printf(" - %s", tmp->program);
+				tmp = tmp->next;
+			}
+		}
+		ft_printf("\n");
+		i++;
+	}
+}
+
+int	ht_search(t_builtin **ht, char *program)
+{
+	t_builtin	*list;
+	int			index;
+
+	index = hash_function(program);
+	list = ht[index];
+	while (list && ft_strcmp(list->program, program) != 0)
+		list = list->next;
+	return (1);
+}

@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 10:52:53 by mrantil           #+#    #+#             */
-/*   Updated: 2022/10/17 12:34:26 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/10/24 15:29:23 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ int	msh_launch(t_msh *msh)
 			msh->args[0] = verify_arg(msh);
 		execve(msh->args[0], msh->args, msh->env);
 		print_error(msh->args[0], 4);
-		free_mem(msh, 1);
+		free_mem(msh, NULL, 1);
 		exit(EXIT_FAILURE);
 	}
 	else if (pid < 0)
