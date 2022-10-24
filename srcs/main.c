@@ -6,39 +6,38 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 15:09:44 by mrantil           #+#    #+#             */
-/*   Updated: 2022/10/07 17:12:09 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/10/24 15:38:34 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "msh.h"
 
-static size_t	num_builtins(void)
+static int	exec_args(t_msh *msh, t_builtin **ht)
 {
-	return (sizeof(g_builtin_str) / sizeof(char *));
-}
-
-static int	exec_args(t_msh *msh)
-{
-	size_t	i;
+	t_builtin	*tmp;
+	int			index;
 
 	if (!msh->args[0])
 		return (1);
-	i = 0;
-	while (i < num_builtins())
+	index = hash_function(msh->args[0]);
+	tmp = ht[index];
+	while (tmp)
 	{
-		if (!ft_strcmp(msh->args[0], g_builtin_str[i]))
-			return (g_builtin_func[i](msh));
-		i++;
+		if (ft_strcmp(msh->args[0], tmp->program) == 0)
+			return (tmp->function(msh));
+		tmp = tmp->next;
 	}
 	return (msh_launch(msh));
 }
 
 int	main(void)
 {
-	t_msh	msh;
-	int		status;
+	t_msh		msh;
+	t_builtin	*ht[HASH_SIZE];
+	int			status;
 
 	init_msh(&msh);
+	initialize_ht(ht);
 	status = 1;
 	while (status)
 	{
@@ -48,14 +47,14 @@ int	main(void)
 			status = parser(&msh);
 			if (status > 0)
 			{
-				status = exec_args(&msh);
+				status = exec_args(&msh, ht);
 				msh.env = update_env_var(&msh);
 			}
-			free_mem(&msh, 1);
+			free_mem(&msh, ht, 1);
 		}
 		else
 			ft_putstr_fd("minishell: could not read input\n", STDERR_FILENO);
 	}
-	free_mem(&msh, 2);
+	free_mem(&msh, ht, 2);
 	return (0);
 }

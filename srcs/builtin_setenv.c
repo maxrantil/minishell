@@ -6,12 +6,19 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 17:22:46 by mrantil           #+#    #+#             */
-/*   Updated: 2022/10/17 13:11:07 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/10/24 09:08:59 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "msh.h"
 
+/**
+ * It loops through the environment variables, and if it finds one that matches the key of the
+ * argument, it unsets it, and then sets the new one
+ * 
+ * @param msh the main shell structure
+ * @param arg the argument passed to setenv
+ */
 void	loop_setenv(t_msh *msh, char *arg)
 {
 	char	*key;

@@ -6,7 +6,7 @@
 #    By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/17 18:22:31 by mrantil           #+#    #+#              #
-#    Updated: 2022/10/13 16:19:32 by mrantil          ###   ########.fr        #
+#    Updated: 2022/10/24 15:49:10 by mrantil          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -67,6 +67,7 @@ FILES 		= 	builtin_cd \
 				init \
 				main \
 				msh_launch \
+				hash_table \
 				parser_changedollar \
 				parser_changetilde \
 				parser_changevar \
