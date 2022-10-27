@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 15:35:59 by mrantil           #+#    #+#             */
-/*   Updated: 2022/10/24 15:52:04 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/10/26 13:58:30 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,14 @@ static char	*ht_insert(t_builtin **ht, t_builtin *p)
 	return (ht[index]->program);
 }
 
+/**
+ * It creates a new t_builtin struct, initializes it with the given string and function pointer, and
+ * inserts it into the hash table
+ * 
+ * @param ht the hash table
+ * @param str The name of the builtin
+ * @param f the function that will be called when the command is executed
+ */
 static void	init_ht_struct(t_builtin **ht, char *str, int (*f)(t_msh *msh))
 {
 	t_builtin	*new;
@@ -53,6 +61,11 @@ static void	init_ht_struct(t_builtin **ht, char *str, int (*f)(t_msh *msh))
 	ht_insert(ht, new);
 }
 
+/**
+ * It initializes the hash table
+ * 
+ * @param ht The hash table
+ */
 static void	init_ht(t_builtin **ht)
 {
 	int	i;
@@ -62,6 +75,11 @@ static void	init_ht(t_builtin **ht)
 		ht[i++] = NULL;
 }
 	
+/**
+ * It initializes the hash table with the builtin functions
+ * 
+ * @param ht the hash table
+ */
 void initialize_ht(t_builtin **ht)
 {
 	init_ht(ht);
