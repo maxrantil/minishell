@@ -6,7 +6,7 @@
 #    By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/17 18:22:31 by mrantil           #+#    #+#              #
-#    Updated: 2022/10/26 10:00:04 by mrantil          ###   ########.fr        #
+#    Updated: 2022/10/28 20:36:38 by mrantil          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -57,7 +57,7 @@ LIBRARIES 	= 	libft
 
 SOURCE_COUNT = $(words $(FILES))
 
-H_FILES 	=	21sh	
+H_FILES 	=	msh
 
 FILES 		= 	builtin_cd \
 				builtin_echo \
