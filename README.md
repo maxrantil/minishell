@@ -4,11 +4,8 @@
 
 # How to use it
 
-Using make will create the minishell executable.
+Using ``make`` will create the minishell executable.
 
-After cloning the source code do and ``cd`` into the directory do:
-```
-make
 ```
 And then,
 simply run it with :
