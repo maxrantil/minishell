@@ -6,7 +6,6 @@
 
 Using ``make`` will create the minishell executable.
 
-```
 And then,
 simply run it with :
 ```
