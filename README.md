@@ -77,11 +77,14 @@ $ exit                      # Exit the minishell
 ```
 
 ```bash
-$ cd /home/user/documents   # Change the current working directory to /home/user/documents
+$ echo "Hello, world!"      # Print "Hello, world!" to the terminal
+$ cd ~                      # Change the current working directory to the user's home directory
+$ ls -l ~                   # List the contents of the user's home directory in long format
+$ cd -                      # Change the current working directory to the previous working directory
 $ pwd                       # Print the current working directory
-$ setenv VAR value          # Set the environment variable VAR to value
-$ echo $VAR                 # Print the value of the environment variable VAR
-$ unsetenv VAR              # Unset the environment variable VAR
+$ setenv PATH "/usr/local/bin:/usr/bin:/bin"  # Set the PATH environment variable to include several directories
+$ echo $PATH                # Print the value of the PATH environment variable
+$ unsetenv PATH             # Unset the PATH environment variable
 $ env                       # Print a list of all environment variables
 $ exit                      # Exit the minishell
 ```
