@@ -66,7 +66,7 @@ Additional features:
 
 
 ## Examples
-```c
+```bash
 $ cd /home/user/documents   # Change the current working directory to /home/user/documents
 $ pwd                       # Print the current working directory
 $ setenv VAR value          # Set the environment variable VAR to value
