@@ -53,7 +53,7 @@ Minishell must meet the following requirements:
 * Handle errors without using ``errno``, instead displaying a message tailored to the error output.
 * Correctly manage the ``PATH`` and the environment (a copy of ``char** environ``).
 * Implement a set of built-in commands: ``echo``, ``cd``, ``setenv``, ``unsetenv``, ``env``, and ``exit``.
-* 8Support expansions of ``$`` and ``~``.
+* Support expansions of ``$`` and ``~``.
 
 Additional features:
 
