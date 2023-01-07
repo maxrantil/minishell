@@ -2,8 +2,6 @@
 
 The minishell project is a program that simulates the behavior of the command shell (also known as the terminal or command prompt) in a Unix-like operating system. When you run the minishell program, it will display a prompt where you can type a command and press enter to execute it. The minishell program is able to parse the command and arguments you enter, and execute the appropriate program. It also has a few built-in functions such as "echo", "cd", "setenv", "unsetenv", "env", and "exit". The minishell program is able to handle expansions (e.g., "$" and "~") and quotes, and has additional features such as the ability to handle relative and absolute paths when using the "cd" command and the ability to print error messages when an error occurs.
 
-## About
-At Hive Helsinki, a 42 Network school, students must write projects according to the "norme". Many formats are restricted, so the code may look surprising in some places.
 
 ## Installation
 To install and run minishell, follow these steps:
@@ -24,6 +22,10 @@ Run the minishell:
 ```
 ./minishell
 ```
+
+
+## About
+At Hive Helsinki, a 42 Network school, students must write projects according to the "norme". Many formats are restricted, so the code may look surprising in some places.
 
 Only allowed readymade functions in this project are listed below. Everything
 else coded by me, including my own printf, ls-command and c-library(libft).
