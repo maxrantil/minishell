@@ -75,3 +75,13 @@ $ unsetenv VAR              # Unset the environment variable VAR
 $ env                       # Print a list of all environment variables
 $ exit                      # Exit the minishell
 ```
+
+```bash
+$ cd /home/user/documents   # Change the current working directory to /home/user/documents
+$ pwd                       # Print the current working directory
+$ setenv VAR value          # Set the environment variable VAR to value
+$ echo $VAR                 # Print the value of the environment variable VAR
+$ unsetenv VAR              # Unset the environment variable VAR
+$ env                       # Print a list of all environment variables
+$ exit                      # Exit the minishell
+```
