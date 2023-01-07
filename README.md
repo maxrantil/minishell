@@ -1,6 +1,6 @@
 # minishell
 
-42 project, recoding our own little bash. A program capable of parsing a prompt and launching executables with arguments, along with a few built-in functions.
+The minishell project is a program that simulates the behavior of the command shell (also known as the terminal or command prompt) in a Unix-like operating system. When you run the minishell program, it will display a prompt where you can type a command and press enter to execute it. The minishell program is able to parse the command and arguments you enter, and execute the appropriate program. It also has a few built-in functions such as "echo", "cd", "setenv", "unsetenv", "env", and "exit". The minishell program is able to handle expansions (e.g., "$" and "~") and quotes, and has additional features such as the ability to handle relative and absolute paths when using the "cd" command and the ability to print error messages when an error occurs.
 
 # How to use it
 
