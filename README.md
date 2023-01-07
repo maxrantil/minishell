@@ -5,12 +5,22 @@ The minishell project is a program that simulates the behavior of the command sh
 ## About
 At Hive Helsinki, a 42 Network school, students must write projects according to the "norme". Many formats are restricted, so the code may look surprising in some places.
 
-# How to use it
+## Installation
+To install and run minishell, follow these steps:
 
-Using ``make`` will create the minishell executable.
-
-And then,
-simply run it with :
+Clone the repository:
+```
+git clone https://github.com/maxrantil/minishell.git
+```
+Navigate to the directory:
+```
+cd minishell
+```
+Build the minishell:
+```
+make
+```
+Run the minishell:
 ```
 ./minishell
 ```
